@@ -89,3 +89,4 @@ ENV/
 .ropeproject
 
 settings_secret.py
+*.sqlite3

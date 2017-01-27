@@ -15,7 +15,7 @@ import os
 # Remember to create settings_secret.py in this directory,
 # and add 'SECRET_KEY = [key]', where [key] can be generated at
 # http://www.miniwebtool.com/django-secret-key-generator/
-from settings_secret import *
+from .settings_secret import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
