@@ -28,4 +28,4 @@ $ vim settings_secret.py
 ```
 Generate a key from this 
 [generator](http://www.miniwebtool.com/django-secret-key-generator/)
-and fill ```SECRET = [key]``` in ```settings_secret.py```.
+and fill ```SECRET = '[key]'``` in ```settings_secret.py```.
