@@ -19,7 +19,7 @@ $ pip install -r requirements.txt
 ```
 
 ### Other required setup
-django requires a ```SECRET = ``` parameter in settings.py. But, we
+django requires a ```SECRET_KEY = '[key]'``` parameter in settings.py. But, we
 can't distribute the secret key freely on github, so instead we generate
 our own.
 ```
@@ -29,3 +29,6 @@ $ vim settings_secret.py
 Generate a key from this 
 [generator](http://www.miniwebtool.com/django-secret-key-generator/)
 and fill ```SECRET_KEY = '[key]'``` in ```settings_secret.py```.
+
+In the future, make sure you ```source bin/activate``` to activate the virtualenv,
+and ```python3 manage.py runserver``` to run the local server.
