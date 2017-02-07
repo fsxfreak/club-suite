@@ -15,7 +15,7 @@ $ cd cse-env
 $ source bin/activate
 $ git clone git@github.com:fsxfreak/club-suite.git
 $ cd club-suite
-$ pip install -r requirements.txt
+$ pip3 install -r requirements.txt
 ```
 
 ### Other required setup
