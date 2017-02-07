@@ -1,4 +1,7 @@
 from django.http import HttpResponse
 
-def index(request):
-    return HttpResponse('hi')
+from django.views.generic import TemplateView
+
+class Index(TemplateView):
+    template_name = 'index.html'
+
