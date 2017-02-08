@@ -2,7 +2,34 @@
 {% load staticfiles %}
 
 {% block body_block %}
+
+<!-- TEMPORARY -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <div class='container'>
-  <h1 class='title'>Hello!</h1>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      User Login
+    </div>
+    <div class="panel-body">
+    <form>
+      <div class="form-group">
+          <label for="usr">Name:</label>
+          <input type="text" class="form-control" id="usr">
+      </div>
+      <div class="form-group">
+          <label for="pwd">Password:</label>
+          <input type="password" class="form-control" id="pwd">
+      </div>
+      <button type="button" class="btn btn-primary">Submit</button>
+    </form>
+    </div>
+  </div>
 </div>
 {% endblock body_block %}
