@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^create_event', views.Index.as_view(), name='event'),
     url(r'^account', views.Index.as_view(), name='account'),
     url(r'^club_view', views.Index.as_view(), name='club_view'),
+    url(r'^signup', views.Signup.as_view(), name='signup'),
 ]
