@@ -28,10 +28,8 @@
             </p>
             <hr>
             <p class="control">
-              <button class="button is-primary">Sign Up</button>
-              <form action="{% url 'login' %}">
-                <button class="button is-default">Cancel</button>
-              </form>
+                <button name='signup' value='signup' class="button is-primary">Sign Up</button>
+                <a href="{% url 'login' %}"><button class="button is-default">Cancel</button></a>
             </p>
           </div>
         </div>
