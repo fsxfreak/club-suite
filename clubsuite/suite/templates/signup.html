@@ -11,28 +11,29 @@
       <div class="columns is-vcentered">
         <div class="column is-4 is-offset-4">
           <h1 class="title">
-            Login
+            Sign Up
           </h1>
           <div class="box">
             <label class="label">Email</label>
             <p class="control">
-              <input class="input" type="text" placeholder="helpcode!@ilovegary.com">
+              <input class="input" type="text" placeholder="">
             </p>
             <label class="label">Password</label>
             <p class="control">
               <input class="input" type="password" placeholder="">
             </p>
+            <label class="label">Re-enter Password</label>
+            <p class="control">
+              <input class="input" type="password" placeholder="">
+            </p>
             <hr>
             <p class="control">
-              <button class="button is-primary">Login</button>
-              <button class="button is-default">Cancel</button>
+              <button class="button is-primary">Sign Up</button>
+              <form action="{% url 'login' %}">
+                <button class="button is-default">Cancel</button>
+              </form>
             </p>
           </div>
-          <p class="has-text-centered">
-            <a href="{% url 'signup' %}">Register an Account</a>
-            |
-            <a href="#">Forgot password</a>
-          </p>
         </div>
       </div>
     </div>
