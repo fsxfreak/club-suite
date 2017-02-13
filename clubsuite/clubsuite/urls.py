@@ -4,5 +4,5 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('suite.urls')),
+    url(r'^', include('suite.urls', namespace='suite')),
 ]
