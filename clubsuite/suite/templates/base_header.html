@@ -1,0 +1,35 @@
+<nav class="nav">
+  <div class="nav-left">
+    <a class="nav-item">
+      <img src="http://www.clipartkid.com/images/668/panda-clipart-collection-clipart-panda-free-clipart-images-XEs7kX-clipart.png" alt="Replace this logo">
+    </a>
+  </div>
+
+  <!-- This "nav-toggle" hamburger menu is only visible on mobile -->
+  <!-- You need JavaScript to toggle the "is-active" class on "nav-menu" -->
+  <span class="nav-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </span>
+
+  <!-- This "nav-menu" is hidden on mobile -->
+  <!-- Add the modifier "is-active" to display it on mobile -->
+  <div class="nav-right nav-menu">
+    <a href={% url 'suite:dashboard' %} class="nav-item">
+      Home
+    </a>
+    <a href={% url 'suite:about' %} class="nav-item">
+      About
+    </a>
+    <a class="nav-item" href={% url 'suite:club_search' %}>
+      Club Search
+    </a>
+    <a class="nav-item" href={% url 'suite:club_create' %}>
+      Create Club 
+    </a>
+    <a class="nav-item" href=>
+      etc.... 
+    </a>
+  </div>
+</nav>
