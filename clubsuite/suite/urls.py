@@ -26,11 +26,6 @@ urlpatterns = [
 
     url(r'^reset-password/complete/$', password_reset_complete,{'template_name': 'registration/reset_password_complete.html'}, name='password_reset_complete'),
 
-    #url(r'^reset-password/$', password_reset, {
-    #    'template_name': 'registration/password_reset_form.html'},name='reset_password'),
-
-    #url(r'^reset-password/done/$', password_reset_done, {
-    #    'template_name': 'registration/password_reset_done.html'}, name='password_reset_done'),
 
 
     # user registration
