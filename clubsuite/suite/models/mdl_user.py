@@ -13,6 +13,7 @@ class Account(models.Model):
       primary_key = True,
    )
    preferred_name = models.CharField(max_length=20, blank=True)
+   student_title = models.CharField(max_length=20, blank=True) #undergrad/grad
    graduation_year = models.IntegerField(blank=True)
    major = models.CharField(max_length=20, blank=True)
    college = models.CharField(max_length=50, blank=True)

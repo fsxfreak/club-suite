@@ -8,7 +8,7 @@ class TestModelAdmin(admin.ModelAdmin):
 
 admin.site.register(TestModel, TestModelAdmin)
 
-# mld_user.py
+# mdl_user.py
 class UserAdmin(admin.ModelAdmin):
    pass
 
@@ -18,3 +18,15 @@ class AccountAdmin(admin.ModelAdmin):
    pass
 
 admin.site.register(Account, AccountAdmin)
+
+# mdl_club.py
+class ClubAdmin(admin.ModelAdmin):
+   pass
+
+admin.site.register(Club, ClubAdmin)
+
+#mdl_event.py
+class EventAdmin(admin.ModelAdmin):
+   pass
+
+admin.site.register(Event, EventAdmin)
