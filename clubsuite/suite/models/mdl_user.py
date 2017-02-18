@@ -13,8 +13,20 @@ class Account(models.Model):
       primary_key = True,
    )
    preferred_name = models.CharField(max_length=20, blank=True)
-   student_title = models.CharField(max_length=20, blank=True) #undergrad/grad
-   graduation_year = models.IntegerField(blank=True)
+
+   UNDERGRAD = 'U'
+   GRADUATE = 'G'
+   OTHERS = 'O'
+   S_T_CHOICES = (
+      (UNDERGRAD, 'Undergraduate'),
+      (GRADUATE, 'Graduate'),
+      (OTHERS, 'Others'),
+   )
+   student_title = models.CharField(
+      max_length=1, 
+      choices=S_T_CHOICES, 
+      default=OTHERS)
+   graduation_year = models.IntegerField(default=0)
    major = models.CharField(max_length=20, blank=True)
    college = models.CharField(max_length=50, blank=True)
-   GPA = models.DecimalField(max_digits=4, decimal_places=3, blank=True)
+   GPA = models.DecimalField(max_digits=4, decimal_places=3, default=0.000)

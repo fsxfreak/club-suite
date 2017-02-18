@@ -11,6 +11,6 @@ class Event(models.Model):
    end_time = models.DateTimeField()
    event_location = models.CharField(max_length=100)
    event_description = models.CharField(max_length=1000)
-   event_cost = models.DecimalField(max_digits=10, decimal_places=2)
+   event_cost = models.DecimalField(max_digits=10, decimal_places=2,default=0)
    accessibility = models.BooleanField(default=True) #True=public, False=private
    required = models.BooleanField(default=False)
