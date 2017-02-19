@@ -43,9 +43,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     # Do not specify permissions using boolean fields. Use PermissionsMixin.
 
     def get_full_name(self):
-        return self.email
+        return self.first_name+' '+self.last_name
     def get_short_name(self):
-        return self.email
+        return self.first_name
 
 
 class Account(models.Model):
