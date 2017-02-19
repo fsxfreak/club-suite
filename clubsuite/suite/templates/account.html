@@ -3,4 +3,38 @@
 
 {% block body_block %}
 
+<section class='section'>
+  <div class='container'>
+    <div class='heading'>
+      <h1 class='title'>Manage My Account</h1>
+    </div>
+    <form formmethod="post" formaction="#">  <!-- {% url account %} -->
+      First Name <br />
+      <input type="text" name="firstname"> <br />
+      Last Name <br />
+      <input type="text" name="lastname"> <br />
+      Preferred First Name <br />
+      <input type="text" name="preferredname"> <br />
+      Email <br />
+      <input type="email" name="email"> <br />
+      Graduation Year<br />
+      <input type="number" name="gradyear"> <br />
+      Undergraduate/Graduate <br />
+      <input type="text" name="undergrad"> <br />
+      Major <br />
+      <input type="text" name="major"> <br />
+      College <br />
+      <input type="text" name="college"> <br />
+      GPA <br />
+      <input type="number" name="gpa"> <br />
+      Food Preferences <br />
+      <input type="text" name="foods"> <br />
+      Food Allergies <br />
+      <input type="text" name="allergies"> <br />
+      <input type="submit">
+  
+    </form>
+  </div>
+</section>
+
 {% endblock body_block %}
