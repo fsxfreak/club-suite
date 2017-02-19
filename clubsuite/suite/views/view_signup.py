@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.views.generic import TemplateView
+from suite.models.mdl_user import *
 
 from django.contrib.auth.forms import PasswordResetForm
 from django.shortcuts import redirect
@@ -17,6 +18,7 @@ class RegistrationView(CreateView):
         obj = form.save(commit=False)
         obj.save()
 
+        '''
         # This form only requires the "email" field, so will validate.
         reset_form = PasswordResetForm(self.request.POST)
         reset_form.is_valid()  # Must trigger validation
@@ -31,5 +33,6 @@ class RegistrationView(CreateView):
         }
         # This form sends the email on save()
         reset_form.save(**opts)
+        '''
 
         return redirect('suite:register_done')
