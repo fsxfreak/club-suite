@@ -15,7 +15,7 @@ class AccountAdmin(admin.ModelAdmin):
 
 admin.site.register(Account, AccountAdmin)
 
-# mdl_club.py
+#mdl_club.py
 class ClubAdmin(admin.ModelAdmin):
    pass
 
