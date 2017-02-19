@@ -1,5 +1,5 @@
 from django.test import TestCase
-from suite import RegistrationForm
+from suite.forms import RegistrationForm
 # Create your tests here.
 #
 
