@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 
+from django.core.urlresolvers import reverse_lazy
+
 # Remember to create settings_secret.py in this directory,
 # and add 'SECRET_KEY = [key]', where [key] can be generated at
 # http://www.miniwebtool.com/django-secret-key-generator/
@@ -105,6 +107,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = 'suite.User'
+LOGIN_URL=reverse_lazy('suite:login')
+LOGIN_REDIRECT_URL=reverse_lazy('suite:dashboard')
 
 
 # Internationalization
