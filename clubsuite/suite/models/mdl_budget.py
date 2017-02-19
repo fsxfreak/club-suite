@@ -13,3 +13,7 @@ class Budget(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
 
+    def __str__(self):
+        s=str(self.cid)+' '+str(self.did)+' '+str(self.planned)
+        return "Club and Division and Plan: "+s
+

@@ -9,3 +9,6 @@ class Club(models.Model):
    )
    club_type = models.CharField(max_length=3,choices=C_CHOICES,default='PUB')
    club_description = models.CharField(max_length=1000)
+
+   def __str__(self):
+       return self.club_name
