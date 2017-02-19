@@ -3,9 +3,9 @@ from django.db import models
 class Event(models.Model):
    cid = models.ForeignKey(
       'Club',
-      on_delete=models.CASCADE,
+      on_delete=models.CASCADE
    )
-#did = models.ForeignKey('Division')
+   did = models.ForeignKey('Division')
    event_name = models.CharField(max_length=100)
    start_time = models.DateTimeField()
    end_time = models.DateTimeField()
