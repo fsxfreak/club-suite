@@ -1,4 +1,3 @@
-'''
 from django.test import TestCase
 from suite import RegistrationForm
 # Create your tests here.
@@ -11,4 +10,3 @@ class RegistrationFormTestCase(TestCase):
     def test_registration_form(self):
         reg_email=RegistrationForm.objects.get(email)
         self.assertEqual(reg_email.email,"test@test.com")
-'''
