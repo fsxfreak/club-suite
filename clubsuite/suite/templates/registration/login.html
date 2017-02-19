@@ -11,27 +11,27 @@
       <div class="columns is-vcentered">
         <div class="column is-4 is-offset-4">
           <h1 class="title">
-            Sign Up
+            Login
           </h1>
           <div class="box">
             <label class="label">Email</label>
             <p class="control">
-              <input class="input" type="text" placeholder="">
+              <input class="input" type="text" placeholder="username@clubsuite.com">
             </p>
             <label class="label">Password</label>
             <p class="control">
               <input class="input" type="password" placeholder="">
             </p>
-            <label class="label">Re-enter Password</label>
-            <p class="control">
-              <input class="input" type="password" placeholder="">
-            </p>
             <hr>
             <p class="control">
-                <button name='signup' value='signup' class="button is-primary">Sign Up</button>
-                <a href="{% url 'login' %}"><button class="button is-default">Cancel</button></a>
+              <button class="button is-primary">Login</button>
             </p>
           </div>
+          <p class="has-text-centered">
+            <a href="{% url 'suite:register' %}">Register an Account</a>
+            |
+            <a href="/resetpassword/">Forgot password</a>
+          </p>
         </div>
       </div>
     </div>
