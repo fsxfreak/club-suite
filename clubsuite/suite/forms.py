@@ -40,3 +40,6 @@ class ClubCreateForm(forms.ModelForm):
 
   #def clean():
   # validation
+
+class ClubSearchForm(forms.Form):
+  club_name = forms.CharField(max_length=50)
