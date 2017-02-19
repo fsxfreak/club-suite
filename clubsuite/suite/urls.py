@@ -15,15 +15,10 @@ urlpatterns = [
     url(r'^club/(?P<clubid>[\w-]+)/$', views.ClubView.as_view(), name='club_view'),
     url(r'^account', views.Account.as_view(), name='account'),
 
-
-
-
-
-
-
     # user registration
     url('^', include('django.contrib.auth.urls')),
     url('^$', auth.views.login, name='login'),
+    #url('^$', views.view_index, name='login'),
 
     url(r'^register', views.RegistrationView.as_view(), name='register'),
     url(r'^register/done', auth.views.password_reset_done, {

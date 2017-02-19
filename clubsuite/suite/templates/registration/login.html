@@ -5,35 +5,34 @@
 
 
 <section class="hero is-fullheight is-dark ">
-
   <div class="hero-body">
     <div class="container">
-      <div class="columns is-vcentered">
-        <div class="column is-4 is-offset-4">
-          <h1 class="title">
-            Login
-          </h1>
-          <div class="box">
-            <label class="label">Email</label>
-            <p class="control">
-              <input class="input" type="text" placeholder="username@clubsuite.com">
-            </p>
-            <label class="label">Password</label>
-            <p class="control">
-              <input class="input" type="password" placeholder="">
-            </p>
-            <hr>
-            <p class="control">
-              <button class="button is-primary">Login</button>
-            </p>
-          </div>
-          <p class="has-text-centered">
-            <a href="{% url 'suite:register' %}">Register an Account</a>
-            |
-            <a href="#">Forgot password</a>
-          </p>
-        </div>
+      <h1 class="title">
+        Login
+      </h1>
+      <div class="box">
+        <form action="{% url 'suite:login' %}" method="post" accept-charset="utf-8">
+          {% if form.errors %}
+          <label class='label'>{{ form.errors }}</label>
+          {% endif %}
+          {% csrf_token %}
+          {% for field in form %}
+            <label class='label'>{{ field.label }}</label>
+            {% if field.errors %}
+              <p class='label'>{{ field.errors }}</p>
+            {% endif %}
+            <p class='control'>{{ field }}</p>
+          {% endfor %}
+          {#<input type="hidden" name="next" value="{{ next }}" />#}
+          <input type="hidden" name="next" value="{% url 'suite:dashboard' %}" />
+          <input class="button small control" type="submit" value="Submit"/>
+        </form>
       </div>
+      <p class="has-text-centered">
+        <a href="{% url 'suite:register' %}">Register an Account</a>
+        |
+        <a href="#">Forgot password</a>
+      </p>
     </div>
   </div>
 
