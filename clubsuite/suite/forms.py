@@ -1,6 +1,7 @@
 from django.contrib import auth
 from django import forms
-from .models import User
+
+from .models import User, Club
 
 class RegistrationForm(auth.forms.UserCreationForm):
   class Meta:
@@ -22,7 +23,6 @@ class RegistrationForm(auth.forms.UserCreationForm):
       return password2
 
     def save(self, commit=False):
-      user = UserManager
       user = super(RegistrationForm, self).save(commit=False)
       user.email = self.cleaned_data['email']
       user.set_password(self.cleaned_data['password1'])
@@ -30,3 +30,13 @@ class RegistrationForm(auth.forms.UserCreationForm):
       if commit:
         user.save()
       return user 
+
+# good docs
+# https://docs.djangoproject.com/en/1.10/topics/forms/modelforms/
+class ClubCreateForm(forms.ModelForm):
+  class Meta:
+    model = Club
+    fields = ['club_name', 'club_type', 'club_description' ]
+
+  #def clean():
+  # validation
