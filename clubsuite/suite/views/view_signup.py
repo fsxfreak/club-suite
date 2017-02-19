@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.views.generic import TemplateView
+from suite.models.mdl_user import *
 
 from django.contrib.auth.forms import PasswordResetForm
 from django.shortcuts import redirect
