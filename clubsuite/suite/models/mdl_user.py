@@ -1,6 +1,4 @@
 from django.db import models
-<<<<<<< HEAD
-=======
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 
@@ -74,4 +72,4 @@ class Account(models.Model):
    major = models.CharField(max_length=20, blank=True)
    college = models.CharField(max_length=50, blank=True)
    GPA = models.DecimalField(max_digits=4, decimal_places=3, default=0.000)
->>>>>>> 8803458abcee1487920c03a6f3c50cf61883dcc0
+
