@@ -31,8 +31,8 @@ urlpatterns = [
     url('^$', auth.views.login, name='login'),
     #url('^$', views.view_index, name='login'),
 
-    url(r'^register', views.RegistrationView.as_view(), name='register'),
-    url(r'^register/done', auth.views.password_reset_done, {
+    url(r'^register$', views.RegistrationView.as_view(), name='register'),
+    url(r'^register/done$', auth.views.password_reset_done, {
             'template_name': 'registration/initial_done.html',
         }, name='register_done'),
     url(r'^register/password/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', auth.views.password_reset_confirm, {
