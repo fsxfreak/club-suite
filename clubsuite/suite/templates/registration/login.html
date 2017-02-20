@@ -7,16 +7,18 @@
 <section class="hero is-fullheight is-dark ">
   <div class="hero-body">
     <div class="container">
-      <h1 class="title">
-        Login
-      </h1>
-      <div class="box">
-        <form action="{% url 'suite:login' %}" method="post" accept-charset="utf-8">
-          {% if form.errors %}
-          <label class='label'>{{ form.errors }}</label>
-          {% endif %}
-          {% csrf_token %}
-          {% for field in form %}
+      <div class="columns is-vcentered">
+        <div class="column is-4 is-offset-4">
+          <h1 class="title">  
+            Login
+          </h1>
+          <div class="box">
+          <form action="{% url 'suite:login' %}" method="post" accept-charset="utf-8">
+            {% if form.errors %}
+            <label class='label'>{{ form.errors }}</label>
+            {% endif %}
+            {% csrf_token %}
+            {% for field in form %}
             <label class='label'>{{ field.label }}</label>
             {% if field.errors %}
               <p class='label'>{{ field.errors }}</p>
