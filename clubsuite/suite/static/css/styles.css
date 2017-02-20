@@ -1,5 +1,14 @@
-/*Make the error fields noticable (registration page)*/
-.hero.is-dark {
-    background-color: #363636;
-    color: #e04e08;
+.button.is-info-navbar {
+    background-color: #3273dc;
+    border-color: transparent;
+    color: #fff;
+    margin-top: 2mm;
 }
+
+.button.is-warning-navbar {
+    background-color: #ffdd57;
+    border-color: transparent;
+    color: rgba(0,0,0,.7);
+    margin-top: 2mm;
+}
+
