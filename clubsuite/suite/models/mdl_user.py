@@ -47,7 +47,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_short_name(self):
         return self.first_name
     def __str__(self):
-        return get_full_name(self)
+        return self.first_name+' '+self.last_name
 
 class Account(models.Model):
     user = models.OneToOneField(
