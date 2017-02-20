@@ -2,6 +2,8 @@ from django.conf.urls import url, include
 from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm  # easy registration
 from django.contrib.auth.views import login, logout, password_reset, password_reset_done, password_reset_confirm, password_reset_complete#password reset
+from django.conf.urls.static import static
+from django.conf import settings
 
 
 import django.contrib.auth as auth
@@ -14,7 +16,7 @@ urlpatterns = [
     url(r'^club/create', views.ClubCreate.as_view(), name='club_create'),
     url(r'^club/search', views.ClubSearch.as_view(), name='club_search'),
     url(r'^club/roster', views.ClubRoster.as_view(), name='club_roster'),
-    url(r'^club/(?P<clubid>[\w-]+)/$', views.ClubView.as_view(), name='club_view'),
+    url(r'^club/(?P<club_id>[0-9]+)/$', views.ClubView.as_view(), name='club_view'),
     url(r'^account', views.Account.as_view(), name='account'),
 
     #password reset
@@ -43,4 +45,4 @@ urlpatterns = [
             'template_name': 'registration/initial_complete.html',
         }, name='register_complete'),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

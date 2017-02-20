@@ -12,4 +12,3 @@ class Budget(models.Model):
     used = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     start_date = models.DateField()
     end_date = models.DateField()
-
