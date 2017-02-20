@@ -3,4 +3,12 @@
 
 {% block body_block %}
 
+<h1> {% club.title %} Roster </h1>
+
+<ul>
+{% for member in club.members %}
+  <li>{{ member.name }} : {{ member.role }}</li>
+  {% endfor %}
+</ul>
+
 {% endblock body_block %}
