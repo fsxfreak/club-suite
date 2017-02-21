@@ -4,9 +4,13 @@
 {% block body_block %}
 <section class='section'>
   <div class='container'>
-    {{club.id}}
     <br />
-    {{club.club_name}}
+    <h1 class="title">{{club.club_name}}</h1>
+    <br />
+    <img src="{{club.image.url}}" />
+
+    <a href="{% url 'suite:even_create' club.id %}">Create a event</a>
+
   </div>
 </section>
 
