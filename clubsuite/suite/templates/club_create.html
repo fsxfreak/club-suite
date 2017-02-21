@@ -8,11 +8,10 @@
       <h1 class='title'>crate MY KLUB!!</h1>
       <h2 class='subtitle'>electricul ingeneers not aloud</h2>
     </div>
-    <form>
-      <label>oh shit here lie a form</label>
-      <p class='control'>
-        <input class='input' type='text' placeholder='who ru'>
-      </p>
+    <form action="{% url 'suite:club_create' %} "method="post">
+      {% csrf_token %}
+      {{ form }}
+      <input class="button control" type="submit" value="Submit"/>
     </form>
   </div>
 </section>

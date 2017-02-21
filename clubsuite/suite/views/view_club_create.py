@@ -1,5 +1,25 @@
-from django.http import HttpResponse
-from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse, HttpResponseRedirect
+from django.views import View
+from django.shortcuts import render
+from django.urls import reverse
 
-class ClubCreate(TemplateView):
-    template_name = 'club_create.html'
+from suite.forms import ClubCreateForm
+
+class ClubCreate(LoginRequiredMixin, View):
+  form_class = ClubCreateForm
+  template_name = 'club_create.html'
+
+  def get(self, request, *args, **kwargs):
+    form = self.form_class
+    return render(request, self.template_name, { 'form' : form })
+
+  def post(self, request, *args, **kwargs):
+    form = self.form_class(request.POST)
+    if form.is_valid():
+      form.save()
+      return HttpResponseRedirect(reverse('suite:dashboard'))
+
+    # create form with request
+    return render(request, self.template_name, { 'form' : form })
+
