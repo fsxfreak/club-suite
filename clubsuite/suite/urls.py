@@ -28,9 +28,11 @@ urlpatterns = [
 
     url(r'^reset-password/complete/$', password_reset_complete,{'template_name': 'registration/reset_password_complete.html'}, name='password_reset_complete'),
 
+    #user logout
     # user registration
     url('^', include('django.contrib.auth.urls')),
     url('^$', auth.views.login, name='login'),
+    url('^loggedout/$', auth.views.logout, {'template_name': 'registration/user_logged_out.html'}, name='loggedout'),
     #url('^$', views.view_index, name='login'),
 
     url(r'^register$', views.RegistrationView.as_view(), name='register'),
