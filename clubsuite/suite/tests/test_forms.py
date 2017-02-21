@@ -8,9 +8,8 @@ from django.test import Client
 
 class RegistrationFormTestCase(TestCase):
     def setUp(self):
-        # does this run?
-        User=get_user_model().objects.create(email="test@test.com",password1="pasdd",password2="pasdd")
-        
+        pass
+    
     def test_valid_data(self):
         form=RegistrationForm(data={'email':"test@test.com",
                                 'password1':"clubsuite",
