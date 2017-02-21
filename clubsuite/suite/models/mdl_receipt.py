@@ -22,3 +22,8 @@ class Receipt(models.Model):
     )
 
     notes = models.CharField(max_length=1000, blank=True)
+
+    def __str__(self):
+        s=str(self.who_purchase)+' spent '+str(self.amount)+\
+          ' on '+str(self.did)
+        return s

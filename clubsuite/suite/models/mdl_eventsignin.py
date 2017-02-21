@@ -14,3 +14,8 @@ class EventSignIn(models.Model):
         'User',
         on_delete = models.CASCADE,
     )
+
+    def __str__(self):
+        s='User '+str(self.uid)+' Event '+str(self.eid)+\
+          ' Club '+str(self.cid)
+        return s

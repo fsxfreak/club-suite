@@ -3,12 +3,16 @@ from django.utils import timezone
 
 class Club(models.Model):
    club_name = models.CharField(max_length=50)
-   club_type = models.CharField(max_length=20)
+
+   C_CHOICES = (
+       ('PUB','Public'),
+       ('PRI','Private')
+   )
+   club_type = models.CharField(max_length=3,choices=C_CHOICES,default='PUB')
    image = models.ImageField(upload_to='media/', default="/media/default.jpg")
    first_seen = models.DateTimeField(editable=False, blank=True, null=True)
    last_seen = models.DateTimeField(blank=True, null=True)
    club_description = models.TextField()
-
 
    def __str__(self):
        return self.club_name
