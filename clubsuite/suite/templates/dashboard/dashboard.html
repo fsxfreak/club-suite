@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block body_block %}
+
+<section class='section'>
+  <div class='container'>
+{% for clubs in clubs.all %}
+
+    <a href="{% url 'suite:club_view' clubs.id %}">{{ clubs.club_name }}</a>
+    <br />
+
+
+    <img src="{{clubs.image.url}}" />
+
+    <br />
+
+    {{ clubs.summary }}
+
+    <hr />
+
+{% endfor %}
+
+
+{% endblock body_block %}
+
+</div>
+</section>
