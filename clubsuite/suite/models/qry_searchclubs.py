@@ -1,7 +1,10 @@
 from .mdl_club import *
+from django.db.models import Q
 
 def qry_searchclubs(keyword):
-    r = Club.objects.filter(club_name__contains=keyword).\
-        filter(club_description__contains=keyword)
+    r=Club.objects.get(
+        Q(club_name__contains=keyword) |
+        Q(club_description__contains=keyword)
+    )
     return r
         
