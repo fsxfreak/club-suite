@@ -8,13 +8,13 @@
       <h1 class='title'>spy on other clubzz!!</h1>
       <h2 class='subtitle'>here to find triton gaming</h2>
     </div>
-    <form>
+    <form formmethod="post" formaction="#"> <!-- {% url club_search %} -->
       <label>oh shit here lie a search form!</label>
       <p class='control'>
-        <input class='input' type='text' placeholder='look 4 kool clubz'>
+        <input name="club_name" class='input' type='text' placeholder='look 4 kool clubz'>
       </p>
       <p class="control">
-        <button class="button is-primary">Submit</button>
+        <button class="button is-primary" type="submit">Submit</button>
       </p>
     </form>
   </div>
