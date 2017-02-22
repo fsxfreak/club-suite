@@ -44,4 +44,7 @@ class ClubCreateForm(forms.ModelForm):
   # validation
 
 class ClubSearchForm(forms.Form):
-  club_name = forms.CharField(max_length=50)
+  keyword = forms.CharField(max_length=50, 
+                            required=True,
+                            label='Club name or description',
+                            initial='CSES')

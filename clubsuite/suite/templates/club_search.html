@@ -8,16 +8,18 @@
       <h1 class='title'>spy on other clubzz!!</h1>
       <h2 class='subtitle'>here to find triton gaming</h2>
     </div>
-    <form formmethod="post" formaction="#"> <!-- {% url club_search %} -->
-      <label>oh shit here lie a search form!</label>
-      <p class='control'>
-        <input name="club_name" class='input' type='text' placeholder='look 4 kool clubz'>
-      </p>
-      <p class="control">
-        <button class="button is-primary" type="submit">Submit</button>
-      </p>
+    <form method='POST' action="{% url 'suite:club_search' %}">
+      {% csrf_token %}
+      {{ form }}
+      <input class="button control" type="submit" value="Submit"/>
+      {% if clubs %}
+        {% for club in clubs.all %}
+        <div>
+          <a href="{% url 'suite:club_view' club.id %}">{{ club.club_name }}</a>
+        </div>
+        {% endfor %}
+      {% endif %}
     </form>
   </div>
 </section>
-
 {% endblock body_block %}
