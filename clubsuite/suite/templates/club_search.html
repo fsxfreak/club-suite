@@ -12,15 +12,14 @@
       {% csrf_token %}
       {{ form }}
       <input class="button control" type="submit" value="Submit"/>
+      {% if clubs %}
+        {% for club in clubs.all %}
+        <div>
+          <a href="{% url 'suite:club_view' club.id %}">{{ club.club_name }}</a>
+        </div>
+        {% endfor %}
+      {% endif %}
     </form>
-    {% if clubs %}
-      {% for club in clubs.all %}
-      <div>
-        <a href="{% url 'suite:club_view' club.id %}">{{ club.club_name }}</a>
-      </div>
-      {% endfor %}
-    {% endif %}
   </div>
 </section>
-
 {% endblock body_block %}
