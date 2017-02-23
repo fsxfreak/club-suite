@@ -10,13 +10,15 @@ class Club(models.Model):
        ('PUB','Public'),
        ('PRI','Private')
    )
-   """ 
+    
    class Meta:
        permissions = (
-           ("pub", "Public"),
-           ("pri", "Private")
+           ("O", "Owner"),
+           ("A", "Admin/Officer"),
+           ("M", "Member"),
+           ("P", "Passerby")
        )
-   """
+   
    club_type = models.CharField(max_length=3,choices=C_CHOICES,default='PUB')
    image = models.ImageField(upload_to='media/', default="/media/default.jpg")
    first_seen = models.DateTimeField(editable=False, blank=True, null=True)
@@ -35,11 +37,11 @@ class Club(models.Model):
        self.last_seen = timezone.now()
        return super(Club, self).save(*args, **kwargs)
 
-   class ClubManager(models.Manager):
+class ClubManager(models.Manager):
 
-      def qry_searchclubs(keyword):
-         r=Club.objects.filter(
-            Q(club_name__contains=keyword) |
-            Q(club_description__contains=keyword)
-         )
-         return r
+   def qry_searchclubs(keyword):
+      r=Club.objects.filter(
+         Q(club_name__contains=keyword) |
+         Q(club_description__contains=keyword)
+      )
+      return r
