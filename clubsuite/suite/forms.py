@@ -6,7 +6,7 @@ from .models import User, Club
 class RegistrationForm(auth.forms.UserCreationForm):
   class Meta:
     model = User
-    fields = ['email', 'password1', 'password2']
+    fields = ['first_name','last_name','email', 'password1', 'password2']
 
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
     password2 = forms.CharField(label="Password confirmation", widget=forms.PasswordInput)
@@ -24,12 +24,14 @@ class RegistrationForm(auth.forms.UserCreationForm):
 
     def save(self, commit=False):
       user = super(RegistrationForm, self).save(commit=False)
+      user.first_name = self.cleaned_data['first_name']
+      user.last_name = self.cleaned_data['last_name']
       user.email = self.cleaned_data['email']
       user.set_password(self.cleaned_data['password1'])
       user.is_active = True
       if commit:
         user.save()
-      return user 
+      return user
 
 # good docs
 # https://docs.djangoproject.com/en/1.10/topics/forms/modelforms/
