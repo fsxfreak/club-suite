@@ -7,6 +7,3 @@ class ClubView(LoginRequiredMixin, TemplateView):
     def get(self, request, club_id):
         club = get_object_or_404(Club, pk=club_id)
         return render(request, 'dashboard/club_view.html', {'club': club})
-
-    def post(self, request, club_id, *args, **kwargs):
-        pass

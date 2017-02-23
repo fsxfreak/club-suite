@@ -51,5 +51,8 @@ class ClubCreateForm(forms.ModelForm):
 class ClubSearchForm(forms.Form):
   keyword = forms.CharField(max_length=50, 
                             required=True,
-                            label='Club name or description',
-                            initial='CSES')
+                            label='Club name or description')
+
+class ClubJoinForm(forms.Form):
+  reason = forms.CharField(max_length=50, 
+                           required=True)

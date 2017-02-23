@@ -7,8 +7,7 @@
     <div>{{club.id}}</div>
     <div>{{club.club_name}}</div>
     <a href="{% url 'suite:club_roster' club.id %}">club roster</a>
+    <a href="{% url 'suite:club_join' club.id %}">join this clubbb</a>
   </div>
 </section>
-
-
 {% endblock body_block %}

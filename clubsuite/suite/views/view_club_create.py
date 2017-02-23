@@ -20,7 +20,6 @@ class ClubCreate(LoginRequiredMixin, View):
     if form.is_valid():
       club = form.save()
       role = Role(title='O', cid=club, uid=request.user).save()
-      print(role)
 
       form.save()
       return HttpResponseRedirect(reverse('suite:dashboard'))
