@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.db.models import Q
 
 class Club(models.Model):
-   club_name = models.CharField(max_length=50)
+   club_name = models.CharField(max_length=50,unique=True)
 
    
    C_CHOICES = (

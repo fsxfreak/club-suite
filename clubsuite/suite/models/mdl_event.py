@@ -6,7 +6,7 @@ class Event(models.Model):
       on_delete=models.CASCADE
    )
    did = models.ForeignKey('Division')
-   event_name = models.CharField(max_length=100)
+   event_name = models.CharField(max_length=100,unique=True)
    start_time = models.DateTimeField()
    end_time = models.DateTimeField()
    event_location = models.CharField(max_length=100)
