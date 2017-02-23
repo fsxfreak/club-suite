@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.db.models import Q
 
 class Club(models.Model):
    club_name = models.CharField(max_length=50)
@@ -33,3 +34,12 @@ class Club(models.Model):
            self.first_seen = timezone.now()
        self.last_seen = timezone.now()
        return super(Club, self).save(*args, **kwargs)
+
+   class ClubManager(models.Manager):
+
+      def qry_searchclubs(keyword):
+         r=Club.objects.filter(
+            Q(club_name__contains=keyword) |
+            Q(club_description__contains=keyword)
+         )
+         return r
