@@ -1,6 +1,7 @@
 from django.contrib import admin
-
 from suite.models import *
+from guardian.admin import GuardedModelAdmin
+
 # Register your models here.
 #class TestModelAdmin(admin.ModelAdmin):
 #	pass
@@ -8,7 +9,8 @@ from suite.models import *
 #admin.site.register(TestModel, TestModelAdmin)
 
 # user
-class UserAdmin(admin.ModelAdmin):
+#old way: class UserAdmin(admin.ModelAdmin):
+class UserAdmin(GuardedModelAdmin):
     pass
 
 admin.site.register(User, UserAdmin)

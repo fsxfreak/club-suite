@@ -49,6 +49,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.first_name+' '+self.last_name
 
+    def has_perm(self,i_codename,groupob):
+        return self.has_perm(i_codename,groupob)
+
+    def add_perm(self,i_codename,groupob):
+        from guardian.models import UserObjectPermission
+        UserObjectPermission.objects.assign_perm(i_codename,self,obj=groupob)
+
 class Account(models.Model):
     user = models.OneToOneField(
        User, 
