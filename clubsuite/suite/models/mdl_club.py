@@ -40,8 +40,9 @@ class Club(models.Model):
 class ClubManager(models.Manager):
 
    def qry_searchclubs(keyword):
-      r=Club.objects.filter(
+      c=Club.objects.filter(
          Q(club_name__contains=keyword) |
          Q(club_description__contains=keyword)
       )
+      r=c.objects.filter(club_type='PUB')
       return r
