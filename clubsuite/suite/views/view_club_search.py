@@ -23,7 +23,5 @@ class ClubSearch(LoginRequiredMixin, View):
       keyword = form.cleaned_data.get('keyword')
       clubs = qry_searchclubs(keyword)
 
-      print(clubs)
-
     return render(request, self.template_name, { 'form' : form, 'clubs' : clubs })
 

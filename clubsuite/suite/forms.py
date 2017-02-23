@@ -1,7 +1,7 @@
 from django.contrib import auth
 from django import forms
 
-from .models import User, Club
+from .models import User, Club, Account
 
 class RegistrationForm(auth.forms.UserCreationForm):
   class Meta:
@@ -11,27 +11,32 @@ class RegistrationForm(auth.forms.UserCreationForm):
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
     password2 = forms.CharField(label="Password confirmation", widget=forms.PasswordInput)
 
-    def clean_password2(self):
-      # Check that the two password entries match
-      password1 = self.cleaned_data.get("password1")
-      password2 = self.cleaned_data.get("password2")
+  def clean_password2(self):
+    # Check that the two password entries match
+    password1 = self.cleaned_data.get("password1")
+    password2 = self.cleaned_data.get("password2")
 
-      if password1 and password2 and password1 != password2:
-        msg = "Passwords don't match"
-        raise forms.ValidationError("Password mismatch")
+    if password1 and password2 and password1 != password2:
+      msg = "Passwords don't match"
+      raise forms.ValidationError("Password mismatch")
 
-      return password2
+    return password2
 
-    def save(self, commit=False):
-      user = super(RegistrationForm, self).save(commit=False)
-      user.first_name = self.cleaned_data['first_name']
-      user.last_name = self.cleaned_data['last_name']
-      user.email = self.cleaned_data['email']
-      user.set_password(self.cleaned_data['password1'])
-      user.is_active = True
-      if commit:
-        user.save()
-      return user
+  def save(self, commit=False):
+    user = super(RegistrationForm, self).save(commit=False)
+    user.first_name = self.cleaned_data['first_name']
+    user.last_name = self.cleaned_data['last_name']
+    user.email = self.cleaned_data['email']
+    user.set_password(self.cleaned_data['password1'])
+    user.is_active = True
+
+    # more account stuff needed here
+    user.account = Account(student_title='U',
+                           preferred_name=self.cleaned_data['first_name'])
+
+    if commit:
+      user.save()
+    return user
 
 # good docs
 # https://docs.djangoproject.com/en/1.10/topics/forms/modelforms/
@@ -46,5 +51,8 @@ class ClubCreateForm(forms.ModelForm):
 class ClubSearchForm(forms.Form):
   keyword = forms.CharField(max_length=50, 
                             required=True,
-                            label='Club name or description',
-                            initial='CSES')
+                            label='Club name or description')
+
+class ClubJoinForm(forms.Form):
+  reason = forms.CharField(max_length=50, 
+                           required=True)

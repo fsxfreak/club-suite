@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block body_block %}
+<section class='section'>
+  <div class='container'>
+    <form method='POST' action="{% url 'suite:club_join' club_id %}">
+      {% csrf_token %}
+      {{ form }}
+      <input class="button control" type="submit" value="Submit"/>
+    </form>
+  </div>
+</section>
+{% endblock body_block %}
