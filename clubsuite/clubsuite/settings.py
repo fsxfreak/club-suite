@@ -44,13 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'suite',
     'django.contrib.auth',
-    'guardian'
 ]
-
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'guardian.backends.ObjectPermissionBackend'
-)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
