@@ -55,3 +55,7 @@ class ClubManager(models.Manager):
       )
       r=c.objects.filter(club_type='PUB')
       return r
+
+   def qry_searchoneclub(cid_in):
+      c=Club.objects.get(id=cid_in)
+      return c

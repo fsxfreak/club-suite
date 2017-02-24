@@ -25,6 +25,18 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+    def promote_to_officer(self, groupob):
+        self.add_perm(self, "A", groupob)
+        self.add_perm(self, 'can_view_stats', groupob)
+        self.add_perm(self, 'can_create_event', groupob)
+        self.add_perm(self, 'can_add_receipt', groupob)
+        self.add_perm(self, 'can_remove_receipt', groupob)
+        self.add_perm(self, 'can_access_attendance', groupob)
+        self.add_perm(self, 'can_access_budget', groupob)
+        self.add_perm(self, 'can_create_budget', groupob)
+        self.add_perm(self, 'can_request_reimbusement', groupob)
+        self.add_perm(self, 'can_handle_reimbursement', groupob)
+
 class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
 
