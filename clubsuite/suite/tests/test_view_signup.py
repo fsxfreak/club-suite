@@ -12,9 +12,7 @@ class RegistrationViewTestCase(TestCase):
         response = self.client.get(reverse('suite:register'))
         self.assertEqual(response.status_code,200)
 
-        #self.assertRedirects(response, reverse('suite:register'))
-    
-    def test_post(self):
+    def test_post_valid(self):
         data={'first_name':"John",
                 'last_name':"Doe",
                 'email':"test@test.com",
@@ -32,21 +30,13 @@ class RegistrationViewTestCase(TestCase):
                 }
         response=self.client.post(reverse('suite:register'),data,follow=True)
         self.assertEqual(response.status_code,200)
-    '''
-    def test_get(self):
-        response = self.client.get(reverse('suite:club_create'))
-        #self.assertEqual(response.status_code,200)
-        self.assertRedirects(response, reverse('suite:club_create'), 302,200)
 
-    def test_post(self):
-        data = {
-                'club_name':"Club",
-                'club_type':"PUB",
-                'club_description':"Pretty cool"
+    def test_post_password_fail(self):
+        data={'first_name':"John",
+                'last_name':"Doe",
+                'email':"test@test.com",
+                'password1':"clubsuite",
+                'password2':"notclubsuite"
                 }
-        response = self.client.post(reverse('suite:club_create'),data, follow=True)
+        response=self.client.post(reverse('suite:register'),data,follow=True)
         self.assertEqual(response.status_code,200)
-
-    #    def test_post_invalid(self):
-    '''
-
