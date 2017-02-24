@@ -15,9 +15,14 @@ urlpatterns = [
     url(r'^dashboard', views.Dashboard.as_view(), name='dashboard'),
     url(r'^club/create', views.ClubCreate.as_view(), name='club_create'),
     url(r'^club/search', views.ClubSearch.as_view(), name='club_search'),
-    url(r'^club/roster', views.ClubRoster.as_view(), name='club_roster'),
+    url(r'^club/(?P<club_id>[0-9]+)/roster', views.ClubRoster.as_view(), name='club_roster'),
     url(r'^club/(?P<club_id>[0-9]+)/$', views.ClubView.as_view(), name='club_view'),
+<<<<<<< HEAD
     url(r'^account', views.Account.edit_profile, name='edit_profile'),
+=======
+    url(r'^club/(?P<club_id>[0-9]+)/join$', views.ClubJoin.as_view(), name='club_join'),
+    url(r'^account', views.Account.as_view(), name='account'),
+>>>>>>> b31a70de3bf670a799f601dfbce4ddbb5cef39ac
 
     #password reset
 

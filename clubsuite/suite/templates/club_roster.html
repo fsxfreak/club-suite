@@ -2,5 +2,17 @@
 {% load staticfiles %}
 
 {% block body_block %}
+<section class='section'>
+<div class='container'>
+  <h1> {{ club.club_name }} Roster </h1>
+
+  <ul>
+  {% for role in roles%}
+  <li>{{ role.uid.first_name}} {{ role.uid.last_name }} 
+    : {{ role.uid.student_title}}, {{ role.title }} </li>
+    {% endfor %}
+  </ul>
+  </div>
+</section>
 
 {% endblock body_block %}
