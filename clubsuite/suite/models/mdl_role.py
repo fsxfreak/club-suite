@@ -15,11 +15,15 @@ class Role(models.Model):
     OFFICER = 'A'
     MEMBER = 'M'
     PASSERBY = 'P'
+    REQUESTED = 'R'
+#Requested: the user has sent a request to this club and it's not been resolved
+#yet. Accept -> Member, Deny -> Passerby
     R_CHOICES = (
         (OWNER, 'Owner'),
         (OFFICER, 'Officer'),
         (MEMBER, 'Member'),
-        (PASSERBY, 'Passerby')
+        (PASSERBY, 'Passerby'),
+        (REQUESTED, 'Requested')
     )
     title = models.CharField(
         max_length=1,
@@ -38,3 +42,8 @@ class RoleManager(models.Manager):
         club_members = club_users.exclude(title='P')
         return club_members
 
+    # gives list of unresolved requested of this club
+    def qry_requestlist(in_cid):
+        club_record = Role.objects.filter(cid=in_cid)
+        club_request = club_record.filter(title='R')
+        return club_request
