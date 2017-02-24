@@ -19,7 +19,7 @@ class Role(models.Model):
         (OWNER, 'Owner'),
         (OFFICER, 'Officer'),
         (MEMBER, 'Member'),
-        (PASSERBY, 'Passerby')
+        (PASSERBY, 'Passerby'),
     )
     title = models.CharField(
         max_length=1,
