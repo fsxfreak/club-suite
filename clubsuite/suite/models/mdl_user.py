@@ -48,10 +48,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.first_name
     def __str__(self):
         return self.first_name+' '+self.last_name
-
+#helper function: check whether the user has certain permission for a club
+#param: codename, club object
+#return: True if have the permission, False for not
     def has_perm(self,i_codename,groupob):
         return self.has_perm(i_codename,groupob)
 
+#helper function: add certain permission of a club to a user
+#param: codename, club object
     def add_perm(self,i_codename,groupob):
         from guardian.models import UserObjectPermission
         UserObjectPermission.objects.assign_perm(i_codename,self,obj=groupob)

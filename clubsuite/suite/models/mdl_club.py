@@ -16,7 +16,16 @@ class Club(models.Model):
            ("O", "Owner"),
            ("A", "Admin/Officer"),
            ("M", "Member"),
-           ("P", "Passerby")
+           ("P", "Passerby"),
+           ('can_view_stats', 'Can view individual member stats'),
+           ('can_create_event', 'Can create an event for this club'),
+           ('can_add_receipt', 'Can add a receipt'),
+           ('can_remove_receipt', 'Can remove a receipt'),
+           ('can_access_attendance', 'Can access member attendance'),
+           ('can_access_budget', 'Can access the budgets for this club'),
+           ('can_create_budget', 'Can create a budget'),
+           ('can_request_reimbusement', 'Can request for a reimbursement'),
+           ('can_handle_reimbursement', 'Can handle reimbursement')
        )
    
    club_type = models.CharField(max_length=3,choices=C_CHOICES,default='PUB')
