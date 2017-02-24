@@ -2,5 +2,18 @@
 {% load staticfiles %}
 
 {% block body_block %}
+    <div class="container">
+        <form method="post" action="{% url 'suite:edit_profile' %}">        
+            {% csrf_token %}
+            {{ form.as_p }}
 
+
+            <input type='submit' name='details' value='Change Details'></input>
+        </form>
+        <form method="post" action="{% url 'suite:edit_profile' %}">        
+            {% csrf_token %}
+            {{ form2.as_p }}
+            <input type='submit' name='password' value='Change Password'></input>
+        </form>
+    </div>
 {% endblock body_block %}

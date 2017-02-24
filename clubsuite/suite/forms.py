@@ -1,6 +1,6 @@
 from django.contrib import auth
 from django import forms
-
+from django.contrib.auth.forms import UserChangeForm
 from .models import User, Club
 
 class RegistrationForm(auth.forms.UserCreationForm):
@@ -45,3 +45,10 @@ class ClubCreateForm(forms.ModelForm):
 
 class ClubSearchForm(forms.Form):
   club_name = forms.CharField(max_length=50)
+
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['email', 'first_name', 'last_name' ]
+
+
