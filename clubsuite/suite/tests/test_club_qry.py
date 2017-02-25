@@ -14,17 +14,19 @@ class ClubMemberQueryTestCase(TestCase):
                                     club_description="another club")
         self.club3=Club.objects.create(club_name="club3",club_type="PUB",
                                     club_description="empty club")
-        
+
        #Create members
         self.role_array=[]
         self.role_array2=[]
         for i in range(0,20):
             form=RegistrationForm(data={'email':"test"+str(i)+"@test.com",
                                         'password1':"clubsuite",
-                                        'password2':"clubsuite"})
+                                        'password2':"clubsuite",
+                                        'first_name':"Person",
+                                        'last_name':"McPerson"})
             self.assertTrue(form.is_valid())
             user=form.save()
-            
+
             if i%2==1:
                 #Create role
                 role=Role.objects.create(cid=self.club,uid=user,title="M")
@@ -55,7 +57,7 @@ class ClubMemberQueryTestCase(TestCase):
         for i in range(0,10):
             self.assertEqual(club_members[i].cid,self.role_array[i].cid)
             self.assertEqual(club_members[i].uid,self.role_array[i].uid)
-        
+
         club_members2=qry_clubmembers(self.club2)
         for i in range(0,10):
             self.assertEqual(club_members2[i].cid,self.role_array2[i].cid)
