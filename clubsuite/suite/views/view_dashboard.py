@@ -5,6 +5,14 @@ from django.views.generic import TemplateView
 from suite.models import Club
 
 class Dashboard(LoginRequiredMixin, TemplateView):
-    def get(self, request):
-        clubs = Club.objects.order_by('last_seen')
-        return render(request, 'dashboard/dashboard.html', {'clubs': clubs})
+  def get(self, request):
+    user = {}
+
+    clubs = []
+    roles = request.user.role_set.all()
+    for role in roles:
+      clubs.append(role.cid)
+
+    user['clubs'] = clubs
+
+    return render(request, 'dashboard/dashboard.html', {'user': user})

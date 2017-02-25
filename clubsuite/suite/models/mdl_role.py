@@ -1,11 +1,13 @@
 from django.db import models
 
 class Role(models.Model):
+    # cid refers to the club object, not the club id
     cid = models.ForeignKey(
         'Club',
         on_delete=models.CASCADE
     )
-    
+   
+    # uid refers to the user object, not the user id
     uid = models.ForeignKey(
         'User',
         on_delete=models.CASCADE
