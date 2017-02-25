@@ -1,7 +1,8 @@
 from django.contrib import auth
 from django import forms
 
-from .models import User, Club, Account
+
+from .models import *
 
 class RegistrationForm(auth.forms.UserCreationForm):
   class Meta:
@@ -43,7 +44,13 @@ class RegistrationForm(auth.forms.UserCreationForm):
 class ClubCreateForm(forms.ModelForm):
   class Meta:
     model = Club
-    fields = ['club_name', 'club_type', 'club_description' ]
+    fields = ['club_name', 'club_type', 'club_description', 'image' ]
+
+class EventCreateForm(forms.ModelForm):
+  class Meta:
+    model = Event
+    fields = ['event_name', 'start_time', 'end_time', 'event_location',
+    'event_description', 'event_cost', 'accessibility', 'required']
 
   #def clean():
   # validation
