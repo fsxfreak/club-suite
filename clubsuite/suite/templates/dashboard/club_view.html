@@ -4,10 +4,12 @@
 {% block body_block %}
 <section class='section'>
   <div class='container'>
-    <div>{{club.id}}</div>
-    <div>{{club.club_name}}</div>
+
+
+    <h1 class="title">{{club.club_name}}</h1>
     <a href="{% url 'suite:club_roster' club.id %}">club roster</a>
-    <a href="{% url 'suite:club_join' club.id %}">join this clubbb</a>
+    <a href="{% url 'suite:club_join' club.id %}">join this club</a>
+
   </div>
 </section>
 {% endblock body_block %}
