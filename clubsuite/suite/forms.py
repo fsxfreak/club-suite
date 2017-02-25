@@ -1,7 +1,7 @@
 from django.contrib import auth
 from django import forms
 
-
+from django.contrib.auth.forms import UserChangeForm
 from .models import *
 
 class RegistrationForm(auth.forms.UserCreationForm):
@@ -56,10 +56,18 @@ class EventCreateForm(forms.ModelForm):
   # validation
 
 class ClubSearchForm(forms.Form):
-  keyword = forms.CharField(max_length=50, 
+  club_name = forms.CharField(max_length=50)
+  keyword = forms.CharField(max_length=50,
                             required=True,
                             label='Club name or description')
 
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['email', 'first_name', 'last_name' ]
+
 class ClubJoinForm(forms.Form):
-  reason = forms.CharField(max_length=50, 
+  reason = forms.CharField(max_length=50,
                            required=True)
+
+

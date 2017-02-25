@@ -2,39 +2,17 @@
 {% load staticfiles %}
 
 {% block body_block %}
+    <div class="container">
+        <form method="post" action="{% url 'suite:edit_profile' %}">        
+            {% csrf_token %}
+            {{ form.as_p }}
 
-<section class='section'>
-  <div class='container'>
-    <div class='heading'>
-      <h1 class='title'>Manage My Account</h1>
+            <input type='submit' name='details' value='Change Details'>
+        </form>
+        <form method="post" action="{% url 'suite:edit_profile' %}">        
+            {% csrf_token %}
+            {{ form2.as_p }}
+            <input type='submit' name='password' value='Change Password'>
+        </form>
     </div>
-    <form formmethod="post" formaction="#">  <!-- {% url account %} -->
-      First Name <br />
-      <input type="text" name="firstname"> <br />
-      Last Name <br />
-      <input type="text" name="lastname"> <br />
-      Preferred First Name <br />
-      <input type="text" name="preferredname"> <br />
-      Email <br />
-      <input type="email" name="email"> <br />
-      Graduation Year<br />
-      <input type="number" name="gradyear"> <br />
-      Undergraduate/Graduate <br />
-      <input type="text" name="undergrad"> <br />
-      Major <br />
-      <input type="text" name="major"> <br />
-      College <br />
-      <input type="text" name="college"> <br />
-      GPA <br />
-      <input type="number" name="gpa"> <br />
-      Food Preferences <br />
-      <input type="text" name="foods"> <br />
-      Food Allergies <br />
-      <input type="text" name="allergies"> <br />
-      <button class="button is-primary" type="submit">Submit</button>
-  
-    </form>
-  </div>
-</section>
-
 {% endblock body_block %}
