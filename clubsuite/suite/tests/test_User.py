@@ -1,14 +1,18 @@
-'''
 from django.test import TestCase
 from suite.models import UserManager
-# Create your tests here.
-#
+from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import check_password
 
-class UserManagerTestCase(TestCase):
+class UserTestCase(TestCase):
     def setUp(self):
-        UserManager.objects.create(email="test@test.com",password="pass")
+        self.user = get_user_model().objects.create(first_name="First",last_name="Last",email="test@test.com")
+        self.user.set_password("testclub123")
+        self.user.save()
 
-    def test_UserManager(self):
-        reg_email=UserManager.objects.get(email)
-        self.assertEqual(reg_email.email,"test@test.com")
-        '''
+    def test_user(self):
+        #reg_email=UserManager.objects.get(email)
+        self.assertEqual(self.user.email,"test@test.com")
+        self.assertEqual(self.user.get_short_name(),"First")
+        self.assertEqual(self.user.get_full_name(),"First Last")
+        self.assertEqual(self.user.last_name,"Last")
+        self.assertTrue(check_password("testclub123",self.user.password))
