@@ -90,3 +90,5 @@ ENV/
 
 settings_secret.py
 *.sqlite3
+*.swp
+cse-env
