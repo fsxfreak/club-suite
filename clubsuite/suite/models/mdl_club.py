@@ -48,6 +48,8 @@ class Club(models.Model):
    last_seen = models.DateTimeField(blank=True, null=True)
    club_description = models.TextField()
 
+   objects = ClubManager()
+
    def __str__(self):
        return self.club_name
 

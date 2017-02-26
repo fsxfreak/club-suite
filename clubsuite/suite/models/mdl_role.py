@@ -53,6 +53,8 @@ class Role(models.Model):
         default=PASSERBY
     )
 
+    objects = RoleManager()
+
     def __str__(self):
         s='User '+str(self.uid)+' is '+str(self.title)+\
           ' in Club '+str(self.cid)
