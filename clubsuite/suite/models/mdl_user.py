@@ -72,6 +72,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         from guardian.models import UserObjectPermission
         UserObjectPermission.objects.assign_perm(i_codename,self,obj=groupob)
 
+    def get_clubs(self):
+        
 class Account(models.Model):
     user = models.OneToOneField(
        User, 
