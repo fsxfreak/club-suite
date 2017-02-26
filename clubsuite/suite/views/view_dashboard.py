@@ -8,11 +8,7 @@ class Dashboard(LoginRequiredMixin, TemplateView):
   def get(self, request):
     user = {}
 
-    clubs = []
-    roles = request.user.role_set.all()
-    for role in roles:
-      clubs.append(role.cid)
-
+    clubs = request.user.club_set.all()
     user['clubs'] = clubs
 
     return render(request, 'dashboard/dashboard.html', {'user': user})

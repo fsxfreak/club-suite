@@ -10,15 +10,18 @@ from suite.forms import ClubJoinForm
 class ClubManage(LoginRequiredMixin, View):
   template_name = 'dashboard/club_manage.html'
 
+  def get_clubs(self, request):
+    return request.user.club_set.all()
+
   def get(self, request, *args, **kwargs):
-    user_roles = request.user.role_set.all()
-    print(user_roles)
-
-    clubs = None
-
+    clubs = self.get_clubs(request)
     return render(request, self.template_name, {'clubs' : clubs}) 
 
   def post(self, request, *args, **kwargs):
-    # should allow resignation from club.
-    pass
+    if 'resign' in request.POST:
+      roles = Role.objects.filter(cid=request.POST['club_id'], uid=request.user.id)
+      roles.delete()
+
+    clubs = self.get_clubs(request)
+    return render(request, self.template_name, {'clubs' : clubs}) 
 

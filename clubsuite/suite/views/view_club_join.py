@@ -21,10 +21,12 @@ class ClubJoin(LoginRequiredMixin, View):
     if form.is_valid():
       reason = form.cleaned_data.get('reason')
       club = Club.objects.get(pk=club_id)
-      
-      # TODO title as pending, as per [OA1]?
-      role = Role(title='M', cid=club, uid=request.user).save()
 
+      # check if user is not part of the club
+      if club.members.filter(id=request.user.id).count() <= 0:
+        # TODO title as pending, as per [OA1]?
+        role = Role(title='M', cid=club, uid=request.user).save()
+      
       redir = reverse('suite:club_view', args=[club_id])
       return HttpResponseRedirect(redir)
 
