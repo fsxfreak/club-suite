@@ -5,24 +5,38 @@
 
 <section class='section'>
   <div class='container'>
-{% for clubs in clubs.all %}
+    <p><a href="{% url 'suite:club_manage' %}">manage my clubs</a></p>
+    {% if user.clubs %}
+    <p>Here is a listing of clubs you are a part of! Click on the name of a club to navigate to that club's home page. As always, you can search for more clubs to join under "Club Search" and start your own club under "Create Club"</p>
+    <div class="columns">
+      <div class='column is-half'>
+        {% for club in user.clubs %}
+        {% if not forloop.counter|divisibleby:"2" %}
+        <div class="box">
+          <a href="{% url 'suite:club_view' club.id %}">{{ club.club_name }}</a>
+          <img src="{{club.image.url}}" />
+          <p>{{club.summary}}</p>
+        </div>
+        {% endif %}
+        {% endfor%}
+      </div>
+      <div class="column is-half">
+        {% for club in user.clubs %}
+        {% if forloop.counter|divisibleby:"2" %}
+        <div class="box">
+          <a href="{% url 'suite:club_view' club.id %}">{{ club.club_name }}</a>
+          <img src="{{club.image.url}}" />
+          <p>{{club.summary}}</p>
+        </div>
+        {% endif %}
+        {% endfor%}
+      </div>
+    </div>
+    {% else %}
+    <p>You are not yet registered as a member for any clubs! Go to "Club Search" to join the club! Don't see a club you like? Go to "Create Club" to start your own!</p>
+    {% endif %}
 
-    <a href="{% url 'suite:club_view' clubs.id %}">{{ clubs.club_name }}</a>
-    <br />
-
-
-    <img src="{{clubs.image.url}}" />
-
-    <br />
-
-    {{ clubs.summary }}
-
-    <hr />
-
-{% endfor %}
-
+  </div>
+</section>
 
 {% endblock body_block %}
-
-</div>
-</section>

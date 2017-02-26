@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block body_block %}
+<section class='section'>
+  <div class='container'>
+    <h1 class='title'>manage my clubs</h1>
+    <table class='table'>
+      <thead>
+        <tr>
+          <th>Club name</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for club in clubs %}
+        <tr>
+          <td>{{ club.club_name }}</td>
+          <td>
+            <form method='POST' action="{% url 'suite:club_manage' %}">
+              {% csrf_token %}
+              <input type='hidden' name='club_id' value='{{ club.id }}'>
+              <input class='button is-link' type="submit" formaction="{% url 'suite:club_manage' %}" name='resign' value='Resign'>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock body_block %}

@@ -1,15 +1,16 @@
 from django.db import models
 from django.utils import timezone
 
+from suite.models import User
+
 class Club(models.Model):
    club_name = models.CharField(max_length=50)
 
-   
    C_CHOICES = (
        ('PUB','Public'),
        ('PRI','Private')
    )
-   """ 
+   """
    class Meta:
        permissions = (
            ("pub", "Public"),
@@ -22,11 +23,21 @@ class Club(models.Model):
    last_seen = models.DateTimeField(blank=True, null=True)
    club_description = models.TextField()
 
+   members = models.ManyToManyField(User, through='Role')
+
    def __str__(self):
        return self.club_name
 
    def summary(self):
-       return self.club_description[:100]
+       if len(self.club_description) < 150:
+           return self.club_description;
+       else:
+           unformatted_summary = self.club_description[:150];
+           last_index = len(unformatted_summary) - 1;
+           while( last_index >= 0 and unformatted_summary[last_index] != ' ' ):
+               last_index = last_index - 1;
+           unformatted_summary += "...";
+           return unformatted_summary;
 
    def save(self, *args, **kwargs):
        if not self.first_seen:
