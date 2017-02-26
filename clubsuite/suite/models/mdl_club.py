@@ -1,9 +1,10 @@
 from django.db import models
 from django.utils import timezone
 
+from suite.models import User
+
 class Club(models.Model):
    club_name = models.CharField(max_length=50)
-
 
    C_CHOICES = (
        ('PUB','Public'),
@@ -21,6 +22,8 @@ class Club(models.Model):
    first_seen = models.DateTimeField(editable=False, blank=True, null=True)
    last_seen = models.DateTimeField(blank=True, null=True)
    club_description = models.TextField()
+
+   members = models.ManyToManyField(User, through='Role')
 
    def __str__(self):
        return self.club_name
