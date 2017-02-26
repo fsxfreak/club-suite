@@ -8,3 +8,5 @@ from .view_club_view import *
 from .view_club_search import *
 from .view_dashboard import *
 from .view_event_create import *
+from .view_club_join import *
+from .view_club_manage import *

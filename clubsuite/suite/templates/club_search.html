@@ -3,7 +3,7 @@
 
 {% block body_block %}
 <section class='section'>
-  <div class='container'>
+<div class='container'>
     <div class='heading'>
       <h1 class='title'>spy on other clubzz!!</h1>
       <h2 class='subtitle'>here to find triton gaming</h2>
@@ -12,14 +12,57 @@
       {% csrf_token %}
       {{ form }}
       <input class="button control" type="submit" value="Submit"/>
+</form>
+      <div>
+
       {% if clubs %}
-        {% for club in clubs.all %}
-        <div>
-          <a href="{% url 'suite:club_view' club.id %}">{{ club.club_name }}</a>
-        </div>
-        {% endfor %}
-      {% endif %}
-    </form>
+     <!--
+        <div class="columns">
+             {% for club in clubs.all %}
+             <div class="{% cycle 'column is-half' 'column is-half is-offset-6' %}">
+                      <div class="box">
+                           <a href="{% url 'suite:club_view' club.id %}">{{ club.club_name }}</a>
+                           <img src="{{club.image.url}}" />
+                           <p>{{club.club_description}}</p>
+                           <p>{{forloop.counter}}</p>
+                      </div>
+
+            </div>
+
+       </div>
+       {% endfor %}
+ -->
+
+     <!-- generate listing of clubs in a two column table format- with odd-indexed clubs being on the
+     left and even-indexed clubs being on the right -->
+       <div class="columns">
+            <div class='column is-half'>
+                 {% for club in clubs.all %}
+                 {% if not forloop.counter|divisibleby:"2" %}
+                 <div class="box">
+                      <a href="{% url 'suite:club_view' club.id %}">{{ club.club_name }}</a>
+                      <img src="{{club.image.url}}" />
+                      <p>{{club.club_description}}</p>
+                 </div>
+                 {% endif %}
+                 {% endfor%}
+            </div>
+            <div class="column is-half">
+                 {% for club in clubs.all %}
+                 {% if forloop.counter|divisibleby:"2" %}
+                 <div class="box">
+                      <a href="{% url 'suite:club_view' club.id %}">{{ club.club_name }}</a>
+                      <img src="{{club.image.url}}" />
+                      <p>{{club.club_description}}</p>
+                 </div>
+                 {% endif %}
+                 {% endfor%}
+            </div>
+       </div>
+
+   </div>
+
+   {% endif %}
   </div>
 </section>
 {% endblock body_block %}

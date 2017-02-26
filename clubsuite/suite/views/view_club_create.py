@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from suite.forms import ClubCreateForm
+from suite.models import Role
 
 class ClubCreate(LoginRequiredMixin, View):
   form_class = ClubCreateForm
@@ -17,6 +18,9 @@ class ClubCreate(LoginRequiredMixin, View):
   def post(self, request, *args, **kwargs):
     form = self.form_class(request.POST)
     if form.is_valid():
+      club = form.save()
+      role = Role(title='O', cid=club, uid=request.user).save()
+
       form.save()
       return HttpResponseRedirect(reverse('suite:dashboard'))
 
