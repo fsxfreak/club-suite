@@ -17,6 +17,12 @@
             <p>{{ form.non_field_errors }}</p>
             <form method='POST'>
               {% csrf_token %}
+              
+              <label class='label'>{{ form.first_name.label_tag }}</label>
+              <p class='control'>{{ form.first_name }}</p>
+              <label class='label'>{{ form.last_name.label_tag }}</label>
+              <p class='control'>{{ form.last_name }}</p>
+              
               <p class='label'>{{ form.email.errors }}</p>
               <label class='label'>{{ form.email.label_tag }}</label>
               <p class='control'>{{ form.email }}</p>

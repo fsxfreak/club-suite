@@ -5,6 +5,6 @@ from django.views.generic import TemplateView
 from suite.models import Club
 
 class Dashboard(LoginRequiredMixin, TemplateView):
-    def get(self, request):
-        clubs = Club.objects.order_by('last_seen')
-        return render(request, 'dashboard/dashboard.html', {'clubs': clubs})
+  def get(self, request):
+    clubs = request.user.club_set.all()
+    return render(request, 'dashboard/dashboard.html', { 'clubs': clubs, 'user': request.user})
