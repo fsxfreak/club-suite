@@ -1,5 +1,23 @@
 from django.db import models
 
+class RoleManager(models.Manager):
+    def qry_clubmembers(in_cid):
+        club_users = Role.objects.filter(cid=in_cid)
+        club_members = club_users.exclude(title='passerby')
+        return club_members
+
+    # gives list of unresolved requests for joining this club
+    def qry_requestlist(in_cid):
+        club_record = Role.objects.filter(cid=in_cid)
+        club_request = club_record.filter(title='join')
+        return club_request
+
+    # gives list of unresolved requests for promotion in this club
+    def qry_promotelist(in_cid):
+        club_record = Role.objects.filter(cid=in_cid)
+        club_promote = club_record.filter(title='promote')
+        return club_promote
+
 class Role(models.Model):
     cid = models.ForeignKey(
         'Club',
@@ -40,20 +58,3 @@ class Role(models.Model):
           ' in Club '+str(self.cid)
         return s
   
-class RoleManager(models.Manager):
-    def qry_clubmembers(in_cid):
-        club_users = Role.objects.filter(cid=in_cid)
-        club_members = club_users.exclude(title='passerby')
-        return club_members
-
-    # gives list of unresolved requests for joining this club
-    def qry_requestlist(in_cid):
-        club_record = Role.objects.filter(cid=in_cid)
-        club_request = club_record.filter(title='join')
-        return club_request
-
-    # gives list of unresolved requests for promotion in this club
-    def qry_promotelist(in_cid):
-        club_record = Role.objects.filter(cid=in_cid)
-        club_promote = club_record.filter(title='promote')
-        return club_promote
