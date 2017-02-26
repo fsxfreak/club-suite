@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'suite',
     'django.contrib.auth',
+    'guardian', 
 ]
 
 MIDDLEWARE = [
@@ -105,6 +106,11 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend', # default
+    'guardian.backends.ObjectPermissionBackend',
+)
 
 AUTH_USER_MODEL = 'suite.User'
 LOGIN_URL=reverse_lazy('suite:login')

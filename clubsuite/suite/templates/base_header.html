@@ -28,6 +28,9 @@
     <a class="nav-item" href={% url 'suite:club_create' %}>
       Create Club 
     </a>
+    <a class="nav-item" href={% url 'suite:edit_profile' %}>
+      Account 
+    </a>
     <a class="nav-item" href={% url 'suite:dashboard' %}>
         {% if user.is_authenticated %}
         <p>| &nbsp;&nbsp;&nbsp; Welcome, {{ user.get_short_name }} </p> <a class="button is-warning-navbar" href="{% url 'suite:loggedout' %}">Logout</a>

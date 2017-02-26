@@ -5,7 +5,6 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from suite.forms import ClubSearchForm
-from suite.models import qry_searchclubs
 
 class ClubSearch(LoginRequiredMixin, View):
   form_class = ClubSearchForm 
@@ -21,9 +20,7 @@ class ClubSearch(LoginRequiredMixin, View):
 
     if form.is_valid():
       keyword = form.cleaned_data.get('keyword')
-      clubs = qry_searchclubs(keyword)
-
-      print(clubs)
+      clubs = Club.objects.qry_searchclubs(keyword)
 
     return render(request, self.template_name, { 'form' : form, 'clubs' : clubs })
 
