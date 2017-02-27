@@ -4,12 +4,18 @@ from datetime import datetime
 class EventManager(models.Manager):
 
    #search for upcoming events of a club since today ordered by start time
+   #most recent to future
    def get_upcoming_events(in_cid):
       upcoming_events=Event.objects.filter(
                         cid=in_cid,
                         end_time__gte=datetime.date.today()
                         ).order_by('start_time')
       return upcoming_events
+
+   #search for all events of a club, ordered from newest to oldest
+   def get_all_events(in_cid):
+      all_events=Event.objects.filter(cid=in_cid).order_by('-start_time')
+      return all_events
 
 class Event(models.Model):
    cid = models.ForeignKey(
