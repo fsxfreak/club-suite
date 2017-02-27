@@ -9,7 +9,7 @@ class ClubManager(models.Manager):
          Q(club_name__contains=keyword) |
          Q(club_description__contains=keyword)
       )
-      r=c.objects.filter(club_type='PUB')
+      r=c.filter(club_type='PUB')
       return r
 
    def qry_searchoneclub(cid_in):
