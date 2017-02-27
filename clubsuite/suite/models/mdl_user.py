@@ -25,18 +25,6 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def promote_to_officer(self, groupob):
-        self.add_perm(self, "A", groupob)
-        self.add_perm(self, 'can_view_stats', groupob)
-        self.add_perm(self, 'can_create_event', groupob)
-        self.add_perm(self, 'can_add_receipt', groupob)
-        self.add_perm(self, 'can_remove_receipt', groupob)
-        self.add_perm(self, 'can_access_attendance', groupob)
-        self.add_perm(self, 'can_access_budget', groupob)
-        self.add_perm(self, 'can_create_budget', groupob)
-        self.add_perm(self, 'can_request_reimbusement', groupob)
-        self.add_perm(self, 'can_handle_reimbursement', groupob)
-
 class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
 
@@ -72,8 +60,49 @@ class User(AbstractBaseUser, PermissionsMixin):
         from guardian.models import UserObjectPermission
         UserObjectPermission.objects.assign_perm(i_codename,self,obj=groupob)
 
-    def get_clubs(self):
+#promote the user from member to officer in club groupob
+    def promote_to_officer(self, groupob):
+        self.add_perm(self, "A", groupob)
+        self.add_perm(self, 'can_handle_join_requests', groupob)
+        self.add_perm(self, 'can_handle_promotion_requests', groupob)
+        self.add_perm(self, 'can_view_stats', groupob)
+        self.add_perm(self, 'can_create_event', groupob)
+        self.add_perm(self, 'can_add_receipt', groupob)
+        self.add_perm(self, 'can_remove_receipt', groupob)
+        self.add_perm(self, 'can_access_attendance', groupob)
+        self.add_perm(self, 'can_access_budget', groupob)
+        self.add_perm(self, 'can_create_budget', groupob)
+        self.add_perm(self, 'can_request_reimbusement', groupob)
+
+        exist=Group.objects.filter(name=groupob.club_name).count()
+        if not exist==1:
+            group = Group.objects.create(name=groupob.club_name)
+            self.groups.add(group)
+        else:
+            group = Group.objects.get(name=groupob.club_name)
+            self.groups.add(group)
+
+#let the user join the club
+    def join_the_club(self,groupob):
+        self.add_perm(self, "M", groupob)
         
+        exist=Group.objects.filter(name=groupob.club_name).count()
+        if not exist==1:
+            group = Group.objects.create(name=groupob.club_name)
+            self.groups.add(group)
+        else:
+            group = Group.objects.get(name=groupob.club_name)
+            self.groups.add(group)
+
+#deny the user from joining the club
+    def deny_the_user(self,groupob):
+        self.add_perm(self,"P", groupob)
+
+#get all clubs the user is in
+    def get_clubs(self):        
+        all_clubs = [x.name for x in self.groups.all()]
+        return Club.objects.filter(club_name__in=all_clubs)
+
 class Account(models.Model):
     user = models.OneToOneField(
        User, 

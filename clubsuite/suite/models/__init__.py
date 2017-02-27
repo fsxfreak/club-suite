@@ -3,6 +3,6 @@ from .mdl_club import *
 from .mdl_event import *
 from .mdl_receipt import *
 from .mdl_budget import *
-from .mdl_role import *
+#from .mdl_role import *
 from .mdl_division import *
 from .mdl_eventsignin import *
