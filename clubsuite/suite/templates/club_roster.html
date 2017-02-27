@@ -7,9 +7,9 @@
   <h1> {{ club.club_name }} Roster </h1>
 
   <ul>
-  {% for role in roles%}
-  <li>{{ role.uid.first_name}} {{ role.uid.last_name }} 
-    : {{ role.uid.student_title}}, {{ role.title }} </li>
+  {% for member in members %}
+  <li>{{ member.user.first_name}} {{ member.user.last_name }} 
+    : {{ member.user.student_title}}, {{ member.group }} </li>
     {% endfor %}
   </ul>
   </div>

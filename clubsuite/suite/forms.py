@@ -35,7 +35,6 @@ class RegistrationForm(auth.forms.UserCreationForm):
     user.account = Account(student_title='U',
                            preferred_name=self.cleaned_data['first_name'])
 
-    commit = True
     if commit:
       user.save()
     return user
