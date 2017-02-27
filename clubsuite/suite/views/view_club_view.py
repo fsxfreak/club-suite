@@ -4,8 +4,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import TemplateView
 from suite.models import Club
-
 from suite.forms import EventCreateForm
+from suite.models import Role
+from suite.models import Event
+
+from . import models
+
 
 class ClubView(LoginRequiredMixin, TemplateView):
     form_class = EventCreateForm
@@ -14,15 +18,19 @@ class ClubView(LoginRequiredMixin, TemplateView):
     def get(self, request, club_id):
         club = get_object_or_404(Club, pk=club_id)
         form = self.form_class
-        return render(request, self.template_name, {'club': club, 'form': form})
+        events = Event.objects.filter(cid=club_id)
 
-    def post(self, request, *args, **kwargs):
+        return render(request, self.template_name, {'club': club, 'form': form, 'events': events})
+
+    def post(self, request, club_id):
       form = self.form_class(request.POST)
+      club = get_object_or_404(Club, pk=club_id)
       if form.is_valid():
-        event = form.save()
+        event = form.save(club, commit=True)
+        #role = Role(title='O', cid=club, uid=request.user).save()
 
-        form.save()
-        return HttpResponseRedirect(reverse('suite:dashboard'))
+
 
       # create form with request
-      return render(request, self.template_name, {'club': club}, { 'form' : form })
+      events = Event.objects.filter(cid=club_id)
+      return render(request, self.template_name, {'club': club, 'form' : form, 'events': events})
