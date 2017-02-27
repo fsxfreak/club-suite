@@ -6,11 +6,20 @@
   <div class='container'>
     <div class='heading'>
       <h1 class='title'>Create a club</h1>
-      <h2 class='subtitle'>Subtite</h2>
+      <h2 class='subtitle'>Give your club a fancy description:)</h2>
     </div>
     <form action="{% url 'suite:club_create' %} "method="post">
       {% csrf_token %}
-      {{ form }}
+      <div class="fieldWrapper">
+        {{form.subject.errors}}
+        <label for="{{form.club.club_name}}">Club name:</label>
+         <input id="club_type" type="text" name="type"
+         maxlength="30" required></p>
+        {{form.subject}}
+      </div>
+      <p><label for="club_type">Club type:</label>
+        <input id="club_type" type="text" name="type"
+         maxlength="30" required></p>
       <input class="button control" type="submit" value="Submit"/>
     </form>
   </div>
