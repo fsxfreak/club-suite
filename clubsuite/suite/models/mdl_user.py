@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 
+from guardian.shortcuts import remove_perm
+from guardian.models import UserObjectPermission
+
 class UserManager(BaseUserManager):
     def create_user(self, email, password, **kwargs):
         user = self.model(
@@ -34,13 +37,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    # TODO define needed fields
-
     password = models.CharField(max_length=20)
     first_name = models.CharField(max_length=20,default="FirstName")
     last_name = models.CharField(max_length=20,default="LastName")
-
-    # Do not specify permissions using boolean fields. Use PermissionsMixin.
 
     def get_full_name(self):
         return self.first_name+' '+self.last_name
@@ -48,6 +47,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.first_name
     def __str__(self):
         return self.first_name+' '+self.last_name
+
+    #get all clubs the user is in
+    def get_clubs(self):        
+        return self.club_set.all()
+
+    def get_club_group(self, club_obj):
+        print(self.groups.all())
+        return self.groups.get(name=club_obj.club_name)
 
 class Account(models.Model):
     user = models.OneToOneField(

@@ -6,6 +6,7 @@ class Event(models.Model):
       'Club',
       on_delete=models.CASCADE
    )
+
    #did = models.ForeignKey('Division')
    event_name = models.CharField(max_length=100)
    start_time = models.DateTimeField(default=datetime.now, blank=True)

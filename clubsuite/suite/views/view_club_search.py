@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from suite.forms import ClubSearchForm
+from suite.models import Club
 
 class ClubSearch(LoginRequiredMixin, View):
   form_class = ClubSearchForm 
