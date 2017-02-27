@@ -29,17 +29,13 @@ class Role(models.Model):
         on_delete=models.CASCADE
     )
 
-    OWNER = 'owner'
-    OFFICER = 'officer'
-    MEMBER = 'member'
-    PASSERBY = 'passerby'
-    REQUESTED = 'join'
-    PROMOTE = 'promote'
+    permission_list=['owner','officer','member','passerby','join request',\
+                     'promotion request']
 #REQUESTED: the user has sent a request to this club and it's not been resolved
 #yet. Accept -> Member, Deny -> Passerby
 #PROMOTE: the member has sent a request to the officers of this club for a
 #promotion and it's not been resolved yet. Accept -> Officer, Deny -> Member
-    R_CHOICES = (
+"""    R_CHOICES = (
         (OWNER, 'Owner'),
         (OFFICER, 'Officer'),
         (MEMBER, 'Member'),
@@ -59,4 +55,4 @@ class Role(models.Model):
         s='User '+str(self.uid)+' is '+str(self.title)+\
           ' in Club '+str(self.cid)
         return s
-  
+"""  
