@@ -16,6 +16,10 @@ class ClubManager(models.Manager):
       c=Club.objects.get(id=cid_in)
       return c
 
+   def club_roster(cname):
+       users_in_group=Group.objects.get(name=cname).user_set.all()
+       return users_in_group
+
 class Club(models.Model):
    club_name = models.CharField(max_length=50,unique=True)
 
@@ -31,6 +35,8 @@ class Club(models.Model):
            ("A", "Admin/Officer"),
            ("M", "Member"),
            ("P", "Passerby"),
+           ('can_handle_join_requests', 'Can handle join requests'),
+           ('can_handle_promotion_requests', 'Can handle promotion requests'),
            ('can_view_stats', 'Can view individual member stats'),
            ('can_create_event', 'Can create an event for this club'),
            ('can_add_receipt', 'Can add a receipt'),
