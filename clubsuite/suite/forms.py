@@ -52,6 +52,25 @@ class EventCreateForm(forms.ModelForm):
     fields = ['event_name', 'start_time', 'end_time', 'event_location',
     'event_description', 'event_cost', 'accessibility', 'required']
 
+  def save(self, club, commit=False):
+
+      event_name = self.cleaned_data['event_name']
+      start_time = self.cleaned_data['start_time']
+      end_time = self.cleaned_data['end_time']
+      event_location = self.cleaned_data['event_location']
+      event_description = self.cleaned_data['event_description']
+      event_cost = self.cleaned_data['event_cost']
+      accessibility = self.cleaned_data['accessibility']
+      required = self.cleaned_data['required']
+
+      event_cid = Event(cid=club, event_name=event_name, start_time=start_time,
+      end_time=end_time, event_location=event_location, event_description=event_description,
+      event_cost=event_cost, accessibility=accessibility, required=required)
+      if commit:
+          event_cid.save()
+
+      return event_cid
+
   #def clean():
   # validation
 
@@ -69,5 +88,3 @@ class EditProfileForm(forms.ModelForm):
 class ClubJoinForm(forms.Form):
   reason = forms.CharField(max_length=50,
                            required=True)
-
-
