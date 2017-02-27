@@ -6,5 +6,3 @@ from .mdl_budget import *
 from .mdl_role import *
 from .mdl_division import *
 from .mdl_eventsignin import *
-from .qry_clubmembers import *
-from .qry_searchclubs import *

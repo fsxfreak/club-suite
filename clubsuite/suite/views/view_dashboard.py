@@ -6,9 +6,5 @@ from suite.models import Club
 
 class Dashboard(LoginRequiredMixin, TemplateView):
   def get(self, request):
-    user = {}
-
     clubs = request.user.club_set.all()
-    user['clubs'] = clubs
-
-    return render(request, 'dashboard/dashboard.html', {'user': user})
+    return render(request, 'dashboard/dashboard.html', { 'clubs': clubs, 'user': request.user})

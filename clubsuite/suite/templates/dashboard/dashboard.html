@@ -6,11 +6,11 @@
 <section class='section'>
   <div class='container'>
     <p><a href="{% url 'suite:club_manage' %}">manage my clubs</a></p>
-    {% if user.clubs %}
+    {% if clubs %}
     <p>Here is a listing of clubs you are a part of! Click on the name of a club to navigate to that club's home page. As always, you can search for more clubs to join under "Club Search" and start your own club under "Create Club"</p>
     <div class="columns">
       <div class='column is-half'>
-        {% for club in user.clubs %}
+        {% for club in clubs %}
         {% if not forloop.counter|divisibleby:"2" %}
         <div class="box">
           <a href="{% url 'suite:club_view' club.id %}">{{ club.club_name }}</a>
@@ -21,7 +21,7 @@
         {% endfor%}
       </div>
       <div class="column is-half">
-        {% for club in user.clubs %}
+        {% for club in clubs %}
         {% if forloop.counter|divisibleby:"2" %}
         <div class="box">
           <a href="{% url 'suite:club_view' club.id %}">{{ club.club_name }}</a>
