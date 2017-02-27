@@ -2,11 +2,12 @@ from django.db import models
 
 class EventManager(models.Manager):
 
+   #search for upcoming events of a club since today ordered by start time
    def get_upcoming_events(in_cid):
       upcoming_events=Event.objects.filter(
                         cid=in_cid,
-                        start_time__gte=datetime.date.today()
-                        ).order_by('-start_time')
+                        end_time__gte=datetime.date.today()
+                        ).order_by('start_time')
       return upcoming_events
 
 class Event(models.Model):
