@@ -1,4 +1,3 @@
-from .view_index import *
 from .view_signup import *
 from .view_about import *
 from .view_account import *

@@ -6,12 +6,10 @@ from django.views.generic import TemplateView
 from suite.models import Club
 
 from suite.forms import EventCreateForm
-from suite.models import Role
 
 class ClubView(LoginRequiredMixin, TemplateView):
     form_class = EventCreateForm
     template_name = 'dashboard/club_view.html'
-
 
     def get(self, request, club_id):
         club = get_object_or_404(Club, pk=club_id)
@@ -22,7 +20,6 @@ class ClubView(LoginRequiredMixin, TemplateView):
       form = self.form_class(request.POST)
       if form.is_valid():
         event = form.save()
-        #role = Role(title='O', cid=club, uid=request.user).save()
 
         form.save()
         return HttpResponseRedirect(reverse('suite:dashboard'))

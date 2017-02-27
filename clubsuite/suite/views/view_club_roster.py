@@ -7,7 +7,15 @@ class ClubRoster(LoginRequiredMixin, View):
   template_name = 'club_roster.html'
   def get(self, request, club_id, *args, **kwargs):
     club = get_object_or_404(Club, pk=club_id)
-    roles = club.role_set.all()
+    mems = club.members.all()
 
-    return render(request, self.template_name, {'club': club, 'roles' : roles })
+    members = []
+    for mem in mems:
+      member = {'user': mem, 'group': None } # TODO group
+      print(member)
+      members.append(member)
+
+    print(members)
+
+    return render(request, self.template_name, {'club': club, 'members' : members})
 
