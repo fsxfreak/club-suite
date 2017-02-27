@@ -1,3 +1,4 @@
+'''
 from django.test import TestCase
 from suite.models import Role
 from suite.models import Club
@@ -65,4 +66,4 @@ class ClubMemberQueryTestCase(TestCase):
             self.assertEqual(club_members2[i].cid,self.role_array2[i].cid)
             self.assertEqual(club_members2[i].uid,self.role_array2[i].uid)
 
-
+'''
