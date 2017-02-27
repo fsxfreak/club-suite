@@ -10,6 +10,7 @@ class ClubCreate(LoginRequiredMixin, View):
   form_class = ClubCreateForm
   template_name = 'club_create.html'
 
+
   def get(self, request, *args, **kwargs):
     form = self.form_class
     return render(request, self.template_name, { 'form' : form })
@@ -25,4 +26,3 @@ class ClubCreate(LoginRequiredMixin, View):
 
     # create form with request
     return render(request, self.template_name, { 'form' : form })
-
