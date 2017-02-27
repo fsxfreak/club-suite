@@ -2,7 +2,7 @@ from django.test import TestCase
 from suite.models import Role
 from suite.models import Club
 from suite.forms import RegistrationForm
-from suite.models import qry_clubmembers
+from suite.models import RoleManager
 
 class ClubMemberQueryTestCase(TestCase):
     def setUp(self):
