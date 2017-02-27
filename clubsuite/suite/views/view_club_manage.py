@@ -4,24 +4,22 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
 from django.urls import reverse
 
-from suite.models import Club, Role
+from suite.models import Club
 from suite.forms import ClubJoinForm
 
 class ClubManage(LoginRequiredMixin, View):
   template_name = 'dashboard/club_manage.html'
 
-  def get_clubs(self, request):
-    return request.user.club_set.all()
-
   def get(self, request, *args, **kwargs):
-    clubs = self.get_clubs(request)
+    clubs = request.user.get_clubs()
     return render(request, self.template_name, {'clubs' : clubs}) 
 
   def post(self, request, *args, **kwargs):
     if 'resign' in request.POST:
-      roles = Role.objects.filter(cid=request.POST['club_id'], uid=request.user.id)
-      roles.delete()
+      club = Club.objects.get(id=request.POST['club_id'])
+      club.remove_member(request.user, request.user)
+      print('remove dmself')
 
-    clubs = self.get_clubs(request)
+    clubs = request.user.get_clubs()
     return render(request, self.template_name, {'clubs' : clubs}) 
 
