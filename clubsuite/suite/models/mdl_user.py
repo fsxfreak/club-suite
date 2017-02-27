@@ -37,13 +37,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    # TODO define needed fields
-
     password = models.CharField(max_length=20)
     first_name = models.CharField(max_length=20,default="FirstName")
     last_name = models.CharField(max_length=20,default="LastName")
-
-    # Do not specify permissions using boolean fields. Use PermissionsMixin.
 
     def get_full_name(self):
         return self.first_name+' '+self.last_name
