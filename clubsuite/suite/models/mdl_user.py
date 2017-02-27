@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 
+from guardian.shortcuts import remove_perm
+from guardian.models import UserObjectPermission
+
 class UserManager(BaseUserManager):
     def create_user(self, email, password, **kwargs):
         user = self.model(
@@ -25,18 +28,6 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def promote_to_officer(self, groupob):
-        self.add_perm(self, "A", groupob)
-        self.add_perm(self, 'can_view_stats', groupob)
-        self.add_perm(self, 'can_create_event', groupob)
-        self.add_perm(self, 'can_add_receipt', groupob)
-        self.add_perm(self, 'can_remove_receipt', groupob)
-        self.add_perm(self, 'can_access_attendance', groupob)
-        self.add_perm(self, 'can_access_budget', groupob)
-        self.add_perm(self, 'can_create_budget', groupob)
-        self.add_perm(self, 'can_request_reimbusement', groupob)
-        self.add_perm(self, 'can_handle_reimbursement', groupob)
-
 class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
 
@@ -46,13 +37,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    # TODO define needed fields
-
     password = models.CharField(max_length=20)
     first_name = models.CharField(max_length=20,default="FirstName")
     last_name = models.CharField(max_length=20,default="LastName")
-
-    # Do not specify permissions using boolean fields. Use PermissionsMixin.
 
     def get_full_name(self):
         return self.first_name+' '+self.last_name
@@ -60,20 +47,15 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.first_name
     def __str__(self):
         return self.first_name+' '+self.last_name
-#helper function: check whether the user has certain permission for a club
-#param: codename, club object
-#return: True if have the permission, False for not
-    def has_perm(self,i_codename,groupob):
-        return self.has_perm(i_codename,groupob)
 
-#helper function: add certain permission of a club to a user
-#param: codename, club object
-    def add_perm(self,i_codename,groupob):
-        from guardian.models import UserObjectPermission
-        UserObjectPermission.objects.assign_perm(i_codename,self,obj=groupob)
+    #get all clubs the user is in
+    def get_clubs(self):        
+        return self.club_set.all()
 
-    #def get_clubs(self):
-        
+    def get_club_group(self, club_obj):
+        print(self.groups.all())
+        return self.groups.get(name=club_obj.club_name)
+
 class Account(models.Model):
     user = models.OneToOneField(
        User, 

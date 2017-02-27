@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
 from django.urls import reverse
 
-from suite.models import Club, Role
+from suite.models import Club
 from suite.forms import ClubJoinForm
 
 class ClubJoin(LoginRequiredMixin, View):
@@ -22,11 +22,8 @@ class ClubJoin(LoginRequiredMixin, View):
       reason = form.cleaned_data.get('reason')
       club = Club.objects.get(pk=club_id)
 
-      # check if user is not part of the club
-      if club.members.filter(id=request.user.id).count() <= 0:
-        # TODO title as pending, as per [OA1]?
-        role = Role(title='M', cid=club, uid=request.user).save()
-      
+      # TODO DO A PENDING USERS
+
       redir = reverse('suite:club_view', args=[club_id])
       return HttpResponseRedirect(redir)
 
