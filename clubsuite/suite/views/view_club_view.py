@@ -5,7 +5,6 @@ from django.urls import reverse
 from django.views.generic import TemplateView
 from suite.models import Club
 from suite.forms import EventCreateForm
-from suite.models import Role
 from suite.models import Event
 
 from . import models
