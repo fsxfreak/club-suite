@@ -18,7 +18,7 @@ class ClubQueryTestCase(TestCase):
         self.clubmanager=ClubManager
 
     def test_search_one_club(self):
-        clubs=self.clubmanager.qry_searchclubs("club2")
+        clubs=self.clubmanager.qry_searchclubs(self,"club2")
         self.assertNotEqual(len(clubs),0)
         '''
         for i in range(0,len(clubs)):
@@ -27,9 +27,9 @@ class ClubQueryTestCase(TestCase):
         self.assertEqual(clubs[0],self.club2)
 
     def test_search_private_club(self):
-        clubs=self.clubmanager.qry_searchclubs("private")
+        clubs=self.clubmanager.qry_searchclubs(self,"private")
         self.assertEqual(len(clubs),0)
 
     def test_search_club_name(self):
-        clubs = self.clubmanager.qry_searchclubs("club")
+        clubs = self.clubmanager.qry_searchclubs(self,"club")
         self.assertEqual(len(clubs),3)

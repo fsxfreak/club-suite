@@ -11,4 +11,4 @@ class TestModelTestCase(TestCase):
     def test_store(self):
         alphabet=TestModel.objects.get(title="abc")
         self.assertEqual(alphabet.title,"abc")
-        '''
+'''
