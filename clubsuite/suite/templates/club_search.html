@@ -5,36 +5,57 @@
 <section class='section'>
 <div class='container'>
     <div class='heading'>
-      <h1 class='title'>spy on other clubzz!!</h1>
-      <h2 class='subtitle'>here to find triton gaming</h2>
+      <h1 class='title'>Search for Clubs</h1>
     </div>
+    <br/>
+    <!-- determine whether to search by name or by keywords-->
     <form method='POST' action="{% url 'suite:club_search' %}">
       {% csrf_token %}
-      {{ form }}
-      <input class="button control" type="submit" value="Submit"/>
+
+      <div class="control is-horizontal">
+           <p class="control has-icon">
+              <!--
+                This following input tag is wrong. see the next comment.
+                <input class="input is-fullwidth" name="club_name" id="id_club_name" type="text" placeholder="Club Name"/>
+              --!>
+                {{ form.club_name }}
+                <span class="icon">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                </span>
+           </p>
+      </div>
+
+      <div class="control is-horizontal">
+           <p class="control has-icon">
+            <!--
+                This following input tag is wrong for two reasons. It doesn't
+                allow for automatic form regeneration if the form is changed
+                on the controller end, thus mixing the controller and view parts
+                of the application.
+
+                <input class="input is-fullwidth" name="keyword" id="id_keyword" type="text" placeholder="Club Description"/>
+
+                The correct manually-typed-out input tag is as follows. But it's
+                still wrong because it doesn't allow for automatic djangothings.
+                <input class='input is-fullwidth' id="id_keyword" maxlength="50" name="keyword" type="text" value="tesc" required />
+              --!>
+              <!-- You need to use this... !-->
+                {{ form.keyword }}
+              <!-- If you want to style this, look at django-widget-tweaks
+                https://pypi.python.org/pypi/django-widget-tweaks !-->
+                <span class="icon">
+                     <i class="fa fa-search" aria-hidden="true"></i>
+                </span>
+           </p>
+      </div>
+
+      <input class="button control" type="submit" value="Submit" style="visibility: hidden"/>
 </form>
+
       <div>
-
+           <!-- generate listing of clubs in a two column table format- with odd-indexed clubs being on the
+           left and even-indexed clubs being on the right -->
       {% if clubs %}
-     <!--
-        <div class="columns">
-             {% for club in clubs.all %}
-             <div class="{% cycle 'column is-half' 'column is-half is-offset-6' %}">
-                      <div class="box">
-                           <a href="{% url 'suite:club_view' club.id %}">{{ club.club_name }}</a>
-                           <img src="{{club.image.url}}" />
-                           <p>{{club.club_description}}</p>
-                           <p>{{forloop.counter}}</p>
-                      </div>
-
-            </div>
-
-       </div>
-       {% endfor %}
- -->
-
-     <!-- generate listing of clubs in a two column table format- with odd-indexed clubs being on the
-     left and even-indexed clubs being on the right -->
        <div class="columns">
             <div class='column is-half'>
                  {% for club in clubs.all %}
@@ -59,10 +80,9 @@
                  {% endfor%}
             </div>
        </div>
-
+       {% endif %}
    </div>
 
-   {% endif %}
   </div>
 </section>
 {% endblock body_block %}
