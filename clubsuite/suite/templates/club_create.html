@@ -10,17 +10,60 @@
     </div>
     <form action="{% url 'suite:club_create' %} "method="post">
       {% csrf_token %}
-      <div class="fieldWrapper">
-        {{form.subject.errors}}
-        <label for="{{form.club.club_name}}">Club name:</label>
-         <input id="club_type" type="text" name="type"
-         maxlength="30" required></p>
-        {{form.subject}}
+
+      <div class="control is-horizontal">
+        <div class="control-label">
+          <label class="label"
+           for="{{form.club_name.id_for_label}}">Club name</label>
+        </div>
+        <p class="control">
+          <input class="input is-fullwidth" id={{form.club_name.id_for_label}}
+           type="text" required/>
+        </p>
       </div>
-      <p><label for="club_type">Club type:</label>
-        <input id="club_type" type="text" name="type"
-         maxlength="30" required></p>
-      <input class="button control" type="submit" value="Submit"/>
+
+      <div class="control is-horizontal">
+        <div class="control-label">
+          <label class="label"
+           for="{{form.club_type.id_for_label}}">Public/Private</label>
+        </div>
+        <p class="control">
+          <label class="radio">
+            <input type="radio" id={{form.club_type.id_for_label}} required>
+            Public
+          </label>
+          <label class="radio">
+            <input type="radio" id={{form.club_type.id_for_label}} required>
+            Private
+          </label>
+        </p>
+      </div>
+
+      <div class="control is-horizontal">
+        <div class="control-label">
+          <label class="label"
+           for="{{form.image.id_for_label}}">Image</label>
+        </div>
+        <p class="control">
+          <input id={{form.image.id_for_label}}
+           type="file" accept="image/*" required/>
+        </p>
+      </div>
+
+      <div class="control is-horizontal">
+        <div class="control-label">
+          <label class="label" 
+           for="{{form.club_description.id_for_label}}">Description</label>
+        </div>
+        <p class="control">
+          <textarea class="textarea is-fullwidth" 
+           id={{form.club_description.id_for_label}} required></textarea>
+        </p>
+      </div>
+
+      <div style="text-align:center;">
+        <input class="button control" type="submit" value="Submit"/>
+      </div>
     </form>
   </div>
 </section>
