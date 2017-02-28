@@ -11,3 +11,58 @@
     color: rgba(0,0,0,.7);
     margin-top: 2mm;
 }
+<<<<<<< HEAD
+=======
+
+/* Required for sticky footer */
+html {
+    height: 100%;
+}
+body {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-image: url("../media/Footer.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+}
+.content {
+    flex: 1;
+}
+.footer {
+    background-color: transparent !important;
+    padding: 30px;
+}
+
+.section {
+    background-color: transparent !important;
+}
+
+.loginBody {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-image: url("../media/LoginBG.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+}
+
+.box input {
+    border-radius: 6px;
+    padding: 5px;
+    width: 100%;
+}
+
+.box .title {
+    text-align: center;
+}
+
+.loginPanda {
+    position: relative;
+    left: 225px;
+    top: 75px;
+    width: 55%;
+}
+>>>>>>> 135d2f60c2847efe8df88594b3faec48803882d6
