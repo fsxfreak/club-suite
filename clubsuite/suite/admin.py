@@ -43,12 +43,6 @@ class BudgetAdmin(admin.ModelAdmin):
 
 admin.site.register(Budget, BudgetAdmin)
 
-# role
-#class RoleAdmin(admin.ModelAdmin):
-#    pass
-
-#admin.site.register(Role, RoleAdmin)
-
 # division
 class DivisionAdmin(admin.ModelAdmin):
     pass

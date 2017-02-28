@@ -18,6 +18,18 @@
       <input class="button control" type="submit" value="Submit"/>
     </form>
 
+    <br />
+
+    {% for event in events %}
+
+      <p>this is the club name {{event.cid}}</p>
+      <p>this is the event name {{event.event_name}}</p>
+      <p>this is the event description {{event.event_description}}</p>
+      <p>and whoevers doing ui, feel free to put other stuff</p>
+      <br />
+
+    {% endfor %}
+
   </div>
 </section>
 {% endblock body_block %}
