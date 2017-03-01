@@ -1,18 +1,116 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load widget_tweaks %}
 
 {% block body_block %}
     <div class="container">
-        <form method="post" action="{% url 'suite:edit_profile' %}">        
-            {% csrf_token %}
-            {{ form.as_p }}
 
-            <input type='submit' name='details' value='Change Details'>
-        </form>
-        <form method="post" action="{% url 'suite:edit_profile' %}">        
+         <h3>Edit Public Profile</h3>
+        <form method="post" action="{% url 'suite:edit_profile' %}">
             {% csrf_token %}
-            {{ form2.as_p }}
+
+            <div class="control is-horizontal">
+                 <div class="control-label">
+                      <label class="label" for="id_first_name">First Name</label>
+                 </div>
+                 <p class="control has-icon">
+                      {{ form.first_name|add_class:'input is-fullwidth' }}
+                      <span class="icon">
+                           <i class="fa fa-user" aria-hidden="true"></i>
+                      </span>
+
+                 </p>
+            </div>
+
+            <div class="control is-horizontal">
+                 <div class="control-label">
+                      <label class="label" for="id_last_name">Last Name</label>
+                 </div>
+                 <p class="control has-icon">
+                      {{ form.last_name|add_class:'input is-fullwidth' }}
+                      <span class="icon">
+                           <i class="fa fa-user" aria-hidden="true"></i>
+                      </span>
+                 </p>
+            </div>
+
+            <div class="control is-horizontal">
+                 <div class="control-label">
+                      <label class="label" for"id_email">Email</label>
+                 </div>
+                 <p class="control has-icon">
+                      {{ form.email|add_class:'input is-fullwidth' }}
+                      <span class="icon">
+                           <i class="fa fa-envelope"></i>
+                      </span>
+                 </p>
+            </div>
+
+            <div class="control is-grouped">
+                 <p class="control">
+                      <button class="button is-primary" type="submit" name="details">Save</button>
+                 </p>
+                 <p class="control">
+                      <button class="button is-link" type="cancel">Cancel</button>
+                 </p>
+            </div>
+        </form>
+
+
+        <h3>Edit Login Details</h3>
+        <form method="post" action="{% url 'suite:edit_profile' %}">
+            {% csrf_token %}
+
+            <div class="control is-horizontal">
+                 <div class="control-label">
+                      <label class="label" for="id_old_password">Old Password</label>
+                 </div>
+                 <p class="control has-icon">
+                      {{ form2.old_password|add_class:'input is-fullwidth' }}
+                      <span class="icon">
+                           <i class="fa fa-key"></i>
+                      </span>
+                 </p>
+            </div>
+
+            <div class="control is-horizontal">
+                 <div class="control-label">
+                      <label class="label" for="id_new_password1">New Password</label>
+                 </div>
+                 <p class="control has-icon">
+                      {{ form2.new_password1|add_class:'input is-fullwidth' }}
+                      <span class="icon">
+                           <i class="fa fa-key"></i>
+                      </span>
+                 </p>
+            </div>
+
+            <div class="control is-horizontal">
+                 <div class="control-label">
+                      <label class="label" for="id_new_password2">New Password Confirmation</label>
+                 </div>
+                 <p class="control has-icon">
+                      {{ form2.new_password2|add_class:'input is-fullwidth' }}
+                      <span class="icon">
+                           <i class="fa fa-key"></i>
+                      </span>
+                 </p>
+            </div>
+
+
+          <div class="control is-grouped">
+               <p class="control">
+                    <button class="button is-primary" type="submit" name="password" value="Change Password">Save</button>
+               </p>
+               <p class="control">
+                    <button class="button is-link" type="cancel">Cancel</button>
+               </p>
+          </div>
+
+          <!-- OLD SUBMIT BUTTON
             <input type='submit' name='password' value='Change Password'>
+       -->
         </form>
     </div>
+
 {% endblock body_block %}
