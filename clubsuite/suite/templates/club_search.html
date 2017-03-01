@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load widget_tweaks %}
 
 {% block body_block %}
 <section class='section'>
@@ -14,11 +15,7 @@
 
       <div class="control is-horizontal">
            <p class="control has-icon">
-              <!--
-                This following input tag is wrong. see the next comment.
-                <input class="input is-fullwidth" name="club_name" id="id_club_name" type="text" placeholder="Club Name"/>
-              --!>
-                {{ form.club_name }}
+                {% render_field form.club_name class="input is-fullwidth" placeholder="Club Name" %}
                 <span class="icon">
                      <i class="fa fa-search" aria-hidden="true"></i>
                 </span>
@@ -27,22 +24,7 @@
 
       <div class="control is-horizontal">
            <p class="control has-icon">
-            <!--
-                This following input tag is wrong for two reasons. It doesn't
-                allow for automatic form regeneration if the form is changed
-                on the controller end, thus mixing the controller and view parts
-                of the application.
-
-                <input class="input is-fullwidth" name="keyword" id="id_keyword" type="text" placeholder="Club Description"/>
-
-                The correct manually-typed-out input tag is as follows. But it's
-                still wrong because it doesn't allow for automatic djangothings.
-                <input class='input is-fullwidth' id="id_keyword" maxlength="50" name="keyword" type="text" value="tesc" required />
-              --!>
-              <!-- You need to use this... !-->
-                {{ form.keyword }}
-              <!-- If you want to style this, look at django-widget-tweaks
-                https://pypi.python.org/pypi/django-widget-tweaks !-->
+             {% render_field form.keyword class="input is-fullwidth" placeholder="Club Description" %}
                 <span class="icon">
                      <i class="fa fa-search" aria-hidden="true"></i>
                 </span>
