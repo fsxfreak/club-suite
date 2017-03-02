@@ -70,7 +70,7 @@ class UserManagerTestCase(TestCase):
         self.assertTrue(check_password("clubsuite",user.password))
 
     def test_create_superuser(self):
-        user=self.usermanager.create_user(email="test@test.com",password="clubsuite")
+        user=self.usermanager.create_superuser(email="test@test.com",password="clubsuite")
         self.assertEqual(user.email,"test@test.com")
         self.assertTrue(check_password("clubsuite",user.password))
         self.assertTrue(user.is_superuser)
