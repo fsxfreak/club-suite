@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load widget_tweaks %}
 
 {% block body_block %}
 <section class='section'>
@@ -8,60 +9,33 @@
       <h1 class='title'>Create a club</h1>
       <h2 class='subtitle'>Give your club a fancy description:)</h2>
     </div>
-    <form action="{% url 'suite:club_create' %} "method="post">
+    <form action="{% url 'suite:club_create' %}" method="post">
       {% csrf_token %}
 
+      <!-- TODO dirty fixes here. please fix !-->
       <div class="control is-horizontal">
         <div class="control-label">
-          <label class="label"
-           for="{{form.club_name.id_for_label}}">Club name</label>
+          {% render_field form.club_name class="input is-fullwidth" %}
         </div>
-        <p class="control">
-          <input class="input is-fullwidth" id={{form.club_name.id_for_label}}
-           type="text" required/>
-        </p>
       </div>
 
       <div class="control is-horizontal">
         <div class="control-label">
-          <label class="label"
-           for="{{form.club_type.id_for_label}}">Public/Private</label>
+          {% render_field form.club_type class="input is-fullwidth" %}
         </div>
-        <p class="control">
-          <label class="radio">
-            <input type="radio" id={{form.club_type.id_for_label}} required>
-            Public
-          </label>
-          <label class="radio">
-            <input type="radio" id={{form.club_type.id_for_label}} required>
-            Private
-          </label>
-        </p>
       </div>
 
       <div class="control is-horizontal">
         <div class="control-label">
-          <label class="label"
-           for="{{form.image.id_for_label}}">Image</label>
+          {% render_field form.image class="input is-fullwidth" %}
         </div>
-        <p class="control">
-          <input id={{form.image.id_for_label}}
-           type="file" accept="image/*" required/>
-        </p>
       </div>
 
       <div class="control is-horizontal">
         <div class="control-label">
-          <label class="label" 
-           for="{{form.club_description.id_for_label}}">Description</label>
+          {% render_field form.club_description class="input is-fullwidth" %}
         </div>
-        <p class="control">
-          <textarea class="textarea is-fullwidth" 
-           id={{form.club_description.id_for_label}} required></textarea>
-        </p>
-      </div>
-
-      <div style="text-align:center;">
+      <div>
         <input class="button control" type="submit" value="Submit"/>
       </div>
     </form>
