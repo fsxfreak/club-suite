@@ -13,7 +13,13 @@ class UserTestCase(TestCase):
 
         #create club
         self.club=Club.objects.create(club_name="club1",club_type="PUB",club_description="a club")
+        self.club._create_permissions()
 
+        self.owner = get_user_model().objects.create(first_name="Officer",last_name="Last",email="test0@test123.com")
+        self.owner.set_password("testclub123")
+        self.owner.save()
+
+        self.club._set_owner(self.owner)
 
     def test_user(self):
         self.assertEqual(self.user.email,"test@test.com")
@@ -21,39 +27,24 @@ class UserTestCase(TestCase):
         self.assertEqual(self.user.get_full_name(),"First Last")
         self.assertEqual(self.user.last_name,"Last")
         self.assertTrue(check_password("testclub123",self.user.password))
-    '''
-    def test_join_the_club(self):
-        self.user.join_the_club(self.club)
-        self.assertTrue(self.user.has_perm("M",self.club))
 
-    def test_promote_to_officer(self):
-        self.user.join_the_club(self.club)
-        self.assertTrue(self.user.has_perm("A",self.club))
-
-    def test_deny_the_user(self):
-        self.user.deny_the_user(self.club)
-        self.assertTrue(self.user.has_perm("P",self.club))
-    '''
     def test_get_clubs(self):
         #create club2
         club2=Club.objects.create(club_name="club2",club_type="PUB",club_description="a club")
-        #create officer of club
-        officer = get_user_model().objects.create(first_name="Officer",last_name="Last",email="test0@test.com")
-        officer.set_password("testclub123")
-        officer.save()
-        self.club._set_owner(officer)
+        club2._create_permissions()
 
-        #create officer of club2
-        officer2 = get_user_model().objects.create(first_name="Officer",last_name="Last",email="test2@test.com")
-        officer2.set_password("testclub123")
-        officer2.save()
-        club2._set_owner(officer2)
+        club2._set_owner(self.owner)
 
         #add user to both clubs
-        self.club.add_member(officer,user)
-        club2.add_member(officer2,user)
+        self.club.add_member(self.owner,self.user)
+        club2.add_member(self.owner,self.user)
 
         #test get clubs
+        #NOTE fails because add_member method doesn't work
         club_list=self.user.get_clubs()
         self.assertEqual(club_list[0],self.club)
-        self.assertEqual(club_list[1],self.club2)
+        self.assertEqual(club_list[1],club2)
+
+    def test_get_club_group(self):
+        self.owner.get_club_group(self.club)
+        self.assertFail()
