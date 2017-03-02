@@ -11,7 +11,7 @@ class ClubManager(models.Manager):
   def qry_searchclubs(self, keyword):
     c=Club.objects.filter(
         Q(club_name__contains=keyword) |
-        Q(club_description__contains=keyword)
+         Q(club_description__contains=keyword)
         )
     r=c.filter(club_type='PUB')
     return r
@@ -49,7 +49,7 @@ class Club(models.Model):
       ('PRI','Private')
       )
   club_type = models.CharField(max_length=3,choices=C_CHOICES,default='PUB')
-  image = models.ImageField(upload_to='media/', default="/media/default.jpg")
+  image = models.ImageField(upload_to='/static/media', default="/static/media/default.jpg")
   first_seen = models.DateTimeField(editable=False, blank=True, null=True)
   last_seen = models.DateTimeField(blank=True, null=True)
   club_description = models.TextField()
