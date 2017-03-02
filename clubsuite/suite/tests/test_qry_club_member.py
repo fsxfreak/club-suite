@@ -18,10 +18,11 @@ class ClubMemberQueryTestCase(TestCase):
         self.assertTrue(form.is_valid())
         self.owner=form.save()
         self.owner.save()
+        self.club._create_permissions()
         self.club._set_owner(self.owner)
 
 
-        self.clubmanager=ClubManager
+        self.clubmanager=ClubManager()
         self.user_list=[]
 
         #add users to club
@@ -30,6 +31,7 @@ class ClubMemberQueryTestCase(TestCase):
             self.assertTrue(form.is_valid())
             user=form.save()
             user.save()
+            # checks actor's permission (first parameter)
             self.club.add_member(self.owner,user)
             self.user_list.append(user)
 

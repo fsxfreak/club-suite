@@ -15,10 +15,10 @@ class ClubQueryTestCase(TestCase):
                                     club_description="empty")
         self.club4=Club.objects.create(club_name="club4",club_type="PRI",
                                     club_description="private")
-        self.clubmanager=ClubManager
+        self.clubmanager=ClubManager()
 
     def test_search_one_club(self):
-        clubs=self.clubmanager.qry_searchclubs(self,"club2")
+        clubs=self.clubmanager.qry_searchclubs("club2")
         self.assertNotEqual(len(clubs),0)
         '''
         for i in range(0,len(clubs)):
@@ -27,9 +27,9 @@ class ClubQueryTestCase(TestCase):
         self.assertEqual(clubs[0],self.club2)
 
     def test_search_private_club(self):
-        clubs=self.clubmanager.qry_searchclubs(self,"private")
+        clubs=self.clubmanager.qry_searchclubs("private")
         self.assertEqual(len(clubs),0)
 
     def test_search_club_name(self):
-        clubs = self.clubmanager.qry_searchclubs(self,"club")
+        clubs = self.clubmanager.qry_searchclubs("club")
         self.assertEqual(len(clubs),3)
