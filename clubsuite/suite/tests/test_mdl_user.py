@@ -57,21 +57,3 @@ class UserTestCase(TestCase):
         club_list=self.user.get_clubs()
         self.assertEqual(club_list[0],self.club)
         self.assertEqual(club_list[1],self.club2)
-
-
-
-class UserManagerTestCase(TestCase):
-    def setUp(self):
-        self.usermanager=UserManager()
-
-    def test_create_user(self):
-        user=self.usermanager.create_user(email="test@test.com",password="clubsuite",first_name="f",last_name="L")
-        self.assertEqual(user.email,"test@test.com")
-        self.assertTrue(check_password("clubsuite",user.password))
-
-    def test_create_superuser(self):
-        user=self.usermanager.create_superuser(email="test@test.com",password="clubsuite")
-        self.assertEqual(user.email,"test@test.com")
-        self.assertTrue(check_password("clubsuite",user.password))
-        self.assertTrue(user.is_superuser)
-        self.assertTrue(user.is_staff)
