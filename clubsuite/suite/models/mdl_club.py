@@ -11,7 +11,7 @@ class ClubManager(models.Manager):
   def qry_searchclubs(self, keyword):
     c=Club.objects.filter(
         Q(club_name__contains=keyword) |
-        Q(club_description__contains=keyword)
+         Q(club_description__contains=keyword)
         )
     r=c.filter(club_type='PUB')
     return r
@@ -49,7 +49,7 @@ class Club(models.Model):
       ('PRI','Private')
       )
   club_type = models.CharField(max_length=3,choices=C_CHOICES,default='PUB')
-  image = models.ImageField(upload_to='media/', default="/media/default.jpg")
+  image = models.ImageField(upload_to='/static/media', default="/static/media/default.jpg")
   first_seen = models.DateTimeField(editable=False, blank=True, null=True)
   last_seen = models.DateTimeField(blank=True, null=True)
   club_description = models.TextField()
@@ -85,12 +85,12 @@ class Club(models.Model):
     if not 'can_handle_join_request' in get_perms(actor, self):
       print(actor, 'cannot add the user because insufficient permisisons!')
       return False
-    
+
     if user.groups.filter(name=self._get_member_group_name()).count() == 0:
       user.groups.add(self._get_member_group())
       self.members.add(user)
 
-    return True 
+    return True
 
   def remove_member(self, actor, user):
     '''
@@ -127,7 +127,7 @@ class Club(models.Model):
 
     if user.groups.filter(name=self._get_officer_group_name()).count() == 0:
       user.groups.add(self._get_officer_group())
-    
+
     return True
 
   def demote_from_officer(self, actor, user):
@@ -152,7 +152,7 @@ class Club(models.Model):
     assign_perm('can_access_budget', group, self)
     assign_perm('can_create_budget', group, self)
     assign_perm('can_request_reimbusement', group, self)
-    
+
   def _assign_owner_permissions(self, group):
     # No special owner perms as of yet.
     pass

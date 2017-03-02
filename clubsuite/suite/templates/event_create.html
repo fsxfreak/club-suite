@@ -1,12 +1,121 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-<h1>Create an Event</h1>
-
-
-
-
-
 {% block body_block %}
+
+<section class='section'>
+  <div class='container'>
+
+     <h1>Create an Event</h1>
+
+    <form action="{% url 'suite:event_create' club.id %} " method="post">
+      {% csrf_token %}
+
+      <div class="control is-horizontal">
+           <div class="control-label">
+                <label class="label" for={{form.event_name.id_for_label}}>Event Name</label>
+           </div>
+           <p class="control">
+                <input class="input is-fullwidth" id={{form.event_name.id_for_label}} type="text" required/>
+           </p>
+      </div>
+
+      <!-- note: event_date field does not yet exist-->
+      <div class="control is-horizontal">
+           <div class="control-label">
+                <label class="label" for={{form.event_date.id_for_label}}>Date</label>
+           </div>
+           <p class="control">
+                <input class="input is-fullwidth" id={{form.event_date.id_for_label}} type="text" required/>
+           </p>
+      </div>
+
+      <!-- note: current format will not work with DateTimeField -->
+      <div class="control is-horizontal">
+           <div class="control-label">
+                <label class="label">Start Time</label>
+           </div>
+           <p class="control">
+               <input class="input is-fullwidth" id={{form.start_time.id_for_label}} type="time" placeholder="Start Time" required/>
+           </p>
+      </div>
+
+       <!-- note: current format will not work with DateTimeField -->
+      <div class="control is-horizontal">
+           <div class="control-label">
+                <label class="label">End Time</label>
+           </div>
+           <p class="control">
+               <input class="input is-fullwidth" id={{form.start_time.id_for_label}} type="time" placeholder="Start Time" required/>
+           </p>
+      </div>
+
+      <div class="control is-horizontal">
+           <div class="control-label">
+                <label class="label">Location</label>
+           </div>
+           <p class="control">
+                <input class="input is-fullwidth" id="id_event_location" type="text" required/>
+           </p>
+      </div>
+
+      <div class="control is-horizontal">
+           <div class="control-label">
+               <label class="label">Description</label>
+           </div>
+           <p class="control">
+                <textarea class="textarea is-fullwidth" id="id_event_description" required></textarea>
+           </p>
+      </div>
+
+      <div class="control is-horizontal">
+           <div class="control-label">
+                <label class="label">Cost</label>
+           </div>
+           <p class="control has-icon">
+                <input class="input is-expanded" id="id_event_cost" type="number" step="any" required/>
+                <span class="icon is-small">
+                     <i class="fa fa-usd"></i>
+                </span>
+      </div>
+
+      <div class="control is-horizontal">
+           <div class="control-label">
+                <label class="label">Public(Y/N)</label>
+           </div>
+           <p class="control">
+                <label class="radio">
+                     <input type="radio" name="id_accessibility" required>
+                     Yes
+                </label>
+                <label class="radio">
+                     <input type="radio" name="id_accessibility" required>
+                     No
+                </label>
+           </p>
+      </div>
+
+      <div class="control is-horizontal">
+           <div class="control-label">
+                <label class="label">Required(Y/N)</label>
+           </div>
+           <p class="control">
+                <label class="radio">
+                     <input type="radio" name="id_required" required>
+                     Yes
+                </label>
+                <label class="radio">
+                     <input type="radio" name="id_required" required>
+                     No
+                </label>
+           </p>
+      </div>
+
+      <input class="button control" type="submit" value="Submit"/>
+      
+    </form>
+
+  </div>
+</section>
 
 {% endblock body_block %}
