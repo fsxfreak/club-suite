@@ -22,9 +22,9 @@ body {
     min-height: 100%;
     display: flex;
     flex-direction: column;
-    background-image: url("../media/CSE110Footer.png");
+    background-image: url("../media/Footer.png");
     background-repeat: no-repeat;
-    background-position: bottom;
+    background-position: center;
     background-size: 100%;
 }
 .content {
