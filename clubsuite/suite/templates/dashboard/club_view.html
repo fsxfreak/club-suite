@@ -10,6 +10,7 @@
     <h1 class="title">{{club.club_name}}</h1>
     <a href="{% url 'suite:club_roster' club.id %}">club roster</a>
     <a href="{% url 'suite:club_join' club.id %}">join this club</a>
+    <a href="{% url 'suite:club_emails' club.id %}">get emailz</a>
     <br />
 
     <form action="{% url 'suite:club_view' club.id %} "method="post">
