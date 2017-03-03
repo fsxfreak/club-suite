@@ -9,26 +9,50 @@
 <section class='section'>
   <div class='container'>
     <h1 class="title">{{club.club_name}}</h1>
-    <a href="{% url 'suite:club_roster' club.id %}">club roster</a>
-    <a href="{% url 'suite:club_join' club.id %}">join this club</a>
+    <a href="{% url 'suite:club_roster' club.id %}">Club Roster</a> |
+    <a href="{% url 'suite:club_join' club.id %}">Join this Club</a> |
     {% if "can_view_account_info" in club_perms %}
-      <a href="{% url 'suite:club_emails' club.id %}">get emailz</a>
+      <a href="{% url 'suite:club_emails' club.id %}">Generate Email List </a> |
     {% endif %}
     {% if "can_handle_join_requests" in club_perms %}
-      <a href="{% url 'suite:handle_join_request' club.id %}">handle join request</a>
+      <a href="{% url 'suite:handle_join_request' club.id %}">Handle Join Request</a> |
     {% endif %}
     {% if "can_create_event" in club_perms %}
-      <a href="{% url 'suite:event_create' club.id %}"> CREATE AN EVENT</a>
+      <a href="{% url 'suite:event_create' club.id %}"> Create Event</a> |
     {% endif %}
 
     <br />
-
+    <img src="{{club.image.url}}">
+    <p> <h2> New Events  </h2></p>
     {% for event in events %}
-      <p>this is the club name {{event.cid}}</p>
-      <p>this is the event name {{event.event_name}}</p>
-      <p>this is the event description {{event.event_description}}</p>
-      <p>and whoevers doing ui, feel free to put other stuff</p>
-      <br />
+      
+   <div class="column is-8">
+        <div class="box">
+          <article class="media">
+            <div class="media-left">
+              <figure class="image is-128x128">
+                <br />
+                  <img src="http://bulma.io/images/placeholders/128x128.png" alt="Image">
+              </figure>
+            </div>
+            <div class="media-content">
+              <div class="content">
+                  <p> <h3>{{event.event_name}} 
+                      {% if event.accessibility != True %}<span class="tag is-warning">Members Only</span>  {% endif %}
+                      {% if event.required == True %}<span class="tag is-dark">Event Required</span>  {% endif %}</h3></p>
+                
+                  <p> {% if event.start_date != event.end_date %}{{event.start_date}} ({{event.start_time}}) - {{event.end_date}} ({{event.end_time}}){% endif %} 
+                      {% if event.start_date == event.end_date %}{{event.start_date}} : {{event.start_time}} - {{event.end_time}} {% endif %}
+                  </p>
+                  <p><h5 class="subtitle">{% if event.event_cost == 0 %} (FREE) {% endif %}</h5> 
+                    {% if event.event_cost != 0 %} (${{event.event_cost}} Event Fee) {% endif %}</p>
+                  <p>Description: {{event.event_description}}</p>
+                  <br />
+              </div>
+            </div>
+          </article>
+        </div>
+      </div> 
     {% endfor %}
 
   </div>
