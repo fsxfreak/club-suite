@@ -8,7 +8,7 @@ class ClubRoster(LoginRequiredMixin, View):
   def get_members(self, club):
     members = []
     for member in club.members.all():
-      group = Club.objects.get_group(club, member)
+      group = club.get_group(member)
       members.append( {'user' : member, 'group' : group })
 
     return members
