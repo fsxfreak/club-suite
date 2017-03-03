@@ -75,9 +75,9 @@ class EventCreateForm(forms.ModelForm):
   # validation
 
 class ClubSearchForm(forms.Form):
-  club_name = forms.CharField(max_length=50)
+  club_name = forms.CharField(max_length=50, required=False)
   keyword = forms.CharField(max_length=50,
-                            required=True,
+                            required=False,
                             label='Club name or description')
 
 class EditProfileForm(forms.ModelForm):
