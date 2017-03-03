@@ -49,11 +49,11 @@ class ClubCreateForm(forms.ModelForm):
 class EventCreateForm(forms.ModelForm):
   class Meta:
     model = Event
-    fields = ['event_name', 'start_time', 'end_time', 'event_location',
+    fields = ['event_name', 'start_date', 'start_time', 'end_time', 'event_location',
     'event_description', 'event_cost', 'accessibility', 'required']
 
   def save(self, club, commit=False):
-
+      
       event_name = self.cleaned_data['event_name']
       start_time = self.cleaned_data['start_time']
       end_time = self.cleaned_data['end_time']
@@ -86,5 +86,4 @@ class EditProfileForm(forms.ModelForm):
         fields = ['email', 'first_name', 'last_name' ]
 
 class ClubJoinForm(forms.Form):
-  reason = forms.CharField(max_length=50,
-                           required=True)
+  reason = forms.CharField(max_length=200, required=True)

@@ -14,10 +14,14 @@ urlpatterns = [
     url(r'^dashboard$', views.Dashboard.as_view(), name='dashboard'),
     url(r'^club/create$', views.ClubCreate.as_view(), name='club_create'),
     url(r'^club/search$', views.ClubSearch.as_view(), name='club_search'),
+    url(r'^club/(?P<club_id>[0-9]+)/event_create$', views.EventCreate.as_view(), name='event_create'),
+    url(r'^club/(?P<club_id>[0-9]+)/event$', views.Event.as_view(), name='event'),
     url(r'^dashboard/club-manage$', views.ClubManage.as_view(), name='club_manage'),
     url(r'^club/(?P<club_id>[0-9]+)/roster$', views.ClubRoster.as_view(), name='club_roster'),
     url(r'^club/(?P<club_id>[0-9]+)/$', views.ClubView.as_view(), name='club_view'),
     url(r'^club/(?P<club_id>[0-9]+)/join$', views.ClubJoin.as_view(), name='club_join'),
+    url(r'^club/(?P<club_id>[0-9]+)/emails$', views.ClubEmails.as_view(), name='club_emails'),
+    url(r'^club/(?P<club_id>[0-9]+)/join/handle_requests$', views.HandleJoinRequest.as_view(), name='handle_join_request'),
     url(r'^account', views.Account.edit_profile, name='edit_profile'),
 
     #password reset

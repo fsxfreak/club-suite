@@ -11,7 +11,10 @@
     <h1 class="title">{{club.club_name}}</h1>
     <a href="{% url 'suite:club_roster' club.id %}">club roster</a>
     <a href="{% url 'suite:club_join' club.id %}">join this club</a>
-    <br />
+    <a href="{% url 'suite:club_emails' club.id %}">get emailz</a>
+    <a href="{% url 'suite:handle_join_request' club.id %}">handle join request</a>
+    <a href="{% url 'suite:event_create' club.id %}"> CREATE AN EVENT</a>
+
     <br />
 
     {% for event in events %}

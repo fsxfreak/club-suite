@@ -20,13 +20,32 @@ class ClubManager(models.Manager):
     c=Club.objects.get(id=cid_in)
     return c
 
-  def club_roster(self, cname):
-    users_in_group=Group.objects.get(name=cname).user_set.all()
-    return users_in_group
+  def get_owners(self, club):
+    return club._get_owner_group().user_set.all()
+  def get_officers(self, club):
+    return club._get_officer_group().user_set.all()
+  def get_members(self, club):
+    return club._get_member_group().user_set.all()
+
+  def is_owner(self, club, user):
+    return user in club._get_owner_group().user_set.all()
+  def is_officer(self, club, user):
+    return user in club._get_officer_group().user_set.all()
+  def is_member(self, club, user):
+    return user in club._get_member_group().user_set.all()
+
+  def get_group(self, club, user):
+    group = []
+    if self.is_owner(club, user):
+      group = 'Owner'
+    elif self.is_officer(club, user):
+      group = 'Officer'
+    elif self.is_member(club, user):
+      group = 'Member'
+    return group
 
 class Club(models.Model):
   club_name = models.CharField(max_length=50,unique=True)
-
 
   class Meta:
     permissions = (
@@ -53,6 +72,11 @@ class Club(models.Model):
   first_seen = models.DateTimeField(editable=False, blank=True, null=True)
   last_seen = models.DateTimeField(blank=True, null=True)
   club_description = models.TextField()
+  requests = models.ManyToManyField(
+                  User, 
+                  through='JoinRequest',
+                  related_name='JoinRequest'
+                  )
 
   members = models.ManyToManyField(User)
   objects = ClubManager()
@@ -77,12 +101,21 @@ class Club(models.Model):
   def _get_member_group(self):
     return Group.objects.get(name=self._get_member_group_name())
 
+  def get_owners(self):
+    pass
+
+  def get_officers(self):
+    pass
+
+  def get_members(self):
+    pass
+
   def add_member(self, actor, user):
     '''
     return: True if user is member of the club, False if not
     '''
     print (actor, user)
-    if not 'can_handle_join_request' in get_perms(actor, self):
+    if not 'can_handle_join_requests' in get_perms(actor, self):
       print(actor, 'cannot add the user because insufficient permisisons!')
       return False
 
@@ -96,7 +129,7 @@ class Club(models.Model):
     '''
     return: True if user removed, False if not
     '''
-    print('in remov emmer')
+    print('in removing member')
     if 'can_remove_member' in get_perms(actor, self) or actor is user:
       # TODO edge case where actor and user is owner of club
       if user.groups.filter(name=self._get_owner_group_name()).count() > 0:
@@ -118,11 +151,11 @@ class Club(models.Model):
     actor must have 'can_handle_promotion_requests' permission
     return: True if user now an officer, False if not
     '''
-    is_member = self.add_member(user)
+    is_member = self.add_member(actor, user)
     if not is_member:
       print('Cannot promote a non member to officer')
       return False
-    if not 'can_handle_join_request' in get_perms(actor, self):
+    if not 'can_handle_join_requests' in get_perms(actor, self):
       return False
 
     if user.groups.filter(name=self._get_officer_group_name()).count() == 0:
