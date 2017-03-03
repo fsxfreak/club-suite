@@ -10,28 +10,30 @@ class ClubEmails(LoginRequiredMixin, View):
   def get_members(self, club):
     members = []
     for member in club.members.all():
-      group = None
-      if Club.objects.is_owner(club, member):
-        group = 'Owner'
-      elif Club.objects.is_officer(club, member):
-        group = 'Officer'
-      elif Club.objects.is_member(club, member):
-        group = 'Member'
-      members.append( {'user' : member, 'group' : group})
+      group = Club.objects.get_group(club, member)
+      members.append( {'user' : member, 'group' : group })
+
+    return members
+
+  def get_officers(self, club):
+    members = []
+    for member in Club.objects.get_officers(club):
+      group = Club.objects.get_group(club, member)
+      members.append( {'user' : member, 'group' : group })
 
     return members
 
   def get(self, request, club_id):
     club = get_object_or_404(Club, pk=club_id)
     members = self.get_members(club)
-    print(members)
-  
-    return render(request, self.template_name, {'members': members})
+    return render(request, self.template_name, { 'club' : club, 'members': members})
 
   def post(self, request, club_id):
+    members = None
     club = get_object_or_404(Club, pk=club_id)
-    members = []
-    # TODO instead of members return officers
-    members = self.get_members(club)
+    if request.POST['member_type'] == 'officer':
+      members = self.get_officers(club)
+    else:
+      members = self.get_members(club)
 
-    return render(request, self.template_name, {'members': members})
+    return render(request, self.template_name, {'club' : club, 'members': members})

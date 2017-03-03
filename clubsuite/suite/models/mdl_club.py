@@ -20,16 +20,12 @@ class ClubManager(models.Manager):
     c=Club.objects.get(id=cid_in)
     return c
 
-  def get_all_members(self, cname):
-    # users_in_group=Group.objects.get(name=cname).user_set.all()
-    return Club.objects.get(name=cname).members.all()
-
-  def get_owners(self, cname):
-    return Club.objects.get(name=cname)._get_owner_group().user_set.all()
-  def get_officers(self, cname):
-    return Club.objects.get(name=cname)._get_officer_group().user_set.all()
-  def get_members(self, cname):
-    return Club.objects.get(name=cname)._get_member_group().user_set.all()
+  def get_owners(self, club):
+    return club._get_owner_group().user_set.all()
+  def get_officers(self, club):
+    return club._get_officer_group().user_set.all()
+  def get_members(self, club):
+    return club._get_member_group().user_set.all()
 
   def is_owner(self, club, user):
     return user in club._get_owner_group().user_set.all()
@@ -37,6 +33,16 @@ class ClubManager(models.Manager):
     return user in club._get_officer_group().user_set.all()
   def is_member(self, club, user):
     return user in club._get_member_group().user_set.all()
+
+  def get_group(self, club, user):
+    group = []
+    if self.is_owner(club, user):
+      group = 'Owner'
+    elif self.is_officer(club, user):
+      group = 'Officer'
+    elif self.is_member(club, user):
+      group = 'Member'
+    return group
 
 class Club(models.Model):
   club_name = models.CharField(max_length=50,unique=True)
