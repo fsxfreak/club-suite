@@ -82,7 +82,7 @@ class Club(models.Model):
     return: True if user is member of the club, False if not
     '''
     print (actor, user)
-    if not 'can_handle_join_request' in get_perms(actor, self):
+    if not 'can_handle_join_requests' in get_perms(actor, self):
       print(actor, 'cannot add the user because insufficient permisisons!')
       return False
 
@@ -96,7 +96,7 @@ class Club(models.Model):
     '''
     return: True if user removed, False if not
     '''
-    print('in remov emmer')
+    print('in removing member')
     if 'can_remove_member' in get_perms(actor, self) or actor is user:
       # TODO edge case where actor and user is owner of club
       if user.groups.filter(name=self._get_owner_group_name()).count() > 0:
@@ -118,11 +118,11 @@ class Club(models.Model):
     actor must have 'can_handle_promotion_requests' permission
     return: True if user now an officer, False if not
     '''
-    is_member = self.add_member(user)
+    is_member = self.add_member(actor, user)
     if not is_member:
       print('Cannot promote a non member to officer')
       return False
-    if not 'can_handle_join_request' in get_perms(actor, self):
+    if not 'can_handle_join_requests' in get_perms(actor, self):
       return False
 
     if user.groups.filter(name=self._get_officer_group_name()).count() == 0:
