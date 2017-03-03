@@ -86,5 +86,4 @@ class EditProfileForm(forms.ModelForm):
         fields = ['email', 'first_name', 'last_name' ]
 
 class ClubJoinForm(forms.Form):
-  reason = forms.CharField(max_length=50,
-                           required=True)
+  reason = forms.CharField(max_length=200, required=True)
