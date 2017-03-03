@@ -1,132 +1,34 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load widget_tweaks %}
+{% load guardian_tags %}
 
 {% block body_block %}
 
+{% get_obj_perms request.user for club as "club_perms" %}
 <section class='section'>
   <div class='container'>
-
-
     <h1 class="title">{{club.club_name}}</h1>
     <a href="{% url 'suite:club_roster' club.id %}">club roster</a>
     <a href="{% url 'suite:club_join' club.id %}">join this club</a>
-    <a href="{% url 'suite:club_emails' club.id %}">get emailz</a>
-    <br />
-
-    <form action="{% url 'suite:club_view' club.id %} "method="post">
-      {% csrf_token %}
-      <!-- inserting my own logic here-->
-      <div class="control is-horizontal">
-           <div class="control-label">
-                <label class="label" for={{form.event_name.id_for_label}}>Event Name</label>
-           </div>
-           <p class="control">
-                <input class="input is-fullwidth" id={{form.event_name.id_for_label}} type="text" required/>
-           </p>
-      </div>
-      <!-- note: event_date field does not yet exist-->
-      <div class="control is-horizontal">
-           <div class="control-label">
-                <label class="label" for={{form.event_date.id_for_label}}>Date</label>
-           </div>
-           <p class="control">
-                <input class="input is-fullwidth" id={{form.event_date.id_for_label}} type="text" required/>
-           </p>
-      </div>
-      <!-- note: current format will not work with DateTimeField -->
-      <div class="control is-horizontal">
-           <div class="control-label">
-                <label class="label">Start Time</label>
-           </div>
-           <p class="control">
-               <input class="input is-fullwidth" id={{form.start_time.id_for_label}} type="time" placeholder="Start Time" required/>
-           </p>
-      </div>
-
-      <div class="control is-horizontal">
-           <div class="control-label">
-                <label class="label">End Time</label>
-           </div>
-           <p class="control">
-               <input class="input is-fullwidth" id={{form.start_time.id_for_label}} type="time" placeholder="Start Time" required/>
-           </p>
-      </div>
-
-      <div class="control is-horizontal">
-           <div class="control-label">
-                <label class="label">Location</label>
-           </div>
-           <p class="control">
-                <input class="input is-fullwidth" id="id_event_location" type="text" required/>
-           </p>
-      </div>
-
-      <div class="control is-horizontal">
-           <div class="control-label">
-               <label class="label">Description</label>
-           </div>
-           <p class="control">
-                <textarea class="textarea is-fullwidth" id="id_event_description" required></textarea>
-           </p>
-      </div>
-
-      <div class="control is-horizontal">
-           <div class="control-label">
-                <label class="label">Cost</label>
-           </div>
-           <p class="control has-icon">
-                <input class="input is-expanded" id="id_event_cost" type="number" step="any" required/>
-                <span class="icon is-small">
-                     <i class="fa fa-usd"></i>
-                </span>
-      </div>
-
-      <div class="control is-horizontal">
-           <div class="control-label">
-                <label class="label">Public(Y/N)</label>
-           </div>
-           <p class="control">
-                <label class="radio">
-                     <input type="radio" name="id_accessibility" required>
-                     Yes
-                </label>
-                <label class="radio">
-                     <input type="radio" name="id_accessibility" required>
-                     No
-                </label>
-           </p>
-      </div>
-
-      <div class="control is-horizontal">
-           <div class="control-label">
-                <label class="label">Required(Y/N)</label>
-           </div>
-           <p class="control">
-                <label class="radio">
-                     <input type="radio" name="id_required" required>
-                     Yes
-                </label>
-                <label class="radio">
-                     <input type="radio" name="id_required" required>
-                     No
-                </label>
-           </p>
-      </div>
-
-      <input class="button control" type="submit" value="Submit"/>
-
-    </form>
+    {% if "can_view_account_info" in club_perms %}
+      <a href="{% url 'suite:club_emails' club.id %}">get emailz</a>
+    {% endif %}
+    {% if "can_handle_join_requests" in club_perms %}
+      <a href="{% url 'suite:handle_join_request' club.id %}">handle join request</a>
+    {% endif %}
+    {% if "can_create_event" in club_perms %}
+      <a href="{% url 'suite:event_create' club.id %}"> CREATE AN EVENT</a>
+    {% endif %}
 
     <br />
 
     {% for event in events %}
-
       <p>this is the club name {{event.cid}}</p>
       <p>this is the event name {{event.event_name}}</p>
       <p>this is the event description {{event.event_description}}</p>
       <p>and whoevers doing ui, feel free to put other stuff</p>
       <br />
-
     {% endfor %}
 
   </div>

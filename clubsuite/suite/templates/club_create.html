@@ -5,40 +5,61 @@
 {% block body_block %}
 <section class='section'>
   <div class='container'>
+
     <div class='heading'>
-      <h1 class='title'>Create a club</h1>
-      <h2 class='subtitle'>Give your club a fancy description:)</h2>
+      <h1 class='title'>Create a Club</h1>
     </div>
+
     <form action="{% url 'suite:club_create' %}" method="post">
       {% csrf_token %}
-
-      <!-- TODO dirty fixes here. please fix !-->
       <div class="control is-horizontal">
-        <div class="control-label">
-          {% render_field form.club_name class="input is-fullwidth" %}
-        </div>
+           <div class="control-label">
+                <label class="label" for="id_club_name">Name</label>
+           </div>
+           <p class="control">
+                {{ form.club_name |add_class:'input is-fullwidth' }}
+           </p>
       </div>
 
       <div class="control is-horizontal">
-        <div class="control-label">
-          {% render_field form.club_type class="input is-fullwidth" %}
-        </div>
+           <div class="control-label">
+                <label class="label" for="id_club_type">Accessibility</label>
+           </div>
+           <p class="control">
+                {{ form.club_type |add_class:'input is-fullwidth' }}
+           </p>
       </div>
 
       <div class="control is-horizontal">
-        <div class="control-label">
-          {% render_field form.image class="input is-fullwidth" %}
-        </div>
+           <div class="control-label">
+                <label class="label" for="id_club_description">Description</label>
+           </div>
+           <p class="control">
+                {{ form.club_description |add_class:'textarea is-fullwidth' }}
+           </p>
       </div>
 
       <div class="control is-horizontal">
-        <div class="control-label">
-          {% render_field form.club_description class="input is-fullwidth" %}
-        </div>
-      <div>
-        <input class="button control" type="submit" value="Submit"/>
+           <div class="control-label">
+                <label class="label" for="id_image">Cover Photo</label>
+           </div>
+           <p class="control">
+                {{ form.image }}
+                <!--{% render_field form.image class="button is-primary"%}-->
+                <!--
+                No aesthetic improvement either :/
+                <img src="{{form.image.url}}"/>
+               -->
+           </p>
+      </div>
+
+        <div class="control">
+           <p class="control">
+               <button class="button is-primary" type="submit" name="details">Submit</button>
+           </p>
       </div>
     </form>
+
   </div>
 </section>
 {% endblock body_block %}

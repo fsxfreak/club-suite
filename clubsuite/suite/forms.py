@@ -49,13 +49,14 @@ class ClubCreateForm(forms.ModelForm):
 class EventCreateForm(forms.ModelForm):
   class Meta:
     model = Event
-    fields = ['event_name', 'start_time', 'end_time', 'event_location',
-    'event_description', 'event_cost', 'accessibility', 'required']
+    fields = ['event_name', 'start_date', 'start_time', 'end_date', 'end_time', 
+              'event_location', 'event_description', 'event_cost', 'accessibility',
+              'required']
 
   def save(self, club, commit=False):
-
       event_name = self.cleaned_data['event_name']
       start_time = self.cleaned_data['start_time']
+      end_date = self.cleaned_data['end_date']
       end_time = self.cleaned_data['end_time']
       event_location = self.cleaned_data['event_location']
       event_description = self.cleaned_data['event_description']
@@ -63,22 +64,17 @@ class EventCreateForm(forms.ModelForm):
       accessibility = self.cleaned_data['accessibility']
       required = self.cleaned_data['required']
 
-      event_cid = Event(cid=club, event_name=event_name, start_time=start_time,
-      end_time=end_time, event_location=event_location, event_description=event_description,
-      event_cost=event_cost, accessibility=accessibility, required=required)
+      event = Event(cid=club, event_name=event_name, start_time=start_time,
+        end_date=end_date, end_time=end_time, event_location=event_location, 
+        event_description=event_description,
+        event_cost=event_cost, accessibility=accessibility, required=required)
       if commit:
-          event_cid.save()
+          event.save()
 
-      return event_cid
-
-  #def clean():
-  # validation
+      return event
 
 class ClubSearchForm(forms.Form):
-  club_name = forms.CharField(max_length=50)
-  keyword = forms.CharField(max_length=50,
-                            required=True,
-                            label='Club name or description')
+  keyword = forms.CharField(max_length=50, required=False)
 
 class EditProfileForm(forms.ModelForm):
     class Meta:
@@ -86,5 +82,4 @@ class EditProfileForm(forms.ModelForm):
         fields = ['email', 'first_name', 'last_name' ]
 
 class ClubJoinForm(forms.Form):
-  reason = forms.CharField(max_length=50,
-                           required=True)
+  reason = forms.CharField(max_length=200, required=True)
