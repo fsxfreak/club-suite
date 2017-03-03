@@ -9,3 +9,4 @@ from .view_dashboard import *
 from .view_event_create import *
 from .view_club_join import *
 from .view_club_manage import *
+from .view_club_emails import *

@@ -20,13 +20,26 @@ class ClubManager(models.Manager):
     c=Club.objects.get(id=cid_in)
     return c
 
-  def club_roster(self, cname):
-    users_in_group=Group.objects.get(name=cname).user_set.all()
-    return users_in_group
+  def get_all_members(self, cname):
+    # users_in_group=Group.objects.get(name=cname).user_set.all()
+    return Club.objects.get(name=cname).members.all()
+
+  def get_owners(self, cname):
+    return Club.objects.get(name=cname)._get_owner_group().user_set.all()
+  def get_officers(self, cname):
+    return Club.objects.get(name=cname)._get_officer_group().user_set.all()
+  def get_members(self, cname):
+    return Club.objects.get(name=cname)._get_member_group().user_set.all()
+
+  def is_owner(self, club, user):
+    return club._get_owner_group().user_set.filter(user=user).count() > 0
+  def is_officer(self, club, user):
+    return club._get_officer_group().user_set.filter(user=user).count() > 0
+  def is_member(self, club, user):
+    return club._get_member_group().user_set.filter(user=user).count() > 0
 
 class Club(models.Model):
   club_name = models.CharField(max_length=50,unique=True)
-
 
   class Meta:
     permissions = (
@@ -76,6 +89,15 @@ class Club(models.Model):
     return Group.objects.get(name=self._get_officer_group_name())
   def _get_member_group(self):
     return Group.objects.get(name=self._get_member_group_name())
+
+  def get_owners(self):
+    pass
+  
+  def get_officers(self):
+    pass
+
+  def get_members(self):
+    pass
 
   def add_member(self, actor, user):
     '''
