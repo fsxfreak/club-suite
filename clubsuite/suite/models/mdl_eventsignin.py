@@ -4,7 +4,7 @@ class EventSignInManager(models.Manager):
 
     #Given a user and a club, find all the events the user attended of the club
     #ordered by start time from most recent to oldest
-    def get_attended_events(in_uid,in_cid):
+    def get_attended_events(self, in_uid, in_cid):
         attended_eid=EventSignIn.objects.values_list('eid',
                         flat=True).filter(cid=in_cid,uid=in_uid)
         attended_events=Event.objects.filter(id__in=set(attended_eid)).order_by('-start_time')
@@ -12,7 +12,7 @@ class EventSignInManager(models.Manager):
 
     #Given a user, find all the events the user attended
     #ordered by start time from most recent to oldest
-    def get_all_attended_events(in_uid):
+    def get_all_attended_events(self, in_uid):
         attended_eid=EventSignIn.objects.values_list('eid',
                         flat=True).filter(uid=in_uid)
         attended_events=Event.objects.filter(id__in=set(attended_eid)).order_by('-start_time')
