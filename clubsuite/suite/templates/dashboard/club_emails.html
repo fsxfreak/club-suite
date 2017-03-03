@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block body_block %}
+<section class='section'>
+<div class='container'>
+  <h1> {{ club.club_name }} Roster </h1>
+
+  <ul>
+  {% for member in members %}
+  <li>{{ member.user.email}}</li>
+    {% endfor %}
+  </ul>
+  </div>
+</section>
+
+{% endblock body_block %}
