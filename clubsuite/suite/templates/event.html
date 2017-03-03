@@ -1,6 +1,21 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load widget_tweaks %}
+
+{% load staticfiles %}
 
 {% block body_block %}
+<section class='section'>
+<div class='container'>
+  <h1> {{ event.event_name }} Roster </h1>
+
+  <ul>
+  {% for member in members %}
+  <li>{{ member.user.first_name}} {{ member.user.last_name }}
+    : {{ member.user.student_title}}, {{ member.group }} </li>
+    {% endfor %}
+  </ul>
+  </div>
+</section>
 
 {% endblock body_block %}
