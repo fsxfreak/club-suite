@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^club/(?P<club_id>[0-9]+)/$', views.ClubView.as_view(), name='club_view'),
     url(r'^club/(?P<club_id>[0-9]+)/join$', views.ClubJoin.as_view(), name='club_join'),
     url(r'^club/(?P<club_id>[0-9]+)/emails$', views.ClubEmails.as_view(), name='club_emails'),
+    url(r'^club/(?P<club_id>[0-9]+)/join/handle_requests$', views.HandleJoinRequest.as_view(), name='handle_join_request'),
     url(r'^account', views.Account.edit_profile, name='edit_profile'),
 
     #password reset

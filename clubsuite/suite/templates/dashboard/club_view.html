@@ -12,6 +12,7 @@
     <a href="{% url 'suite:club_roster' club.id %}">club roster</a>
     <a href="{% url 'suite:club_join' club.id %}">join this club</a>
     <a href="{% url 'suite:club_emails' club.id %}">get emailz</a>
+    <a href="{% url 'suite:handle_join_request' club.id %}">handle join request</a>
     <br />
 
     <form action="{% url 'suite:club_view' club.id %} "method="post">

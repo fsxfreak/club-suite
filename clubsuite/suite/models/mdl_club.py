@@ -74,8 +74,8 @@ class Club(models.Model):
   club_description = models.TextField()
   requests = models.ManyToManyField(
                   User, 
-                  through='JoinRequest', 
-                  through_fields=('cid', 'uid'),
+                  through='JoinRequest',
+                  related_name='JoinRequest'
                   )
 
   members = models.ManyToManyField(User)
