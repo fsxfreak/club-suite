@@ -8,7 +8,6 @@
   <div class='container'>
 
      <h1>Create an Event</h1>
-
      <form action="{% url 'suite:event_create' club.id %} "method="post">
        {% csrf_token %}
 

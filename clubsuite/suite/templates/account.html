@@ -4,8 +4,9 @@
 
 {% block body_block %}
     <div class="container">
-         <h3>Edit Public Profile</h3>
 
+         <h3>Edit Public Profile</h3>
+         
         <form method="post" action="{% url 'suite:edit_profile' %}">
             {% csrf_token %}
 
