@@ -53,6 +53,11 @@ class Club(models.Model):
   first_seen = models.DateTimeField(editable=False, blank=True, null=True)
   last_seen = models.DateTimeField(blank=True, null=True)
   club_description = models.TextField()
+  requests = models.ManyToManyField(
+                  User, 
+                  through='JoinRequest', 
+                  through_fields=('cid', 'uid'),
+                  )
 
   members = models.ManyToManyField(User)
   objects = ClubManager()
