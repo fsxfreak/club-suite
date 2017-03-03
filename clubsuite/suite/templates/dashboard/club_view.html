@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load widget_tweaks %}
 
 {% block body_block %}
 
@@ -21,25 +22,26 @@
                 <label class="label" for={{form.event_name.id_for_label}}>Event Name</label>
            </div>
            <p class="control">
-                <input class="input is-fullwidth" id={{form.event_name.id_for_label}} type="text" required/>
+                {% render_field form.event_name class="input is-fullwidth" placeholder="Event Name" %}
            </p>
       </div>
       <!-- note: event_date field does not yet exist-->
       <div class="control is-horizontal">
            <div class="control-label">
-                <label class="label" for={{form.event_date.id_for_label}}>Date</label>
+              <label class="label">Date</label>
            </div>
            <p class="control">
-                <input class="input is-fullwidth" id={{form.event_date.id_for_label}} type="text" required/>
+              {% render_field form.start_date class="input is-fullwidth" %}
            </p>
       </div>
+
       <!-- note: current format will not work with DateTimeField -->
       <div class="control is-horizontal">
            <div class="control-label">
                 <label class="label">Start Time</label>
            </div>
            <p class="control">
-               <input class="input is-fullwidth" id={{form.start_time.id_for_label}} type="time" placeholder="Start Time" required/>
+               {% render_field form.start_time class="input is-fullwidth"  %}
            </p>
       </div>
 
@@ -48,7 +50,7 @@
                 <label class="label">End Time</label>
            </div>
            <p class="control">
-               <input class="input is-fullwidth" id={{form.start_time.id_for_label}} type="time" placeholder="Start Time" required/>
+               {% render_field form.end_time class="input is-fullwidth"  %}
            </p>
       </div>
 
@@ -57,7 +59,7 @@
                 <label class="label">Location</label>
            </div>
            <p class="control">
-                <input class="input is-fullwidth" id="id_event_location" type="text" required/>
+                  {% render_field form.event_location class="input is-fullwidth"  %}
            </p>
       </div>
 
@@ -66,7 +68,7 @@
                <label class="label">Description</label>
            </div>
            <p class="control">
-                <textarea class="textarea is-fullwidth" id="id_event_description" required></textarea>
+                    {% render_field form.event_description class="input is-fullwidth"  %}
            </p>
       </div>
 
@@ -74,59 +76,36 @@
            <div class="control-label">
                 <label class="label">Cost</label>
            </div>
-           <p class="control has-icon">
-                <input class="input is-expanded" id="id_event_cost" type="number" step="any" required/>
+           <p class="control">
+                {% render_field form.event_cost class="input is-fullwidth"  %}
                 <span class="icon is-small">
                      <i class="fa fa-usd"></i>
                 </span>
       </div>
 
-      <div class="control is-horizontal">
-           <div class="control-label">
-                <label class="label">Public(Y/N)</label>
-           </div>
-           <p class="control">
-                <label class="radio">
-                     <input type="radio" name="id_accessibility" required>
-                     Yes
-                </label>
-                <label class="radio">
-                     <input type="radio" name="id_accessibility" required>
-                     No
-                </label>
-           </p>
-      </div>
 
       <div class="control is-horizontal">
            <div class="control-label">
-                <label class="label">Required(Y/N)</label>
+                {% render_field form.accessibility %}
+      </div>
+      <br />
+      <div class="control is-horizontal">
+           <div class="control-label">
+                <label class="label">Required</label>
            </div>
-           <p class="control">
-                <label class="radio">
-                     <input type="radio" name="id_required" required>
-                     Yes
-                </label>
-                <label class="radio">
-                     <input type="radio" name="id_required" required>
-                     No
-                </label>
-           </p>
+                {% render_field form.required %}
       </div>
 
+    <br />
       <input class="button control" type="submit" value="Submit"/>
-
-    </form>
-
     <br />
 
     {% for event in events %}
-
       <p>this is the club name {{event.cid}}</p>
       <p>this is the event name {{event.event_name}}</p>
       <p>this is the event description {{event.event_description}}</p>
       <p>and whoevers doing ui, feel free to put other stuff</p>
       <br />
-
     {% endfor %}
 
   </div>

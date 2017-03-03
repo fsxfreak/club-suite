@@ -103,7 +103,7 @@ class Club(models.Model):
 
   def get_owners(self):
     pass
-  
+
   def get_officers(self):
     pass
 
