@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
+
 from suite.models import Event
 
-class Event(View):
+class Event(LoginRequiredMixin, View):
     template_name = 'event.html'
     def get(self, request, club_id, event_id, *args, **kwargs):
        club = get_object_or_404(Club, pk=club_id)

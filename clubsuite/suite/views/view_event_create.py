@@ -2,24 +2,36 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import TemplateView
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from suite.models import Club
 from suite.forms import EventCreateForm
 
-class EventCreate(TemplateView):
-    form_class = EventCreateForm
-    template_name = 'event_create.html'
+from guardian.shortcuts import get_perms
+from django.core.exceptions import PermissionDenied
 
-    def get(self, request, club_id):
-      club = get_object_or_404(Club, pk=club_id)
-      form = self.form_class
-      return render(request, self.template_name, { 'club' : club, 'form' : form})
+class EventCreate(UserPassesTestMixin, LoginRequiredMixin, TemplateView):
+  form_class = EventCreateForm
+  template_name = 'event_create.html'
 
-    def post(self, request, club_id):
-      form = self.form_class(request.POST)
-      club = get_object_or_404(Club, pk=club_id)
-      if form.is_valid():
-        event = form.save(club, commit=True)
+  # testing for proper permissions
+  def test_func(self):
+    club = get_object_or_404(Club, pk=self.kwargs['club_id'])
+    if 'can_create_event' not in get_perms(self.request.user, club):
+      raise PermissionDenied
 
-      return HttpResponseRedirect(reverse('suite:club_view', args=[club_id]))
+    return True 
+
+  def get(self, request, club_id):
+    club = get_object_or_404(Club, pk=club_id)
+    form = self.form_class
+    return render(request, self.template_name, { 'club' : club, 'form' : form})
+
+  def post(self, request, club_id):
+    form = self.form_class(request.POST)
+    club = get_object_or_404(Club, pk=club_id)
+    if form.is_valid():
+      event = form.save(club, commit=True)
+
+    return HttpResponseRedirect(reverse('suite:club_view', args=[club_id]))
 

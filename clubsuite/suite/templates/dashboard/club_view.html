@@ -1,19 +1,25 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% load widget_tweaks %}
+{% load guardian_tags %}
 
 {% block body_block %}
 
+{% get_obj_perms request.user for club as "club_perms" %}
 <section class='section'>
   <div class='container'>
-
-
     <h1 class="title">{{club.club_name}}</h1>
     <a href="{% url 'suite:club_roster' club.id %}">club roster</a>
     <a href="{% url 'suite:club_join' club.id %}">join this club</a>
-    <a href="{% url 'suite:club_emails' club.id %}">get emailz</a>
-    <a href="{% url 'suite:handle_join_request' club.id %}">handle join request</a>
-    <a href="{% url 'suite:event_create' club.id %}"> CREATE AN EVENT</a>
+    {% if "can_view_account_info" in club_perms %}
+      <a href="{% url 'suite:club_emails' club.id %}">get emailz</a>
+    {% endif %}
+    {% if "can_handle_join_requests" in club_perms %}
+      <a href="{% url 'suite:handle_join_request' club.id %}">handle join request</a>
+    {% endif %}
+    {% if "can_create_event" in club_perms %}
+      <a href="{% url 'suite:event_create' club.id %}"> CREATE AN EVENT</a>
+    {% endif %}
 
     <br />
 

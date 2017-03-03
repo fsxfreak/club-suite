@@ -37,7 +37,8 @@ class Club(models.Model):
          ('can_access_budget', 'Can access the budgets for this club'),
          ('can_create_budget', 'Can create a budget'),
          ('can_request_reimbusement', 'Can request for a reimbursement'),
-         ('can_handle_reimbursement', 'Can handle reimbursement')
+         ('can_handle_reimbursement', 'Can handle reimbursement'),
+         ('can_view_account_info', 'Can view member personal information'),
          )
 
   C_CHOICES = (
@@ -177,6 +178,7 @@ class Club(models.Model):
     assign_perm('can_access_budget', group, self)
     assign_perm('can_create_budget', group, self)
     assign_perm('can_request_reimbusement', group, self)
+    assign_perm('can_view_account_info', group, self)
 
   def _assign_owner_permissions(self, group):
     # No special owner perms as of yet.
