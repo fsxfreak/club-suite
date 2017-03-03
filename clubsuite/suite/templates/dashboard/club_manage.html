@@ -15,7 +15,7 @@
       <tbody>
       {% for club in clubs %}
         <tr>
-          <td>{{ club.club_name }}</td>
+            <td><a href="{% url 'suite:club_view' club.id %}">{{ club.club_name }}</a></td>
           <td>
             <form method='POST' action="{% url 'suite:club_manage' %}">
               {% csrf_token %}
