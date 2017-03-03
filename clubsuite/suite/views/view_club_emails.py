@@ -10,7 +10,14 @@ class ClubEmails(LoginRequiredMixin, View):
   def get_members(self, club):
     members = []
     for member in club.members.all():
-      members.append( {'user' : member, 'group' : None })
+      group = None
+      if Club.objects.is_owner(club, member):
+        group = 'Owner'
+      elif Club.objects.is_officer(club, member):
+        group = 'Officer'
+      elif Club.objects.is_member(club, member):
+        group = 'Member'
+      members.append( {'user' : member, 'group' : group})
 
     return members
 

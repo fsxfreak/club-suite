@@ -32,11 +32,11 @@ class ClubManager(models.Manager):
     return Club.objects.get(name=cname)._get_member_group().user_set.all()
 
   def is_owner(self, club, user):
-    return club._get_owner_group().user_set.filter(user=user).count() > 0
+    return user in club._get_owner_group().user_set.all()
   def is_officer(self, club, user):
-    return club._get_officer_group().user_set.filter(user=user).count() > 0
+    return user in club._get_officer_group().user_set.all()
   def is_member(self, club, user):
-    return club._get_member_group().user_set.filter(user=user).count() > 0
+    return user in club._get_member_group().user_set.all()
 
 class Club(models.Model):
   club_name = models.CharField(max_length=50,unique=True)
