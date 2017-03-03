@@ -1,11 +1,21 @@
 from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import View
 
 from suite.models import Club
 
-class ClubEmails(LoginRequiredMixin, View):
+from guardian.shortcuts import get_perms
+from django.core.exceptions import PermissionDenied
+
+class ClubEmails(UserPassesTestMixin, LoginRequiredMixin, View):
   template_name = 'dashboard/club_emails.html'
+
+  def test_func(self):
+    club = get_object_or_404(Club, pk=self.kwargs['club_id'])
+    if 'can_view_account_info' not in get_perms(self.request.user, club):
+      raise PermissionDenied
+
+    return True 
 
   def get_members(self, club, group_str):
     users = None

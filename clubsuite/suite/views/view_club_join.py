@@ -23,7 +23,6 @@ class ClubJoin(LoginRequiredMixin, View):
       club = Club.objects.get(pk=club_id)
       
       if request.user not in club.members.all():
-        print('joinin')
         join_request = JoinRequest(cid=club, uid=request.user, reason=reason)
         join_request.save()
 

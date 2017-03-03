@@ -18,7 +18,6 @@ class ClubManage(LoginRequiredMixin, View):
     if 'resign' in request.POST:
       club = Club.objects.get(id=request.POST['club_id'])
       club.remove_member(request.user, request.user)
-      print('remove dmself')
 
     clubs = request.user.get_clubs()
     return render(request, self.template_name, {'clubs' : clubs}) 

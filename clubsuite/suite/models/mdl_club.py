@@ -107,7 +107,6 @@ class Club(models.Model):
     '''
     return: True if user is member of the club, False if not
     '''
-    print (actor, user)
     if not 'can_handle_join_requests' in get_perms(actor, self):
       print(actor, 'cannot add the user because insufficient permisisons!')
       return False
@@ -122,7 +121,6 @@ class Club(models.Model):
     '''
     return: True if user removed, False if not
     '''
-    print('in removing member')
     if 'can_remove_member' in get_perms(actor, self) or actor is user:
       # TODO edge case where actor and user is owner of club
       if user.groups.filter(name=self._get_owner_group_name()).count() > 0:
@@ -153,8 +151,9 @@ class Club(models.Model):
 
     if user.groups.filter(name=self._get_officer_group_name()).count() == 0:
       user.groups.add(self._get_officer_group())
+      return True
 
-    return True
+    return False
 
   def demote_from_officer(self, actor, user):
     '''
