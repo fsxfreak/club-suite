@@ -29,7 +29,7 @@ class Event(models.Model):
       on_delete=models.CASCADE
    )
 
-   #did = models.ForeignKey('Division')
+   did = models.ForeignKey('Division', on_delete=models.CASCADE, null=True)
    event_name = models.CharField(max_length=100)
    start_date = models.DateField(default=datetime.now)
    start_time = models.TimeField(default='12:00:00')
@@ -40,6 +40,7 @@ class Event(models.Model):
    event_cost = models.DecimalField(max_digits=10, decimal_places=2,default=0)
    accessibility = models.BooleanField(default=True) #True=public, False=private
    required = models.BooleanField(default=False)
+   image = models.ImageField(default="static/media/special_event.png")
 
    objects = EventManager()
 

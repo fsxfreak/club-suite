@@ -46,12 +46,12 @@ class Club(models.Model):
       ('PRI','Private')
       )
   club_type = models.CharField(max_length=3,choices=C_CHOICES,default='PUB')
-  image = models.ImageField(upload_to='/static/media', default="/static/media/default.jpg")
+  image = models.ImageField(default="static/media/default.jpg")
   first_seen = models.DateTimeField(editable=False, blank=True, null=True)
   last_seen = models.DateTimeField(blank=True, null=True)
   club_description = models.TextField()
   requests = models.ManyToManyField(
-                  User, 
+                  User,
                   through='JoinRequest',
                   related_name='JoinRequest'
                   )
@@ -142,7 +142,7 @@ class Club(models.Model):
     actor must have 'can_handle_promotion_requests' permission
     return: True if user now an officer, False if not
     '''
-    is_member = self.add_member(actor, user)
+    is_member = self.is_member(self, user)
     if not is_member:
       print('Cannot promote a non member to officer')
       return False
@@ -159,8 +159,22 @@ class Club(models.Model):
     '''
     actor must have 'can_handle_promotion_requests' permission
     '''
-    # TODO
-    pass
+    is_officer = self.is_officer(self,user)
+    if not is_officer:
+      print('Cannot demote a non officer to member')
+      return False
+    if not 'can_handle_join_requests' in get_perms(actor,self):
+      return False
+
+    if user.groups.filter(name=self._get_member_group_name()).count() == 0:
+      user.groups.add(self._get_member_group())
+      user.groups.remove(self._get_officer_group())
+
+    if user.groups.filter(name=self._get_officer_group_name()).count() != 0:
+      user.groups.remove(self._get_officer_group()) 
+      return True
+
+    return False
 
   def _assign_member_permissions(self, group):
     assign_perm('can_request_reimbusement', group, self)

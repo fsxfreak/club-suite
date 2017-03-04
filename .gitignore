@@ -95,3 +95,5 @@ cse-env
 
 
 *.DS_Store
+
+clubsuite/static

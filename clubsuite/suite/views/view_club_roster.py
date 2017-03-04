@@ -32,4 +32,3 @@ class ClubRoster(LoginRequiredMixin, View):
 
     members = self.get_members(club)
     return render(request, self.template_name, {'club': club, 'members' : members})
-

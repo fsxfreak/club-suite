@@ -7,14 +7,21 @@
 <div class='container'>
   <h1>requests</h1>
   {% for req in reqs %}
-    {{ req.cid.club_name }}
-    {{ req.uid.get_full_name }}
+    {{ req.uid.get_full_name }} wants to join   {{ req.cid.club_name }} because
     {{ req.reason }}
+    <span>
     <form method='POST' action="{% url 'suite:handle_join_request' req.cid.id %}">
       {% csrf_token %}
-      <input class='button' type='submit' name='submit' value='{{ req.uid.get_full_name }}'>
+      <input class='button' type='submit' name='submit' value='Let him join!'>
       <input type='hidden' name='accept' value='{{ req.id }}'>
     </form>
+    <form method='POST' action="{% url 'suite:handle_join_request' req.cid.id %}">
+      {% csrf_token %}
+      <input class='button' type='submit' name='submit' value='Delete'>
+      <input type='hidden' name='delete' value='{{ req.id }}'>
+    </form>
+    </span>
+
   {% endfor %}
 </div>
 </section>

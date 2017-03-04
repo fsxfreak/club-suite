@@ -20,7 +20,6 @@
             </p>
        </div>
 
-       <!-- note: start_date field does not yet exist-->
        <div class="control is-horizontal">
             <div class="control-label">
                  <label class="label" for="id_start_date">Start Date</label>
@@ -82,6 +81,26 @@
                  <span class="icon is-small">
                       <i class="fa fa-usd"></i>
                  </span>
+       </div>
+
+       <div class="control is-horizontal">
+            <div class="control-label">
+                 <label class="label">Upload Image</label>
+            </div>
+            <p class="control has-icon">
+                 {% render_field form.image %}
+            </p>
+       </div>
+
+
+
+       <div class="control is-horizontal">
+            <div class="control-label">
+                 <label class="label" for="id_did">Division</label>
+            </div>
+            <p class="control has-icon">
+                 {% render_field form.did %}
+            </p>
        </div>
 
        <div class="control is-horizontal">

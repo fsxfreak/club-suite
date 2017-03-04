@@ -19,20 +19,27 @@ class HandleJoinRequest(UserPassesTestMixin, LoginRequiredMixin, View):
     if 'can_handle_join_requests' not in get_perms(self.request.user, club):
       raise PermissionDenied
 
-    return True 
+    return True
 
   def get(self, request, club_id, *args, **kwargs):
     reqs = Club.objects.get(pk=club_id).joinrequest_set.all()
     return render(request, self.template_name, { 'reqs' : reqs })
 
   def post(self, request, club_id, *args, **kwargs):
-    req_id = request.POST['accept']
-    if req_id:
-      req = JoinRequest.objects.get(id=req_id)
-      if req.cid.add_member(request.user, req.uid):
-        # only process if sufficient permission
-        req.delete()
+    if 'accept' in request.POST:
+         req_id = request.POST['accept']
+         req = JoinRequest.objects.get(id=req_id)
+         if req.cid.add_member(request.user, req.uid):
+           # only process if sufficient permission
+           req.delete()
+    if 'delete' in request.POST:
+         req_idDelete = request.POST['delete']
+         req = JoinRequest.objects.get(id=req_idDelete)
+         req.cid.remove_member(request.user, req.uid)
+         req.delete()
+
+
+
 
     reqs = Club.objects.get(pk=club_id).joinrequest_set.all()
     return render(request, self.template_name, { 'reqs' : reqs })
-
