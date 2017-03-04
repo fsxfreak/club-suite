@@ -8,21 +8,78 @@
 {% get_obj_perms request.user for club as "club_perms" %}
 <section class='section'>
   <div class='container'>
-    <h1 class="title">{{club.club_name}}</h1>
-    <a href="{% url 'suite:club_roster' club.id %}">Club Roster</a> |
-    <a href="{% url 'suite:club_join' club.id %}">Join this Club</a> |
-    {% if "can_view_account_info" in club_perms %}
-      <a href="{% url 'suite:club_emails' club.id %}">Generate Email List </a> |
-    {% endif %}
-    {% if "can_handle_join_requests" in club_perms %}
-      <a href="{% url 'suite:handle_join_request' club.id %}">Handle Join Request</a> |
-    {% endif %}
-    {% if "can_create_event" in club_perms %}
-      <a href="{% url 'suite:event_create' club.id %}"> Create Event</a> |
-    {% endif %}
+    
+    <nav class="nav has-shadow">
+  <div class="container">
+    <div class="nav-left">
+        <a class="nav-item is-tab is-hidden-mobile is-active" href="{% url 'suite:club_roster' club.id %}">Club Roster</a>  
+        <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:club_join' club.id %}">Join this Club</a>  
+        {% if "can_view_account_info" in club_perms %}
+        <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:club_emails' club.id %}">Generate Email List </a>  
+        {% endif %}
+        {% if "can_handle_join_requests" in club_perms %}
+        <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:handle_join_request' club.id %}">Handle Join Request</a>  
+        {% endif %}
+        {% if "can_create_event" in club_perms %}
+        <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:event_create' club.id %}"> Create Event</a>  
+        {% endif %}
+    </div>
+    <span class="nav-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+  </div>
+</nav>
+      
 
     <br />
-    <img src="{{club.image.url}}">
+    
+    
+    <div class="columns">
+        <div class="column is-one-third">
+
+            <div class="card">
+                <div class="card-image">
+                    <figure class="image is-4by3">
+                        <img src="{{club.image.url}}" alt="Image">
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                            {% if club.club_type == PUB %} 
+                            <figure class="image" style="height: 40px; width: 40px;">
+                                <img src="../../static/media/public.png" alt="Image">
+                            </figure>
+                            {% endif %}
+                            {% if club.club_type != PUB %} 
+                            <figure class="image" style="height: 40px; width: 40px;">
+                                <img src="../../static/media/black-private-512.jpg" alt="Image">
+                            </figure>
+                            {% endif %}
+                        </div>
+                        <div class="media-content">
+                            <p class="title is-4">{{club.club_name}}</p>
+                            <p class="subtitle is-6">University of California, San Diego</p>
+                        </div>
+                    </div>
+
+                    <div class="content">
+                        <p>
+                        <br>
+                        <small>{% if club.club_type != PUB%} Join by Invitation Only{% endif %}</small>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="column">
+            <blockquote>{{ club.summary}}</blockquote>
+        </div>
+  </div>
+    
+    
     <p> <h2> New Events  </h2></p>
     {% for event in events %}
       
