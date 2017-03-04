@@ -13,7 +13,7 @@ class View_Club_Join_TestCase(TestCase):
 
     def test_get_login(self):
         self.client.force_login(get_user_model().objects.get_or_create(first_name='testuser')[0])
-        response = self.client.get(reverse('suite:club_join',kwargs={'club_id':id(self.club)}))
+        response = self.client.get(reverse('suite:club_join',kwargs={'club_id':self.club.id}))
         #self.assertRedirects(response,reverse('suite:club_join',self.club))
 
 '''
