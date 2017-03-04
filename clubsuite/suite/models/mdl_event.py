@@ -39,6 +39,7 @@ class Event(models.Model):
    event_cost = models.DecimalField(max_digits=10, decimal_places=2,default=0)
    accessibility = models.BooleanField(default=True) #True=public, False=private
    required = models.BooleanField(default=False)
+   image = models.ImageField(default="static/media/special_event.png")
 
    objects = EventManager()
 
