@@ -52,15 +52,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_clubs(self):        
         return self.club_set.all()
 
-    def get_club_group(self, club_obj):
-        print(self.groups.all())
-        return self.groups.get(name=club_obj.club_name)
-
 class Account(models.Model):
     user = models.OneToOneField(
        User, 
        on_delete = models.CASCADE,
-       primary_key = True,
+       primary_key = True
     )
     preferred_name = models.CharField(max_length=20, blank=True)
 
