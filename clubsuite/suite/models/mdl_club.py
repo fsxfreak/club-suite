@@ -142,7 +142,7 @@ class Club(models.Model):
     actor must have 'can_handle_promotion_requests' permission
     return: True if user now an officer, False if not
     '''
-    is_member = self.is_member(self, user)
+    is_member = self.is_member(user)
     if not is_member:
       print('Cannot promote a non member to officer')
       return False
@@ -159,7 +159,7 @@ class Club(models.Model):
     '''
     actor must have 'can_handle_promotion_requests' permission
     '''
-    is_officer = self.is_officer(self,user)
+    is_officer = self.is_officer(user)
     if not is_officer:
       print('Cannot demote a non officer to member')
       return False
@@ -177,9 +177,9 @@ class Club(models.Model):
     return False
   
   def promote_officer_to_owner(self, actor, user):
-    if not self.is_owner(self, actor):
+    if not self.is_owner(actor):
        return False
-    if not self.is_officer(self, user):
+    if not self.is_officer(user):
        return False
     if user.groups.filter(name=self._get_owner_group_name()).count() == 0:
        user.groups.add(self._get_owner_group())
@@ -189,11 +189,11 @@ class Club(models.Model):
     return False
 
   def demote_owner_to_officer(self, actor, user):
-    if not self.is_owner(self, actor):
+    if not self.is_owner(actor):
        return False
-    if not self.is_owner(self, user):
+    if not self.is_owner(user):
        return False
-    if self.get_owners(self).count() <= 1:
+    if self.get_owners().count() <= 1:
        return False
 
     if user.groups.filter(name=self._get_owner_group_name()).count() != 0:
