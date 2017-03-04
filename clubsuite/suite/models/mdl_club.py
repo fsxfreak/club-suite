@@ -20,13 +20,9 @@ class ClubManager(models.Manager):
     c=Club.objects.get(id=cid_in)
     return c
 
-  def club_roster(self, cname):
-    users_in_group=Group.objects.get(name=cname).user_set.all()
-    return users_in_group
 
 class Club(models.Model):
   club_name = models.CharField(max_length=50,unique=True)
-
 
   class Meta:
     permissions = (
@@ -41,7 +37,8 @@ class Club(models.Model):
          ('can_access_budget', 'Can access the budgets for this club'),
          ('can_create_budget', 'Can create a budget'),
          ('can_request_reimbusement', 'Can request for a reimbursement'),
-         ('can_handle_reimbursement', 'Can handle reimbursement')
+         ('can_handle_reimbursement', 'Can handle reimbursement'),
+         ('can_view_account_info', 'Can view member personal information'),
          )
 
   C_CHOICES = (
@@ -49,10 +46,15 @@ class Club(models.Model):
       ('PRI','Private')
       )
   club_type = models.CharField(max_length=3,choices=C_CHOICES,default='PUB')
-  image = models.ImageField(upload_to='/static/media', default="/static/media/default.jpg")
+  image = models.ImageField(default="static/media/default.jpg")
   first_seen = models.DateTimeField(editable=False, blank=True, null=True)
   last_seen = models.DateTimeField(blank=True, null=True)
   club_description = models.TextField()
+  requests = models.ManyToManyField(
+                  User, 
+                  through='JoinRequest',
+                  related_name='JoinRequest'
+                  )
 
   members = models.ManyToManyField(User)
   objects = ClubManager()
@@ -77,12 +79,35 @@ class Club(models.Model):
   def _get_member_group(self):
     return Group.objects.get(name=self._get_member_group_name())
 
+  def get_owners(self):
+    return self._get_owner_group().user_set.all()
+  def get_officers(self):
+    return self._get_officer_group().user_set.all()
+  def get_members(self):
+    return self._get_member_group().user_set.all()
+
+  def is_owner(self, user):
+    return user in self._get_owner_group().user_set.all()
+  def is_officer(self, user):
+    return user in self._get_officer_group().user_set.all()
+  def is_member(self, user):
+    return user in self._get_member_group().user_set.all()
+
+  def get_group(self, user):
+    group = []
+    if self.is_owner(user):
+      group = 'Owner'
+    elif self.is_officer(user):
+      group = 'Officer'
+    elif self.is_member(user):
+      group = 'Member'
+    return group
+
   def add_member(self, actor, user):
     '''
     return: True if user is member of the club, False if not
     '''
-    print (actor, user)
-    if not 'can_handle_join_request' in get_perms(actor, self):
+    if not 'can_handle_join_requests' in get_perms(actor, self):
       print(actor, 'cannot add the user because insufficient permisisons!')
       return False
 
@@ -96,7 +121,6 @@ class Club(models.Model):
     '''
     return: True if user removed, False if not
     '''
-    print('in remov emmer')
     if 'can_remove_member' in get_perms(actor, self) or actor is user:
       # TODO edge case where actor and user is owner of club
       if user.groups.filter(name=self._get_owner_group_name()).count() > 0:
@@ -118,17 +142,18 @@ class Club(models.Model):
     actor must have 'can_handle_promotion_requests' permission
     return: True if user now an officer, False if not
     '''
-    is_member = self.add_member(user)
+    is_member = self.add_member(actor, user)
     if not is_member:
       print('Cannot promote a non member to officer')
       return False
-    if not 'can_handle_join_request' in get_perms(actor, self):
+    if not 'can_handle_join_requests' in get_perms(actor, self):
       return False
 
     if user.groups.filter(name=self._get_officer_group_name()).count() == 0:
       user.groups.add(self._get_officer_group())
+      return True
 
-    return True
+    return False
 
   def demote_from_officer(self, actor, user):
     '''
@@ -152,6 +177,7 @@ class Club(models.Model):
     assign_perm('can_access_budget', group, self)
     assign_perm('can_create_budget', group, self)
     assign_perm('can_request_reimbusement', group, self)
+    assign_perm('can_view_account_info', group, self)
 
   def _assign_owner_permissions(self, group):
     # No special owner perms as of yet.

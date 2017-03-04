@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block body_block %}
+<section class='section'>
+<div class='container'>
+  <h1> {{ club.club_name }} emailzzzz </h1>
+
+  <ul>
+  {% for member in members %}
+  <li>{{ member.user.email}},  {{ member.group }}</li>
+    {% endfor %}
+  </ul>
+  <form method='POST' action="{% url 'suite:club_emails' club.id %}">
+    {% csrf_token %}
+    <input name='member_type' value='officer'>
+  </form>
+</div>
+</section>
+
+{% endblock body_block %}

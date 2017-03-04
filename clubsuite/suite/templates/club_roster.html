@@ -1,15 +1,38 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load widget_tweaks %}
+{% load guardian_tags %}
+
+{% load staticfiles %}
 
 {% block body_block %}
+
+{% get_obj_perms request.user for club as "club_perms" %}
 <section class='section'>
 <div class='container'>
   <h1> {{ club.club_name }} Roster </h1>
 
   <ul>
   {% for member in members %}
-  <li>{{ member.user.first_name}} {{ member.user.last_name }} 
-    : {{ member.user.student_title}}, {{ member.group }} </li>
+    <li>
+      <div>{{ member.user.first_name}} {{ member.user.last_name }} 
+            : {{ member.group }} 
+      </div>
+      {% if "can_remove_member" in club_perms %}
+      <form method='POST' action="{% url 'suite:club_roster' club.id %}">
+        {% csrf_token %}
+        <input class='button' type='submit' name='submit' value='Delete {{ member.user.first_name }}'>
+        <input type='hidden' name='delete' value='{{ member.user.id }}'>
+      </form>
+      {% endif %}
+      {% if "can_handle_promotion_requests" in club_perms %}
+      <form method='POST' action="{% url 'suite:club_roster' club.id %}">
+        {% csrf_token %}
+        <input class='button' type='submit' name='submit' value='Promote {{ member.user.first_name }}'>
+        <input type='hidden' name='promote' value='{{ member.user.id }}'>
+      </form>
+      {% endif %}
+    </li>
     {% endfor %}
   </ul>
   </div>

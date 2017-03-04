@@ -5,7 +5,7 @@ class EventManager(models.Manager):
 
    #search for upcoming events of a club since today ordered by start time
    #most recent to future
-   def get_upcoming_events(in_cid):
+   def get_upcoming_events(self, in_cid):
       today = datetime.now()
       upcoming_events=Event.objects.filter(
                         cid=in_cid,
@@ -17,7 +17,7 @@ class EventManager(models.Manager):
       return upcoming_events
 
    #search for all events of a club, ordered from newest to oldest
-   def get_all_events(in_cid):
+   def get_all_events(self, in_cid):
       all_events=Event.objects.filter(
                         cid=in_cid
                         ).order_by('-start_date','-start_time')
@@ -36,7 +36,7 @@ class Event(models.Model):
    end_date = models.DateField(default=datetime.now)
    end_time = models.TimeField(default='12:00:00')
    event_location = models.CharField(max_length=100)
-   event_description = models.CharField(max_length=1000)
+   event_description = models.TextField()
    event_cost = models.DecimalField(max_digits=10, decimal_places=2,default=0)
    accessibility = models.BooleanField(default=True) #True=public, False=private
    required = models.BooleanField(default=False)
