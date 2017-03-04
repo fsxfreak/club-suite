@@ -51,7 +51,7 @@ class Club(models.Model):
   last_seen = models.DateTimeField(blank=True, null=True)
   club_description = models.TextField()
   requests = models.ManyToManyField(
-                  User, 
+                  User,
                   through='JoinRequest',
                   related_name='JoinRequest'
                   )
