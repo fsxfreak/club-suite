@@ -12,3 +12,4 @@ from .view_club_manage import *
 from .view_club_emails import *
 from .view_handle_join_request import *
 from .view_event import *
+from .view_budget import *

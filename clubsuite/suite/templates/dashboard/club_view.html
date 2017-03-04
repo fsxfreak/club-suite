@@ -23,6 +23,9 @@
         {% if "can_create_event" in club_perms %}
         <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:event_create' club.id %}"> Create Event</a>  
         {% endif %}
+        {% if "can_access_budget" in club_perms %}
+        <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:budget' club.id %}">Access Budget</a>  
+        {% endif %}
     </div>
     <span class="nav-toggle">
       <span></span>

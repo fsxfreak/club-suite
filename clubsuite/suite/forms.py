@@ -51,7 +51,7 @@ class EventCreateForm(forms.ModelForm):
     model = Event
     fields = ['event_name', 'start_date', 'start_time', 'end_date', 'end_time', 
               'event_location', 'event_description', 'event_cost', 'accessibility',
-              'required']
+              'required', 'did']
 
   def save(self, club, commit=False):
       event_name = self.cleaned_data['event_name']
@@ -63,11 +63,13 @@ class EventCreateForm(forms.ModelForm):
       event_cost = self.cleaned_data['event_cost']
       accessibility = self.cleaned_data['accessibility']
       required = self.cleaned_data['required']
+      did = self.cleaned_data['did']
 
       event = Event(cid=club, event_name=event_name, start_time=start_time,
         end_date=end_date, end_time=end_time, event_location=event_location, 
         event_description=event_description,
-        event_cost=event_cost, accessibility=accessibility, required=required)
+        event_cost=event_cost, accessibility=accessibility, required=required,
+        did=did)
       if commit:
           event.save()
 
@@ -83,3 +85,23 @@ class EditProfileForm(forms.ModelForm):
 
 class ClubJoinForm(forms.Form):
   reason = forms.CharField(max_length=200, required=True)
+
+class DivisionCreateForm(forms.ModelForm):
+  class Meta:
+    model = Division
+    fields = ['name']
+
+  def save(self, commit=False):
+    name = self.cleaned_data['name']
+
+    # must add division.cid = club later!!!!!!!!!!!
+    division = Division(name=name)
+    if commit:
+      division.save()
+    return division
+
+class BudgetCreateForm(forms.ModelForm):
+  class Meta:
+    model = Budget
+    fields = [ 'did', 'planned', 'start_date', 'end_date' ]
+

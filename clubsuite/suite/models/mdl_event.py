@@ -28,7 +28,7 @@ class Event(models.Model):
       on_delete=models.CASCADE
    )
 
-   #did = models.ForeignKey('Division')
+   did = models.ForeignKey('Division', on_delete=models.CASCADE, null=True)
    event_name = models.CharField(max_length=100)
    start_date = models.DateField(default=datetime.now)
    start_time = models.TimeField(default='12:00:00')
