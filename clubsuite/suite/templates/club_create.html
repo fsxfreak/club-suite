@@ -10,7 +10,7 @@
       <h1 class='title'>Create a Club</h1>
     </div>
 
-    <form action="{% url 'suite:club_create' %}" method="post">
+    <form action="{% url 'suite:club_create' %}" method="post" enctype='multipart/form-data'>
       {% csrf_token %}
       <div class="control is-horizontal">
            <div class="control-label">
