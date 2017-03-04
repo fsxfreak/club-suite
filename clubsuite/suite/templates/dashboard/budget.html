@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block body_block %}
+<section class='section'>
+<div class='container'>
+  <h1> {{ club.club_name }} bud get st00f </h1>
+
+  <p> make your division</p>
+  <form method='POST' action="{% url 'suite:budget' club.id %}">
+    {% csrf_token %}
+    {{ division_form }}
+    <input type='submit' class='button'>
+    <input type='hidden' name='division' class='button'>
+  </form>
+
+  <p> make yourbudget item</p>
+  <form method='POST' action="{% url 'suite:budget' club.id %}">
+    {% csrf_token %}
+    {{ budget_form }}
+    <input type='submit' class='button'>
+    <input type='hidden' name='budget' class='button'>
+  </form>
+
+  <p>division list</p>
+  {% for division in divisions %}
+    <h3>{{ division }}</h3>
+    {% for budget in division.budget_set.all %}
+      <h4>{{ budget }}</h4>
+    {% endfor %}
+  {% endfor %}
+</div>
+</section>
+
+{% endblock body_block %}
