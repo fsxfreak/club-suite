@@ -68,7 +68,7 @@ class EventCreateForm(forms.ModelForm):
       image = self.cleaned_data['image']
 
       event = Event(cid=club, event_name=event_name, start_time=start_time,
-        start_date=start_date, nd_date=end_date, end_time=end_time, event_location=event_location,
+        start_date=start_date, end_date=end_date, end_time=end_time, event_location=event_location,
         event_description=event_description,
         event_cost=event_cost, accessibility=accessibility, required=required,
         did=did, image=image)
