@@ -49,13 +49,14 @@ class ClubCreateForm(forms.ModelForm):
 class EventCreateForm(forms.ModelForm):
   class Meta:
     model = Event
-    fields = ['event_name', 'start_date', 'start_time', 'end_date', 'end_time', 
+    fields = ['event_name', 'start_date', 'start_time', 'end_date', 'end_time',
               'event_location', 'event_description', 'event_cost', 'accessibility',
-              'required', 'did']
+              'required', 'did', 'image']
 
   def save(self, club, commit=False):
       event_name = self.cleaned_data['event_name']
       start_time = self.cleaned_data['start_time']
+      start_date = self.cleaned_data['start_date']
       end_date = self.cleaned_data['end_date']
       end_time = self.cleaned_data['end_time']
       event_location = self.cleaned_data['event_location']
@@ -64,12 +65,13 @@ class EventCreateForm(forms.ModelForm):
       accessibility = self.cleaned_data['accessibility']
       required = self.cleaned_data['required']
       did = self.cleaned_data['did']
+      image = self.cleaned_data['image']
 
       event = Event(cid=club, event_name=event_name, start_time=start_time,
-        end_date=end_date, end_time=end_time, event_location=event_location, 
+        start_date=start_date, nd_date=end_date, end_time=end_time, event_location=event_location,
         event_description=event_description,
         event_cost=event_cost, accessibility=accessibility, required=required,
-        did=did)
+        did=did, image=image)
       if commit:
           event.save()
 
@@ -104,4 +106,3 @@ class BudgetCreateForm(forms.ModelForm):
   class Meta:
     model = Budget
     fields = [ 'did', 'planned', 'start_date', 'end_date' ]
-

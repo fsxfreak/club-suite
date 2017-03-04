@@ -7,13 +7,22 @@
 {% block body_block %}
 <section class='section'>
 <div class='container'>
-  <h1> {{ event.event_name }} Roster </h1>
+  <h1> {{ event.event_name }} Sign In </h1>
 
   <ul>
   {% for member in members %}
+  <span>
   <li>{{ member.user.first_name}} {{ member.user.last_name }}
-    : {{ member.user.student_title}}, {{ member.group }} </li>
-    {% endfor %}
+    : {{ member.user.student_title}}, {{ member.group }}
+    {% endfor %} &nbsp &nbsp &nbsp &nbsp &nbsp
+
+    <label class="checkbox">
+     <input type="checkbox">
+       Sign in
+   </label>
+   </li>
+ </span>
+
   </ul>
   </div>
 </section>
