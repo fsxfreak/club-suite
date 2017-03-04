@@ -193,6 +193,9 @@ class Club(models.Model):
        return False
     if not self.is_owner(self, user):
        return False
+    if self.get_owners(self).count() <= 1:
+       return False
+
     if user.groups.filter(name=self._get_owner_group_name()).count() != 0:
        user.groups.add(self._get_officer_group())
        user.groups.remove(self._get_owner_group())
