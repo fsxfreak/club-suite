@@ -27,7 +27,7 @@
                 </h1>
               <form action="{% url 'suite:login' %}" method="post" accept-charset="utf-8">
                 {% if form.errors %}
-                <label class='label'>{{ form.errors }}</label>
+                <label class='label'>Please enter a correct email and password. Note that both fields may be case-sensitive.<label>
                 {% endif %}
                 {% csrf_token %}
                 {% for field in form %}
