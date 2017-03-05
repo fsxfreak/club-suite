@@ -22,6 +22,24 @@ class Budget(UserPassesTestMixin, LoginRequiredMixin, View):
 
     return True 
 
+  def generate_books(self, divs):
+    books = []
+    for div in divs:
+      budgets = div.budget_set.all()
+      total_budget = 0
+      for budget in budgets:
+        total_budget = total_budget + budget.planned
+
+      events = div.event_set.all()
+      total_expense = 0
+      for event in events:
+        total_expense = total_expense + event.event_cost
+
+      books.append({ 'division' : div, 'budgets' : budgets, 'events' : events,
+        'total_budget' : total_budget, 'total_expense' : total_expense })
+
+    return books
+
   def get(self, request, club_id, *args, **kwargs):
     club = Club.objects.get(pk=club_id)
     
@@ -29,12 +47,21 @@ class Budget(UserPassesTestMixin, LoginRequiredMixin, View):
     budget_form.fields['did'].queryset = Division.objects.filter(cid=club)
 
     division_form = self.division_form_class
-    divisions = club.division_set.all()
 
-    return render(request, self.template_name, { 'divisions' : divisions, 
+    books = self.generate_books(club.division_set.all())
+
+    total_budget = 0
+    total_expense = 0
+    for book in books:
+      total_budget = total_budget + book['total_budget']
+      total_expense = total_expense + book['total_expense']
+
+    return render(request, self.template_name, { 'books': books, 
                                                  'club': club,
                                                  'budget_form' : budget_form,
-                                                 'division_form' : division_form})
+                                                 'division_form' : division_form,
+                                                 'total_budget' : total_budget,
+                                                 'total_expense' : total_expense})
 
   def post(self, request, club_id, *args, **kwargs):
     club = Club.objects.get(pk=club_id)
@@ -56,8 +83,9 @@ class Budget(UserPassesTestMixin, LoginRequiredMixin, View):
         budget = budget_form.save(commit=True)
         budget.save()
 
-    divisions = club.division_set.all()
-    return render(request, self.template_name, { 'divisions' : divisions, 
+    books = self.generate_books(club.division_set.all())
+
+    return render(request, self.template_name, { 'books' : books, 
                                                  'club': club,
                                                  'budget_form' : budget_form,
                                                  'division_form' : division_form})
