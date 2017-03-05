@@ -24,23 +24,23 @@ class View_Budget_TestCase(TestCase):
     def test_get_login(self):
         self.client.force_login(get_user_model().objects.get(first_name='Owner'))
         #response = self.client.get(reverse('suite:budget',kwargs={self.club.id}))
-        response = self.client.get(reverse('suite:budget',kwargs={self.club.id}),club_id=self.club.id)
+        response = self.client.get(reverse('suite:budget',kwargs={'club_id':self.club.id}),club_id=self.club.pk)
         self.assertEqual(response.status_code,200)
 
     def test_get_not_logged_in(self):
-        response = self.client.get(reverse('suite:budget',kwargs={self.club.id}))
-        self.assertRedirects(response, "/?next="+reverse('suite:budget',kwargs={self.club.id}), 302,200)
+        response = self.client.get(reverse('suite:budget',kwargs={'club_id':self.club.id}),club_id=self.club.pk)
+        self.assertEqual(response.status_code,403)
 
     def test_post(self):
         self.client.force_login(get_user_model().objects.get(first_name='Owner'))
         data_division = {'name':"Expenses",
                          'division':"1"}
-        response = self.client.post(reverse('suite:budget',kwargs={self.club.id}),data_division, follow=True)
+        response = self.client.post(reverse('suite:budget',kwargs={'club_id':self.club.id}),data_division,club_id=self.club.pk,follow=True)
         self.assertEqual(response.status_code,200)
         division = Division.objects.get(name="Expenses")
 
-        data_budget = {'did':division.id,'planned':1000,'start_date':"03/05/17",'end_date':"03/06/17",'budget':"1"}
+        data_budget = {'did':division.pk,'planned':1000,'start_date':"03/05/17",'end_date':"03/06/17",'budget':"1"}
 
-        response = self.client.post(reverse('suite:budget',kwargs={self.club.id}),data_budget, follow=True)
+        response = self.client.post(reverse('suite:budget',kwargs={'club_id':self.club.id}),data_budget, follow=True)
 
-        self.assertEqual(len(Budget.objects),1)
+        self.assertEqual(len(Budget.objects.filter(did=division.pk)),1)
