@@ -45,6 +45,11 @@ class UserTestCase(TestCase):
         self.assertEqual(club_list[0],self.club)
         self.assertEqual(club_list[1],club2)
 
-    def test_get_club_group(self):
-        self.owner.get_club_group(self.club)
-        self.assertFail()
+    def test_get_clubs(self):
+
+        #create club
+        club2=Club.objects.create(club_name="club2",club_type="PUB",club_description="something")
+        club2._create_permissions()
+        club2._set_owner(self.owner)
+
+        self.assertEqual(len(self.owner.get_clubs()),2)
