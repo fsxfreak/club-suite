@@ -18,6 +18,8 @@ class ClubRoster(LoginRequiredMixin, View):
     club = get_object_or_404(Club, pk=club_id)
     members = self.get_members(club)
 
+    print(club, club_id, request.user)
+
     return render(request, self.template_name, {'club': club, 'members' : members})
 
   def post(self, request, club_id, *args, **kwargs):
