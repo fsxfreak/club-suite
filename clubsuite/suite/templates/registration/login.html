@@ -1,58 +1,46 @@
+{% extends 'base_login.html' %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="description" content="A site to make managing your club easier.">
-    <title>{% block title %}Club Suite{% endblock %}</title>
 
-    {% include 'base_css.html' %}
-    {% include 'base_js.html' %}
-  </head>
+{% block body_block %}
 
-  <body class="loginBody">
-    <div class="content">
+<section class="">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-vcentered">
+        <div class="column is-4 is-offset-4">
+          <img src="../static/media/CSElogo.png" class="loginPanda">
+          <div class="box">
 
-    <section class="">
-      <div class="hero-body">
-        <div class="container">
-          <div class="columns is-vcentered">
-            <div class="column is-4 is-offset-4">
-              <img src="../static/media/CSElogo.png" class="loginPanda">
-              <div class="box">
-                  
-                <h1 class="title">  
-                  Club Suite
-                </h1>
-              <form action="{% url 'suite:login' %}" method="post" accept-charset="utf-8">
-                {% if form.errors %}
-                <label class='label'>{{ form.errors }}</label>
-                {% endif %}
-                {% csrf_token %}
-                {% for field in form %}
-                <label class='label'>{{ field.label }}</label>
-                {% if field.errors %}
-                  <p class='label'>{{ field.errors }}</p>
-                {% endif %}
-                <p class='control'>{{ field }}</p>
-              {% endfor %}
-              {#<input type="hidden" name="next" value="{{ next }}" />#}
-              <input type="hidden" name="next" value="{% url 'suite:dashboard' %}" />
-              <input class="button small control is-primary" type="submit" value="Login"/>
-            </form>
-          </div>
-          <p class="has-text-centered">
-            <a href="{% url 'suite:register' %}">Register an Account</a>
-            |
-            <a href="#">Forgot password</a>
-          </p>
-        </div>
+            <h1 class="title">  
+              Club Suite
+            </h1>
+          <form action="{% url 'suite:login' %}" method="post" accept-charset="utf-8">
+            {% if form.errors %}
+            <label class='label'>{{ form.errors }}</label>
+            {% endif %}
+            {% csrf_token %}
+            {% for field in form %}
+            <label class='label'>{{ field.label }}</label>
+            {% if field.errors %}
+              <p class='label'>{{ field.errors }}</p>
+            {% endif %}
+            <p class='control'>{{ field }}</p>
+          {% endfor %}
+          {#<input type="hidden" name="next" value="{{ next }}" />#}
+          <input type="hidden" name="next" value="{% url 'suite:dashboard' %}" />
+          <input class="button small control is-primary" type="submit" value="Login" />
+        </form>
+
       </div>
+      <p class="has-text-centered">
+        <a href="{% url 'suite:register' %}">Register an Account</a>
+        |
+        <a href="#">Forgot password</a>
+      </p>
+    </div>
+    </div>
+  </div>
+</div>
+</section>
 
-    </section>
-      </div>
-  </body>
-      
-</html>
-
+{% endblock body_block %}

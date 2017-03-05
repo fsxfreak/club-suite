@@ -1,7 +1,7 @@
 <nav class="nav">
   <div class="nav-left">
     <a class="nav-item">
-      <img href={% url 'suite:dashboard' %} src="http://www.clipartkid.com/images/668/panda-clipart-collection-clipart-panda-free-clipart-images-XEs7kX-clipart.png" alt="Replace this logo">
+      <img href={% url 'suite:dashboard' %} src="../static/media/CSElogo.png" alt="Club Suite Logo">
     </a>
   </div>
 
@@ -43,9 +43,6 @@
         <p>| &nbsp;&nbsp;&nbsp; Welcome, Guest </p><a class="button is-warning-navbar" href="{% url 'suite:login' %}">Log In</a><a class="button is-info-navbar" href="{% url 'suite:register' %}">Register</a>
         {% endif %} 
     </a>
-
-    <span class="nav-item">
-    </span>
   </div>
 </nav>
 
