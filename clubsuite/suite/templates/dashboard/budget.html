@@ -1,32 +1,142 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load widget_tweaks %}
+{% load mathfilters %}
 
 {% block body_block %}
 <section class='section'>
 <div class='container'>
-  <h1> {{ club.club_name }} bud get st00f </h1>
+  <h1>Manage Logistics</h1>
 
-  <p> make your division</p>
+  <h3>Create a New Division</h3>
   <form method='POST' action="{% url 'suite:budget' club.id %}">
     {% csrf_token %}
-    {{ division_form }}
-    <input type='submit' class='button'>
-    <input type='hidden' name='division' class='button'>
+    <div class="control is-horizontal">
+         <div class="control-label">
+              <label class="label" for="id_name">Division Name</label>
+         </div>
+         <p class="control">
+              {{ division_form.name|add_class:'input is-fullwidth' }}
+         </p>
+    </div>
+    <div class="control is-grouped">
+      <p class="control">
+           <button class="button is-primary" type="submit" name="details">Submit</button>
+          <input type='hidden' name='division' class='button'>
+      </p>
+  </div>
   </form>
 
-  <p> make yourbudget item</p>
+  <h3>Create a Budget</h3>
+  <h4>Create a Spending Category</h4>
   <form method='POST' action="{% url 'suite:budget' club.id %}">
     {% csrf_token %}
-    {{ budget_form }}
+    <div class="control is-horizontal">
+         <div class="control-label">
+              <label class="label">Division Name</label>
+         </div>
+         <p class="control">
+              {{ budget_form.did|add_class:'input is-fullwidth' }}
+         </p>
+    </div>
+
+    <div class="control is-horizontal">
+         <div class="control-label">
+              <label class="label" for="id_planned">Allocated Amount</label>
+         </div>
+         <p class="control has-icon">
+              {% render_field budget_form.planned class="input is-fullwidth" type="number" step="any" %}
+              <span class="icon is-small">
+                   <i class="fa fa-usd"></i>
+              </span>
+    </div>
+
+    <div class="control is-horizontal">
+         <div class="control-label">
+              <label class="label">Start Date</label>
+         </div>
+         <p class="control">
+              {% render_field budget_form.start_date class="input is-fullwidth" type="date" %}
+         </p>
+    </div>
+
+    <div class="control is-horizontal">
+         <div class="control-label">
+              <label class="label">End Date</label>
+         </div>
+         <p class="control">
+              {% render_field budget_form.end_date class="input is-fullwidth" type="date" %}
+         </p>
+    </div>
+
+    <div class="control is-grouped">
+      <p class="control">
+           <button class="button is-primary" type="submit" name="details">Add Division</button>
+         <input type='hidden' name='budget' class='button'>
+      </p>
+</div>
+</form>
+<!--
     <input type='submit' class='button'>
     <input type='hidden' name='budget' class='button'>
-  </form>
+    -->
+
+   <h3>View Budget</h3>
+
+  <table class="table">
+  <thead>
+    <tr>
+      <th>Division</th>
+      <th>Spent</th>
+      <th>Budget</th>
+    </tr>
+  </thead>
+  <tfoot>
+       <tr>
+            <th>Total</th>
+            <th>{{total_expense}}</th>
+            <th>{{total_budget}}</th>
+       </tr>
+  </tfoot>
+  <tbody>
+       {% for book in books %}
+       <tr>
+            <td>{{book.division}}</td>
+            <td>${{book.total_expense}}</td>
+            <td>${{book.total_budget}}</td>
+      </tr>
+       {% endfor %}
+
+  </tbody>
+</table>
+
+<h3>View Detailed Budget</h3>
+{% for book in books %}
+{% if not book.total_budget == 0 %}
+<h4>{{book.division}} - {{book.total_expense}}</h4>
+  <progress class="progress is-info" value="{{ book.total_expense|div:book.total_budget|mul:100}}" max="100">{{book.total_expense|div:book.total_budget|mul:100}}%</progress>
+  <table class="table">
+       <thead>
+            <th>Event Name</th>
+            <th>Event Cost</th>
+       </thead>
+       <tbody>
+            {% for event in book.events %}
+            <tr>
+                 <td>{{event.event_name}}</td>
+                 <td>{{event.event_cost}}</td>
+            </tr>
+            {% endfor %}
+       </tbody>
+  </table>
+{% endif %}
+{% endfor %}
 
   <p>total budget overall: {{ total_budget }}</p>
   <p>total expense overall: {{ total_expense }}</p>
 
   <p>division list</p>
-  {% for book in books %} 
+  {% for book in books %}
   <h3>{{ book.division }} total budget for this idvision: {{ book.total_budget }}
       total expenses: {{ book.total_expense }}</h3>
     {% for budget in book.budgets %}
