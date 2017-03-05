@@ -6,21 +6,31 @@
 <section class='section'>
 <div class='container'>
   {% include 'club_bar.html' with club=club club_id=club.id user=request.user%} 
-  <h1>requests</h1>
+  <h1>Club Requests</h1>
   {% for req in reqs %}
-    {{ req.uid.get_full_name }} wants to join   {{ req.cid.club_name }} because
-    {{ req.reason }}
+    
     <span>
     <form method='POST' action="{% url 'suite:handle_join_request' req.cid.id %}">
-      {% csrf_token %}
-      <input class='button' type='submit' name='submit' value='Let him join!'>
+    <article class="message is-dark">
+    <div class="message-body">
+    {{ req.uid.get_full_name }} wants to join   {{ req.cid.club_name }}.
+    </br>
+    </br>
+    Reason:
+    </br>
+    {{ req.reason }}
+    </br>  
+    {% csrf_token %}
+      <input class='button' type='submit' name='submit' value='Approve'>
       <input type='hidden' name='accept' value='{{ req.id }}'>
     </form>
     <form method='POST' action="{% url 'suite:handle_join_request' req.cid.id %}">
       {% csrf_token %}
-      <input class='button' type='submit' name='submit' value='Delete'>
+      <input class='button' type='submit' name='submit' value='Decline'>
       <input type='hidden' name='delete' value='{{ req.id }}'>
     </form>
+    </div>
+    </article>
     </span>
 
   {% endfor %}
