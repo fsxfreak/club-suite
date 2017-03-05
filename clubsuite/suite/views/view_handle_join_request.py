@@ -22,8 +22,9 @@ class HandleJoinRequest(UserPassesTestMixin, LoginRequiredMixin, View):
     return True
 
   def get(self, request, club_id, *args, **kwargs):
+    club = Club.objects.get(pk=club_id)
     reqs = Club.objects.get(pk=club_id).joinrequest_set.all()
-    return render(request, self.template_name, { 'reqs' : reqs })
+    return render(request, self.template_name, { 'reqs' : reqs, 'club' : club })
 
   def post(self, request, club_id, *args, **kwargs):
     if 'accept' in request.POST:
@@ -37,9 +38,6 @@ class HandleJoinRequest(UserPassesTestMixin, LoginRequiredMixin, View):
          req = JoinRequest.objects.get(id=req_idDelete)
          req.cid.remove_member(request.user, req.uid)
          req.delete()
-
-
-
 
     reqs = Club.objects.get(pk=club_id).joinrequest_set.all()
     return render(request, self.template_name, { 'reqs' : reqs })

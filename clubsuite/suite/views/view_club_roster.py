@@ -18,6 +18,8 @@ class ClubRoster(LoginRequiredMixin, View):
     club = get_object_or_404(Club, pk=club_id)
     members = self.get_members(club)
 
+    print(club, club_id, request.user)
+
     return render(request, self.template_name, {'club': club, 'members' : members})
 
   def post(self, request, club_id, *args, **kwargs):
@@ -28,7 +30,18 @@ class ClubRoster(LoginRequiredMixin, View):
       club.remove_member(request.user, User.objects.get(id=user_id))
     elif 'promote' in request.POST:
       user_id = request.POST['promote']
-      club.promote_to_officer(request.user, User.objects.get(id=user_id))
+      act_on_user = User.objects.get(id=user_id)
+      if club.is_officer(act_on_user):
+        club.promote_owner_to_officer(request.user, act_on_user)
+      else:
+        club.promote_to_officer(request.user, act_on_user)
+    elif 'demote' in request.POST:
+      user_id = request.POST['demote']
+      act_on_user = User.objects.get(id=user_id)
+      if club.is_owner(act_on_user):
+        club.demote_owner_to_officer(request.user, act_on_user)
+      elif club.is_officer(act_on_user):
+        club.demote_from_officer(request.user, act_on_user)
 
     members = self.get_members(club)
     return render(request, self.template_name, {'club': club, 'members' : members})

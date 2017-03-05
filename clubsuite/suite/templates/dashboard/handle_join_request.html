@@ -5,6 +5,7 @@
 {% block body_block %}
 <section class='section'>
 <div class='container'>
+  {% include 'club_bar.html' with club=club club_id=club.id user=request.user%} 
   <h1>requests</h1>
   {% for req in reqs %}
     {{ req.uid.get_full_name }} wants to join   {{ req.cid.club_name }} because
