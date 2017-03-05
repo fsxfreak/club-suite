@@ -6,13 +6,12 @@ class EventManager(models.Manager):
    #search for upcoming events of a club since today ordered by start time
    #most recent to future
    def get_upcoming_events(self, in_cid):
-      today = datetime.now()
       upcoming_events=Event.objects.filter(
                         cid=in_cid,
-                        end_date__gte=today.date
+                        end_date__gte=datetime.date.today
                         )
       upcoming_events=upcoming_events.filter(
-                        end_time__gte=today.time
+                        end_time__gte=datetime.datetime.now().time
                         ).order_by('start_date', 'start_time')
       return upcoming_events
 
@@ -29,7 +28,7 @@ class Event(models.Model):
       on_delete=models.CASCADE
    )
 
-   #did = models.ForeignKey('Division')
+   did = models.ForeignKey('Division', on_delete=models.CASCADE, null=True)
    event_name = models.CharField(max_length=100)
    start_date = models.DateField(default=datetime.now)
    start_time = models.TimeField(default='12:00:00')
@@ -40,6 +39,7 @@ class Event(models.Model):
    event_cost = models.DecimalField(max_digits=10, decimal_places=2,default=0)
    accessibility = models.BooleanField(default=True) #True=public, False=private
    required = models.BooleanField(default=False)
+   image = models.ImageField(default="static/media/special_event.png")
 
    objects = EventManager()
 

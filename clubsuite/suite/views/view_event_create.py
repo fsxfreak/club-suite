@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-from suite.models import Club
+from suite.models import Club, Division, Budget
 from suite.forms import EventCreateForm
 
 from guardian.shortcuts import get_perms
@@ -24,7 +24,9 @@ class EventCreate(UserPassesTestMixin, LoginRequiredMixin, TemplateView):
 
   def get(self, request, club_id):
     club = get_object_or_404(Club, pk=club_id)
-    form = self.form_class
+    form = self.form_class()
+    form.fields['did'].queryset = Division.objects.filter(cid=club)
+
     return render(request, self.template_name, { 'club' : club, 'form' : form})
 
   def post(self, request, club_id):

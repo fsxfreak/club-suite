@@ -51,7 +51,7 @@ class Club(models.Model):
   last_seen = models.DateTimeField(blank=True, null=True)
   club_description = models.TextField()
   requests = models.ManyToManyField(
-                  User, 
+                  User,
                   through='JoinRequest',
                   related_name='JoinRequest'
                   )
@@ -142,11 +142,11 @@ class Club(models.Model):
     actor must have 'can_handle_promotion_requests' permission
     return: True if user now an officer, False if not
     '''
-    is_member = self.add_member(actor, user)
+    is_member = self.is_member(user)
     if not is_member:
       print('Cannot promote a non member to officer')
       return False
-    if not 'can_handle_join_requests' in get_perms(actor, self):
+    if not 'can_handle_promotion_requests' in get_perms(actor, self):
       return False
 
     if user.groups.filter(name=self._get_officer_group_name()).count() == 0:
@@ -159,16 +159,55 @@ class Club(models.Model):
     '''
     actor must have 'can_handle_promotion_requests' permission
     '''
-    # TODO
-    pass
+    is_officer = self.is_officer(user)
+    if not is_officer:
+      print('Cannot demote a non officer to member')
+      return False
+    if not 'can_handle_promotion_requests' in get_perms(actor,self):
+      return False
+
+    if user.groups.filter(name=self._get_member_group_name()).count() == 0:
+      user.groups.add(self._get_member_group())
+      user.groups.remove(self._get_officer_group())
+
+    if user.groups.filter(name=self._get_officer_group_name()).count() != 0:
+      user.groups.remove(self._get_officer_group()) 
+      return True
+
+    return False
+  
+  def promote_officer_to_owner(self, actor, user):
+    if not self.is_owner(actor):
+       return False
+    if not self.is_officer(user):
+       return False
+    if user.groups.filter(name=self._get_owner_group_name()).count() == 0:
+       user.groups.add(self._get_owner_group())
+       user.groups.remove(self._get_officer_group())
+       return True
+
+    return False
+
+  def demote_owner_to_officer(self, actor, user):
+    if not self.is_owner(actor):
+       return False
+    if not self.is_owner(user):
+       return False
+    if self.get_owners().count() <= 1:
+       return False
+
+    if user.groups.filter(name=self._get_owner_group_name()).count() != 0:
+       user.groups.add(self._get_officer_group())
+       user.groups.remove(self._get_owner_group())
+       return True
+
+    return False
 
   def _assign_member_permissions(self, group):
     assign_perm('can_request_reimbusement', group, self)
 
   def _assign_officer_permissions(self, group):
-    assign_perm('can_remove_member', group, self)
     assign_perm('can_handle_join_requests', group, self)
-    assign_perm('can_handle_promotion_requests', group, self)
     assign_perm('can_view_stats', group, self)
     assign_perm('can_create_event', group, self)
     assign_perm('can_add_receipt', group, self)
@@ -180,8 +219,19 @@ class Club(models.Model):
     assign_perm('can_view_account_info', group, self)
 
   def _assign_owner_permissions(self, group):
-    # No special owner perms as of yet.
-    pass
+    assign_perm('can_remove_member', group, self)
+    assign_perm('can_handle_promotion_requests', group, self)
+
+    assign_perm('can_handle_join_requests', group, self)
+    assign_perm('can_view_stats', group, self)
+    assign_perm('can_create_event', group, self)
+    assign_perm('can_add_receipt', group, self)
+    assign_perm('can_remove_receipt', group, self)
+    assign_perm('can_access_attendance', group, self)
+    assign_perm('can_access_budget', group, self)
+    assign_perm('can_create_budget', group, self)
+    assign_perm('can_request_reimbusement', group, self)
+    assign_perm('can_view_account_info', group, self)
 
   def _set_owner(self, user):
     '''

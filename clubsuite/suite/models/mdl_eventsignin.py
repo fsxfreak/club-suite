@@ -1,4 +1,5 @@
 from django.db import models
+from suite.models import Event
 
 class EventSignInManager(models.Manager):
 
@@ -7,7 +8,8 @@ class EventSignInManager(models.Manager):
     def get_attended_events(self, in_uid, in_cid):
         attended_eid=EventSignIn.objects.values_list('eid',
                         flat=True).filter(cid=in_cid,uid=in_uid)
-        attended_events=Event.objects.filter(id__in=set(attended_eid)).order_by('-start_time')
+        attended_events=Event.objects.filter(id__in=set(attended_eid)).order_by('-start_date',
+                        '-start_time')
         return attended_events
 
     #Given a user, find all the events the user attended
@@ -15,7 +17,8 @@ class EventSignInManager(models.Manager):
     def get_all_attended_events(self, in_uid):
         attended_eid=EventSignIn.objects.values_list('eid',
                         flat=True).filter(uid=in_uid)
-        attended_events=Event.objects.filter(id__in=set(attended_eid)).order_by('-start_time')
+        attended_events=Event.objects.filter(id__in=set(attended_eid)).order_by('-start_date',
+                        '-start_time')
         return attended_events
 
 class EventSignIn(models.Model):
