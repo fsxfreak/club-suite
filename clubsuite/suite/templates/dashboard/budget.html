@@ -76,12 +76,45 @@
       </p>
 </div>
 </form>
-<!--
-    <input type='submit' class='button'>
-    <input type='hidden' name='budget' class='button'>
-    -->
 
    <h3>View Budget</h3>
+
+   <div class="columns">
+        <div class="column is-half is-offset-one-quarter">
+             <canvas id="myChart"></canvas>
+        </div>
+   </div>
+   <script>
+   var divisions = [];
+   var budgets = [];
+   {% for book in books %}
+        {% if not book.total_budget == 0 %}
+             divisions.push( "{{book.division}}" );
+             budgets.push( {{book.total_budget}} );
+        {% endif %}
+   {% endfor %}
+   var backgroundColors = ["#FF5733", "#36A2EB", "#33FF7A", "#FFA833", "#8A33FF", "#FFCE56", "#3F33FF", "#FF335E", "#33FFB5"];
+
+   var ctx = document.getElementById("myChart");
+
+   var myChart = new Chart(ctx, {
+       type: 'pie',
+       data: {
+       labels: divisions,
+       datasets: [
+           {
+               data: budgets,
+               backgroundColor: backgroundColors,
+               hoverBackgroundColor: backgroundColors
+           }]
+       },
+       options: {
+           animation:{
+               animateScale:true
+           }
+       }
+   });
+   </script>
 
   <table class="table">
   <thead>
@@ -112,8 +145,8 @@
 
 <h3>View Detailed Budget</h3>
 {% for book in books %}
-{% if not book.total_budget == 0 %}
-<h4>{{book.division}} - {{book.total_expense}}</h4>
+{% if not book.total_budget == 0 and not book.total_expense == 0 %}
+<h4>{{book.division}} - ${{book.total_expense}} / ${{book.total_budget}}</h4>
   <progress class="progress is-info" value="{{ book.total_expense|div:book.total_budget|mul:100}}" max="100">{{book.total_expense|div:book.total_budget|mul:100}}%</progress>
   <table class="table">
        <thead>
@@ -132,20 +165,6 @@
 {% endif %}
 {% endfor %}
 
-  <p>total budget overall: {{ total_budget }}</p>
-  <p>total expense overall: {{ total_expense }}</p>
-
-  <p>division list</p>
-  {% for book in books %}
-  <h3>{{ book.division }} total budget for this idvision: {{ book.total_budget }}
-      total expenses: {{ book.total_expense }}</h3>
-    {% for budget in book.budgets %}
-      <h4>{{ budget }}</h4>
-    {% endfor %}
-    {% for event in book.events %}
-    <h4>event: {{ event.event_name }}, cost {{ event.event_cost }}</h4>
-    {% endfor %}
-  {% endfor %}
 </div>
 </section>
 
