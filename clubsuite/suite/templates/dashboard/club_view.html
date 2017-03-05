@@ -8,8 +8,10 @@
 {% get_obj_perms request.user for club as "club_perms" %}
 <section class='section'>
   <div class='container'>
+
     
       {% include 'club_bar.html' with club=club club_id=club.id user=request.user%} 
+
 
 
     <br />
