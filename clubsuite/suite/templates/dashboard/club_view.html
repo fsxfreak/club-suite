@@ -15,12 +15,10 @@
     <br />
 
 
-    <div class="columns">
-        <div class="column is-one-third">
 
             <div class="card">
                 <div class="card-image">
-                    <figure class="image is-4by3">
+                    <figure class="image is-4by1">
                         <img src="{{club.image.url}}" alt="Image">
                     </figure>
                 </div>
@@ -44,17 +42,10 @@
                         </div>
                     </div>
 
-                    <div class="content">
-                        <p>
-                        <br>
-                        <small>{% if club.club_type != PUB%} Join by Invitation Only{% endif %}</small>
-                    </div>
                 </div>
-            </div>
-
-        </div>
         <div class="column">
             <blockquote>{{ club.summary}}</blockquote>
+            <small>{% if club.club_type != PUB%} &nbsp; Join by Invitation Only{% endif %}</small>
         </div>
   </div>
 
