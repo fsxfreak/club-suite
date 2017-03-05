@@ -12,8 +12,10 @@
     <nav class="nav has-shadow">
   <div class="container">
     <div class="nav-left">
-        <a class="nav-item is-tab is-hidden-mobile is-active" href="{% url 'suite:club_roster' club.id %}">Club Roster</a>
+        <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:club_roster' club.id %}">Club Roster</a>
+        {% if "can_request_reimbusement" not in club_perms  %}
         <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:club_join' club.id %}">Join this Club</a>
+        {% endif %}
         {% if "can_view_account_info" in club_perms %}
         <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:club_emails' club.id %}">Generate Email List </a>
         {% endif %}
