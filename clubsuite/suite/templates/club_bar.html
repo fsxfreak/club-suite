@@ -7,7 +7,7 @@
     
 <nav class="nav has-shadow">
   <div class="container">
-    <div class="nav-left">
+    <div class="nav-center">
         <a class="nav-item" href="{% url 'suite:club_view' club_id %}">
         <img src="../../static/media/club-home-icon.png" alt="Club Suite">
         </a>
@@ -30,9 +30,6 @@
     </span>
     
     <div class="nav-right nav-menu" id="nav-menu">
-        <a class="nav-item is-tab is-hidden-tablet" href="{% url 'suite:club_view' club_id %}">
-        <img src="../../static/media/club-home-icon.png" alt="Club Suite">
-        </a>
         <a class="nav-item is-tab is-hidden-tablet" href="{% url 'suite:club_roster' club_id %}">Club Roster</a>  
         <a class="nav-item is-tab is-hidden-tablet" href="{% url 'suite:club_join' club_id %}">Join this Club</a>  
         {% if "can_view_account_info" in club_perms %}

@@ -25,16 +25,9 @@
                 <div class="card-content">
                     <div class="media">
                         <div class="media-left">
-                            {% if club.club_type is not "PUB" %} 
                             <figure class="image" style="height: 40px; width: 40px;">
                                 <img src="../../static/media/public.png" alt="Image">
                             </figure>
-                            {% endif %}
-                            {% if club.club_type is "PUB" %} 
-                            <figure class="image" style="height: 40px; width: 40px;">
-                                <img src="../../static/media/black-private-512.jpg" alt="Image">
-                            </figure>
-                            {% endif %}
                         </div>
                         <div class="media-content">
                             <p class="title is-4">{{club.club_name}}</p>
@@ -45,7 +38,6 @@
                 </div>
         <div class="column">
             <blockquote>{{ club.summary}}</blockquote>
-            <small>{% if club.club_type != PUB%} &nbsp; Join by Invitation Only{% endif %}</small>
         </div>
   </div>
 

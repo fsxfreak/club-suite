@@ -5,17 +5,22 @@
     </a>
   </div>
 
+  <div class="nav-center">
+  
+  </div>
+
   <!-- This "nav-toggle" hamburger menu is only visible on mobile -->
   <!-- You need JavaScript to toggle the "is-active" class on "nav-menu" -->
-  <span class="nav-toggle">
+  <span class="nav-toggle" id="nav-toggle-main">
     <span></span>
     <span></span>
     <span></span>
+    &nbsp;
   </span>
 
   <!-- This "nav-menu" is hidden on mobile -->
   <!-- Add the modifier "is-active" to display it on mobile -->
-  <div class="nav-right nav-menu">
+  <div class="nav-right nav-menu" id="nav-menu-main">
     <a href={% url 'suite:dashboard' %} class="nav-item">
       Home
     </a>
@@ -38,8 +43,23 @@
         <p>| &nbsp;&nbsp;&nbsp; Welcome, Guest </p><a class="button is-warning-navbar" href="{% url 'suite:login' %}">Log In</a><a class="button is-info-navbar" href="{% url 'suite:register' %}">Register</a>
         {% endif %} 
     </a>
-    <a class="nav-item" href=''>
-      etc.... 
-    </a>
+
+    <span class="nav-item">
+    </span>
   </div>
 </nav>
+
+
+<script type="text/javascript">
+        document.getElementById("nav-toggle-main").addEventListener ("click", toggleNavMain);
+        function toggleNavMain() {
+                var nav = document.getElementById("nav-menu-main");
+                var className = nav.getAttribute("class");
+                if(className == "nav-right nav-menu") {
+                    nav.className = "nav-right nav-menu is-active";
+                } else {
+                    nav.className = "nav-right nav-menu";
+                }
+        }
+</script>
+

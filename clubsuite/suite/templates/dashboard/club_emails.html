@@ -37,9 +37,19 @@
   {% for member in members %}
   <a class="panel-block is-active">
     <span class="panel-icon">
-      <i class="fa fa-book"></i>
+    {% if member.group == "Owner" %}
+        <figure class="image" style="height: 25px; width: 25px;">
+            <img src="../../static/media/crown.png" alt="Image">
+        </figure>
+    {% endif %}
+    {% if member.group == "Officer" %}
+        <figure class="image" style="height: 15px; width: 15px;">
+            <img src="../../static/media/batch.png" alt="Image">
+        </figure>
+    {% endif %}
+
     </span>
-    {{member.user.first_name}} {{member.user.last_name}} ({{ member.group }})
+    {{member.user.first_name}} {{member.user.last_name}} :  
  
     {{ member.user.email}}    </a>
     {% endfor %}
