@@ -22,11 +22,18 @@
     <input type='hidden' name='budget' class='button'>
   </form>
 
+  <p>total budget overall: {{ total_budget }}</p>
+  <p>total expense overall: {{ total_expense }}</p>
+
   <p>division list</p>
-  {% for division in divisions %}
-    <h3>{{ division }}</h3>
-    {% for budget in division.budget_set.all %}
+  {% for book in books %} 
+  <h3>{{ book.division }} total budget for this idvision: {{ book.total_budget }}
+      total expenses: {{ book.total_expense }}</h3>
+    {% for budget in book.budgets %}
       <h4>{{ budget }}</h4>
+    {% endfor %}
+    {% for event in book.events %}
+    <h4>event: {{ event.event_name }}, cost {{ event.event_cost }}</h4>
     {% endfor %}
   {% endfor %}
 </div>
