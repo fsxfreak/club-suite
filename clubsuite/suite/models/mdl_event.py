@@ -8,7 +8,7 @@ class EventManager(models.Manager):
    def get_upcoming_events(self, in_cid):
       upcoming_events=Event.objects.filter(
                         cid=in_cid,
-                        end_date__gte=datetime.date.today
+                        end_date__gte=datetime.datetime.now().date
                         )
       upcoming_events=upcoming_events.filter(
                         end_time__gte=datetime.datetime.now().time
