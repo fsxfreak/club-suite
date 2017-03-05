@@ -8,12 +8,13 @@ from suite.models import Club, JoinRequest
 from suite.forms import ClubJoinForm
 
 class ClubJoin(LoginRequiredMixin, View):
-  form_class = ClubJoinForm 
+  form_class = ClubJoinForm
   template_name = 'club_join.html'
 
   def get(self, request, club_id, *args, **kwargs):
     form = self.form_class
-    return render(request, self.template_name, { 'club_id' : club_id, 'form' : form })
+    club = Club.objects.get(id=club_id)
+    return render(request, self.template_name, { 'club_id' : club_id, 'form' : form, 'club': club })
 
   def post(self, request, club_id, *args, **kwargs):
     form = self.form_class(request.POST)
@@ -21,7 +22,7 @@ class ClubJoin(LoginRequiredMixin, View):
     if form.is_valid():
       reason = form.cleaned_data.get('reason')
       club = Club.objects.get(pk=club_id)
-      
+
       if request.user not in club.members.all():
         join_request = JoinRequest(cid=club, uid=request.user, reason=reason)
         join_request.save()

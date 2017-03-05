@@ -9,29 +9,8 @@
 <section class='section'>
   <div class='container'>
     
-    <nav class="nav has-shadow">
-  <div class="container">
-    <div class="nav-left">
-        <a class="nav-item is-tab is-hidden-mobile is-active" href="{% url 'suite:club_roster' club.id %}">Club Roster</a>  
-        <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:club_join' club.id %}">Join this Club</a>  
-        {% if "can_view_account_info" in club_perms %}
-        <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:club_emails' club.id %}">Generate Email List </a>  
-        {% endif %}
-        {% if "can_handle_join_requests" in club_perms %}
-        <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:handle_join_request' club.id %}">Handle Join Request</a>  
-        {% endif %}
-        {% if "can_create_event" in club_perms %}
-        <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:event_create' club.id %}"> Create Event</a>  
-        {% endif %}
-    </div>
-    <span class="nav-toggle">
-      <span></span>
-      <span></span>
-      <span></span>
-    </span>
-  </div>
-</nav>
-      
+      {% include 'club_bar.html' with club=club club_id=club.id user=request.user%} 
+
 
     <br />
     
@@ -48,12 +27,12 @@
                 <div class="card-content">
                     <div class="media">
                         <div class="media-left">
-                            {% if club.club_type == PUB %} 
+                            {% if club.club_type is not "PUB" %} 
                             <figure class="image" style="height: 40px; width: 40px;">
                                 <img src="../../static/media/public.png" alt="Image">
                             </figure>
                             {% endif %}
-                            {% if club.club_type != PUB %} 
+                            {% if club.club_type is "PUB" %} 
                             <figure class="image" style="height: 40px; width: 40px;">
                                 <img src="../../static/media/black-private-512.jpg" alt="Image">
                             </figure>
