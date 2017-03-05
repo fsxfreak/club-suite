@@ -10,7 +10,10 @@
       
       <form method='POST' action="{% url 'suite:club_join' club.id %}">
       {% csrf_token %}
-      {{ form }}
+      <label class="label">Please explain why you would like to join.</label>
+      <p class="control">
+        {% render_field  form.reason class="textarea" %}
+      </p>
       <input class="button control" type="submit" value="Submit"/>
     </form>
   </div>
