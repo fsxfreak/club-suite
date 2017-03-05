@@ -6,13 +6,12 @@ class EventManager(models.Manager):
    #search for upcoming events of a club since today ordered by start time
    #most recent to future
    def get_upcoming_events(self, in_cid):
-      today = datetime.now()
       upcoming_events=Event.objects.filter(
                         cid=in_cid,
-                        end_date__gte=today.date
+                        end_date__gte=datetime.date.today
                         )
       upcoming_events=upcoming_events.filter(
-                        end_time__gte=today.time
+                        end_time__gte=datetime.datetime.now().time
                         ).order_by('start_date', 'start_time')
       return upcoming_events
 
