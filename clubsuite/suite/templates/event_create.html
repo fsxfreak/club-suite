@@ -8,7 +8,7 @@
 {% get_obj_perms request.user for club as "club_perms" %}
 <section class='section'>
   <div class='container'>
-      {% include 'club_bar.html' with club=club club_id=club.id user=request.user%} 
+      {% include 'club_bar.html' with club=club club_id=club.id user=request.user%}
 
 
      <h1>Create an Event</h1>
@@ -81,7 +81,7 @@
                  <label class="label" for="id_event_cost">Cost</label>
             </div>
             <p class="control has-icon">
-                 {% render_field form.event_cost class="input is-expanded" type="number" step="any" %}
+                 {% render_field form.event_cost class="input is-expanded" type="number" step="any" min="0"%}
                  <span class="icon is-small">
                       <i class="fa fa-usd"></i>
                  </span>
@@ -102,8 +102,10 @@
             <div class="control-label">
                  <label class="label" for="id_did">Division</label>
             </div>
-            <p class="control has-icon">
+            <p class="control">
+                 <span class="select is-fullwidth">
                  {% render_field form.did %}
+            </span>
             </p>
        </div>
 
@@ -115,17 +117,6 @@
                  <label class="checkbox">
                       {% render_field form.accessibility %}
                  </label>
-               <!--
-               Formatting I preferred but which does not seem to persist the changes
-                 <label class="radio">
-                      <input type="radio" name="id_accessibility" required>
-                      Yes
-                 </label>
-                 <label class="radio">
-                      <input type="radio" name="id_accessibility" required>
-                      No
-                 </label>
-               -->
             </p>
        </div>
 
@@ -137,26 +128,12 @@
                  <label class="checkbox">
                       {% render_field form.required %}
                  </label>
-                 <!--
-                 Formatting I preferred but which does not seem to persist the changes
-                 <label class="radio">
-                      <input type="radio" name="id_required" required>
-                      Yes
-                 </label>
-                 <label class="radio">
-                      <input type="radio" name="id_required" required>
-                      No
-                 </label>
-               -->
             </p>
        </div>
 
-       <div class="control is-grouped">
+       <div class="control">
           <p class="control">
                <button class="button is-primary" type="submit" name="details">Submit</button>
-          </p>
-          <p class="control">
-               <button class="button is-link" type="cancel">Cancel</button>
           </p>
       </div>
     </form>
