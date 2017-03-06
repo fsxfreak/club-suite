@@ -20,7 +20,7 @@
                 {{ form.club_name |add_class:'input is-fullwidth' }}
            </p>
       </div>
-
+      <!--
       <div class="control is-horizontal">
            <div class="control-label">
                 <label class="label" for="id_club_type">Accessibility</label>
@@ -29,7 +29,7 @@
                 {{ form.club_type |add_class:'input is-fullwidth' }}
            </p>
       </div>
-
+      --!>
       <div class="control is-horizontal">
            <div class="control-label">
                 <label class="label" for="id_club_description">Description</label>
@@ -41,7 +41,8 @@
 
       <div class="control is-horizontal">
            <div class="control-label">
-                <label class="label" for="id_image">Cover Photo</label>
+                <label class="label" for="id_image">Cover Photo </label>
+                <h6 class="subtitle is-6"> (4:1 aspect ratio) </h6>
            </div>
            <p class="control">
                 {{ form.image }}
