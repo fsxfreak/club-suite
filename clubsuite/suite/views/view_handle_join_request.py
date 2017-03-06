@@ -27,6 +27,7 @@ class HandleJoinRequest(UserPassesTestMixin, LoginRequiredMixin, View):
     return render(request, self.template_name, { 'reqs' : reqs, 'club' : club })
 
   def post(self, request, club_id, *args, **kwargs):
+    club = Club.objects.get(pk=club_id)
     if 'accept' in request.POST:
          req_id = request.POST['accept']
          req = JoinRequest.objects.get(id=req_id)

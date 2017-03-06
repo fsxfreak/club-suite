@@ -10,16 +10,16 @@
 {% get_obj_perms request.user for club as "club_perms" %}
 <section class='section'>
 <div class='container'>
-      {% include 'club_bar.html' with club_id=club.id user=request.user%} 
+      {% include 'club_bar.html' with club_id=club.id user=request.user%}
 
-  
+
     <h1> {{ club.club_name }} Roster </h1>
 
   <ul>
   {% for member in members %}
     <li>
-      <div>{{ member.user.first_name}} {{ member.user.last_name }} 
-            : {{ member.group }} 
+      <div>{{ member.user.first_name}} {{ member.user.last_name }}
+            : {{ member.group }}
       </div>
       {% if "can_remove_member" in club_perms %}
       <form method='POST' action="{% url 'suite:club_roster' club.id %}">

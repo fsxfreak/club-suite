@@ -50,8 +50,8 @@ class EventCreateForm(forms.ModelForm):
   class Meta:
     model = Event
     fields = ['event_name', 'start_date', 'start_time', 'end_date', 'end_time',
-              'event_location', 'event_description', 'event_cost', 'accessibility',
-              'required', 'did', 'image']
+              'event_location', 'event_description', 'event_cost', 'event_fee',
+              'accessibility', 'required', 'did', 'image']
 
   def save(self, club, commit=False):
       event_name = self.cleaned_data['event_name']
@@ -62,15 +62,18 @@ class EventCreateForm(forms.ModelForm):
       event_location = self.cleaned_data['event_location']
       event_description = self.cleaned_data['event_description']
       event_cost = self.cleaned_data['event_cost']
+      event_fee = self.cleaned_data['event_fee']
       accessibility = self.cleaned_data['accessibility']
       required = self.cleaned_data['required']
       did = self.cleaned_data['did']
       image = self.cleaned_data['image']
 
       event = Event(cid=club, event_name=event_name, start_time=start_time,
-        start_date=start_date, end_date=end_date, end_time=end_time, event_location=event_location,
+        start_date=start_date, end_date=end_date, end_time=end_time,
+        event_location=event_location,
         event_description=event_description,
-        event_cost=event_cost, accessibility=accessibility, required=required,
+        event_cost=event_cost, event_fee=event_fee,
+        accessibility=accessibility, required=required,
         did=did, image=image)
       if commit:
           event.save()

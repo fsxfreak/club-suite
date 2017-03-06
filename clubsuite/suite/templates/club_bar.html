@@ -27,7 +27,11 @@
         <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:event_create' club_id %}">Create Event</a>  
         {% endif %}
     </div>
-   
+    <span class="nav-toggle" id="nav-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span> 
     <div class="nav-right nav-menu" id="nav-menu">
       <a class="nav-item is-tab is-hidden-tablet" href="{% url 'suite:club_roster' club_id %}">Club Roster</a>
       {% if "can_request_reimbursement" not in club_perms %}
@@ -40,7 +44,7 @@
       <a class="nav-item is-tab is-hidden-tablet" href="{% url 'suite:handle_join_request' club_id %}">Handle Join Request</a>
       {% endif %}
       {% if "can_access_budget" in club_perms %}
-      <a class="nav-item is-tab is-hidden-table" href="{% url 'suite:budget' club_id %}">Access Budget</a>
+      <a class="nav-item is-tab is-hidden-tablet" href="{% url 'suite:budget' club_id %}">Access Budget</a>
       {% endif %}
       {% if "can_create_event" in club_perms %}
       <a class="nav-item is-tab is-hidden-tablet" href="{% url 'suite:event_create' club_id %}"> Create Event</a>

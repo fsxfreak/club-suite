@@ -67,6 +67,8 @@ class Budget(UserPassesTestMixin, LoginRequiredMixin, View):
     club = Club.objects.get(pk=club_id)
 
     budget_form = self.budget_form_class()
+    budget_form.fields['did'].queryset = Division.objects.filter(cid=club)
+
     division_form = self.division_form_class
 
     if 'division' in request.POST:
