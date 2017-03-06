@@ -30,7 +30,7 @@ class EventCreate(UserPassesTestMixin, LoginRequiredMixin, TemplateView):
     return render(request, self.template_name, { 'club' : club, 'form' : form})
 
   def post(self, request, club_id):
-    form = self.form_class(request.POST)
+    form = self.form_class(request.POST, request.FILES)
     club = get_object_or_404(Club, pk=club_id)
     if form.is_valid():
       event = form.save(club, commit=True)

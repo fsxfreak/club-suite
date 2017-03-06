@@ -18,8 +18,11 @@
         {% if "can_handle_join_requests" in club_perms %}
         <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:handle_join_request' club_id %}">Handle Join Request</a>
         {% endif %}
+        {% if "can_access_budget" in club_perms %}
+        <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:budget' club_id %}">Access Budget</a>
+        {% endif %}
         {% if "can_create_event" in club_perms %}
-        <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:event_create' club_id %}"> Create Event</a>
+        <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:event_create' club_id %}">Create Event</a>
         {% endif %}
     </div>
     <span class="nav-toggle">
