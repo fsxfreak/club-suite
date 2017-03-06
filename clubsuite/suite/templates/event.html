@@ -11,19 +11,41 @@
 
   <ul>
   {% for member in members %}
-  <span>
-  <li>{{ member.user.first_name}} {{ member.user.last_name }}
+  <li>
+
+
+    {{ member.user.first_name}} {{ member.user.last_name }}
     : {{ member.user.student_title}}, {{ member.group }}
-    {% endfor %} &nbsp &nbsp &nbsp &nbsp &nbsp
+    <form method='POST' action="{% url 'suite:event' club.id event.id %}">
+      {% csrf_token %}
+      <input class='button' type='submit' name='submit' value='Sign In'>
+      <input type='hidden' name='going' value='{{ member.user.id }}'>
+    </form>
 
-    <label class="checkbox">
-     <input type="checkbox">
-       Sign in
-   </label>
+
+
    </li>
- </span>
-
+       {% endfor %}
   </ul>
+  <br />
+
+<p>Members who have signed in</p>
+
+  <ul>
+  {% for eventSignIn in eventSignIns %}
+  <li>
+
+
+    {{ eventSignIn.uid}}
+
+
+
+   </li>
+       {% endfor %}
+  </ul>
+
+
+
   </div>
 </section>
 
