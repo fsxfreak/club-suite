@@ -66,7 +66,7 @@
                       {% if event.start_date == event.end_date %}{{event.start_date}} : {{event.start_time}} - {{event.end_time}} {% endif %}
                   </p>
                   <p><h5 class="subtitle">{% if event.event_cost == 0 %} (FREE) {% endif %}</h5>
-                    {% if event.event_cost != 0 %} (${{event.event_cost}} Event Fee) {% endif %}</p>
+                    {% if event.event_fee != 0 %} (${{event.event_fee}} Event Fee) {% endif %}</p>
                   <p>Description: {{event.event_description}}</p>
                   <br />
               </div>
