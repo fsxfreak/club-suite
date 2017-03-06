@@ -36,7 +36,7 @@ class Club(models.Model):
          ('can_access_attendance', 'Can access member attendance'),
          ('can_access_budget', 'Can access the budgets for this club'),
          ('can_create_budget', 'Can create a budget'),
-         ('can_request_reimbusement', 'Can request for a reimbursement'),
+         ('can_request_reimbursement', 'Can request for a reimbursement'),
          ('can_handle_reimbursement', 'Can handle reimbursement'),
          ('can_view_account_info', 'Can view member personal information'),
          )
@@ -207,7 +207,7 @@ class Club(models.Model):
     return False
 
   def _assign_member_permissions(self, group):
-    assign_perm('can_request_reimbusement', group, self)
+    assign_perm('can_request_reimbursement', group, self)
 
   def _assign_officer_permissions(self, group):
     assign_perm('can_handle_join_requests', group, self)
@@ -218,7 +218,7 @@ class Club(models.Model):
     assign_perm('can_access_attendance', group, self)
     assign_perm('can_access_budget', group, self)
     assign_perm('can_create_budget', group, self)
-    assign_perm('can_request_reimbusement', group, self)
+    assign_perm('can_request_reimbursement', group, self)
     assign_perm('can_view_account_info', group, self)
 
   def _assign_owner_permissions(self, group):
@@ -233,7 +233,7 @@ class Club(models.Model):
     assign_perm('can_access_attendance', group, self)
     assign_perm('can_access_budget', group, self)
     assign_perm('can_create_budget', group, self)
-    assign_perm('can_request_reimbusement', group, self)
+    assign_perm('can_request_reimbursement', group, self)
     assign_perm('can_view_account_info', group, self)
 
   def _set_owner(self, user):
