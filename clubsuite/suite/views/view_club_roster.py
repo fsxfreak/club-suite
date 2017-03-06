@@ -31,6 +31,11 @@ class ClubRoster(LoginRequiredMixin, View):
       act_on_user = User.objects.get(id=user_id)
       if not club.is_officer(act_on_user):
         club.promote_to_officer(request.user, act_on_user)
+    elif 'promoteToOwner' in request.POST:
+      user_id = request.POST['promoteToOwner']
+      act_on_user = User.objects.get(id=user_id)
+      if club.is_officer(act_on_user):
+        club.promote_officer_to_owner(request.user, act_on_user)
     elif 'demote' in request.POST:
       user_id = request.POST['demote']
       act_on_user = User.objects.get(id=user_id)
