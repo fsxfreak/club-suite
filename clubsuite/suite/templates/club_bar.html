@@ -12,7 +12,9 @@
           <img src="{% static 'media/club-home-icon.png' %}" alt="Club Suite">
         </a>
         <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:club_roster' club_id %}">Club Roster</a>  
+        {% if "can_request_reimbursement" not in club_perms %}
         <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:club_join' club_id %}">Join this Club</a>  
+        {% endif %}
         {% if "can_view_account_info" in club_perms %}
         <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:club_emails' club_id %}">Generate Email List </a>  
         {% endif %}
