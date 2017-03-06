@@ -6,7 +6,7 @@
 {% block body_block %}
 <section class='section'>
 <div class='container'>
-  {% include 'club_bar.html' with club=club club_id=club.id user=request.user%} 
+  {% include 'club_bar.html' with club=club club_id=club.id user=request.user%}
   <h1>Manage Logistics</h1>
 
   <h3>Create a New Division</h3>
@@ -79,12 +79,19 @@
 </form>
 
    <h3>View Budget</h3>
-
+   {% if not total_budget == 0 %}
    <div class="columns">
         <div class="column is-half is-offset-one-quarter">
              <canvas id="myChart"></canvas>
         </div>
    </div>
+   {% else %}
+   <div class="notification">
+        No budget information to display.
+   </div>
+   <div>
+   </div>
+   {% endif %}
    <script>
    var divisions = [];
    var budgets = [];
@@ -116,7 +123,7 @@
        }
    });
    </script>
-
+   {% if not total_budget == 0 %}
   <table class="table">
   <thead>
     <tr>
@@ -143,28 +150,43 @@
 
   </tbody>
 </table>
+{% endif %}
 
 <h3>View Detailed Budget</h3>
-{% for book in books %}
-{% if not book.total_budget == 0 and not book.total_expense == 0 %}
-<h4>{{book.division}} - ${{book.total_expense}} / ${{book.total_budget}}</h4>
-  <progress class="progress is-info" value="{{ book.total_expense|div:book.total_budget|mul:100}}" max="100">{{book.total_expense|div:book.total_budget|mul:100}}%</progress>
-  <table class="table">
-       <thead>
-            <th>Event Name</th>
-            <th>Event Cost</th>
-       </thead>
-       <tbody>
-            {% for event in book.events %}
-            <tr>
-                 <td>{{event.event_name}}</td>
-                 <td>{{event.event_cost}}</td>
-            </tr>
-            {% endfor %}
-       </tbody>
-  </table>
+{% if total_budget == 0 %}
+     <div class="notification">
+          No detailed budget information to display.
+     </div>
+{% else %}
+     {% for book in books %}
+     {% if not book.total_expense == 0 %}
+     <h4>{{book.division}} - ${{book.total_expense}} / ${{book.total_budget}}</h4>
+     {% if book.total_budget == 0 %}
+     <div class="notification is-danger">
+          Have exceeded budget limit for division {{book.division}}!
+     </div>
+     {% else %}
+       <progress class="progress is-info" value="{{ book.total_expense|div:book.total_budget|mul:100}}" max="100">{{book.total_expense|div:book.total_budget|mul:100}}%</progress>
+     {% endif %}
+       <table class="table">
+            <thead>
+                 <th>Event Name</th>
+                 <th>Event Cost</th>
+            </thead>
+            <tbody>
+                 {% for event in book.events %}
+                 <tr>
+                      <td>{{event.event_name}}</td>
+                      <td>{{event.event_cost}}</td>
+                 </tr>
+                 {% endfor %}
+            </tbody>
+       </table>
+       <br/>
 {% endif %}
 {% endfor %}
+
+{% endif %}
 
 </div>
 </section>
