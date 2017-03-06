@@ -12,12 +12,10 @@
   </head>
 
   <body>
-  {# Perhaps have base_head.html (which might include base_nav?) here #}
   {% include 'base_header.html' %}
   <div class="content">
       {% block body_block %}{% endblock %}
   </div>
   {% include 'base_footer.html' %}
-  {# Perhaps have base_footer.html here #}
   </body>
 </html>

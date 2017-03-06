@@ -9,7 +9,7 @@
   <div class="container">
     <div class="nav-center">
         <a class="nav-item" href="{% url 'suite:club_view' club_id %}">
-        <img src="../../static/media/club-home-icon.png" alt="Club Suite">
+          <img src="{% static 'media/club-home-icon.png' %}" alt="Club Suite">
         </a>
         <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:club_roster' club_id %}">Club Roster</a>  
         <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:club_join' club_id %}">Join this Club</a>  
