@@ -1,19 +1,80 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load guardian_tags %}
 {% load staticfiles %}
 
 {% block body_block %}
+{% get_obj_perms request.user for club as "club_perms" %}
+
+<script src="../../static/javascript/copy.js"></script>
 <section class='section'>
 <div class='container'>
-  <h1> {{ club.club_name }} emailzzzz </h1>
+      {% include 'club_bar.html' with club=club club_id=club.id user=request.user%} 
 
-  <ul>
-  {% for member in members %}
-  <li>{{ member.user.email}},  {{ member.group }}</li>
-    {% endfor %}
-  </ul>
+  
+    <h1> {{ club.club_name }} Emails </h1>
+
   <form method='POST' action="{% url 'suite:club_emails' club.id %}">
     {% csrf_token %}
-    <input name='member_type' value='officer'>
+    <p class="control has-addons has-addons-centered">
+  <span class="select">
+    <select name="member_type" id="action">
+      <option value='member'>Members</option>
+      <option value='officer'>Officers</option>
+      <option value='owner'>Owners</option>
+    </select>
+  </span>
+  <button type="submit" name="submit" value="submit" class="button is-primary">
+    Filter
+  </button>
+<div class="columns">
+      <div class="column is-4">
+
+<nav class="panel">
+  <p class="panel-heading">
+    Group List
+  </p>
+  <ul>
+  {% for member in members %}
+  <a class="panel-block is-active">
+    <span class="panel-icon">
+    {% if member.group == "Owner" %}
+        <figure class="image" style="height: 25px; width: 25px;">
+          <img src="{% static 'media/crown.png' %}" alt="Image">
+        </figure>
+    {% endif %}
+    {% if member.group == "Officer" %}
+        <figure class="image" style="height: 15px; width: 15px;">
+          <img src="{% static 'media/batch.png' %}" alt="Image">
+        </figure>
+    {% endif %}
+
+    </span>
+    {{member.user.first_name}} {{member.user.last_name}} :  
+ 
+    {{ member.user.email}}    </a>
+    {% endfor %}
+  </ul>
+</nav>
+
+      </div>
+      <div class="column">
+          <blockquote>
+          <p id="p1"> 
+          {% for member in members %}
+ 
+            {{ member.user.email}}, 
+          {% endfor %}
+          </p>
+          </blockquote>
+          <button class="button is-primary" onClick="copyToClipboard('#p1')"> Copy Emails</button>
+      </div>
+      </div>
+
+
+
+
+</p>
   </form>
 </div>
 </section>

@@ -7,14 +7,45 @@
 {% block body_block %}
 <section class='section'>
 <div class='container'>
-  <h1> {{ event.event_name }} Roster </h1>
+  <h1> {{ event.event_name }} Sign In </h1>
 
   <ul>
   {% for member in members %}
-  <li>{{ member.user.first_name}} {{ member.user.last_name }}
-    : {{ member.user.student_title}}, {{ member.group }} </li>
-    {% endfor %}
+  <li>
+
+
+    {{ member.user.first_name}} {{ member.user.last_name }}
+    : {{ member.user.student_title}}, {{ member.group }}
+    <form method='POST' action="{% url 'suite:event' club.id event.id %}">
+      {% csrf_token %}
+      <input class='button' type='submit' name='submit' value='Sign In'>
+      <input type='hidden' name='going' value='{{ member.user.id }}'>
+    </form>
+
+
+
+   </li>
+       {% endfor %}
   </ul>
+  <br />
+
+<p>Members who have signed in</p>
+
+  <ul>
+  {% for eventSignIn in eventSignIns %}
+  <li>
+
+
+    {{ eventSignIn.uid}}
+
+
+
+   </li>
+       {% endfor %}
+  </ul>
+
+
+
   </div>
 </section>
 

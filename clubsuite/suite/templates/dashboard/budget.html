@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load mathfilters %}
+
+{% block body_block %}
+<section class='section'>
+<div class='container'>
+  {% include 'club_bar.html' with club=club club_id=club.id user=request.user%} 
+  <h1>Manage Logistics</h1>
+
+  <h3>Create a New Division</h3>
+  <form method='POST' action="{% url 'suite:budget' club.id %}">
+    {% csrf_token %}
+    <div class="control is-horizontal">
+         <div class="control-label">
+              <label class="label" for="id_name">Division Name</label>
+         </div>
+         <p class="control">
+              {{ division_form.name|add_class:'input is-fullwidth' }}
+         </p>
+    </div>
+    <div class="control is-grouped">
+      <p class="control">
+           <button class="button is-primary" type="submit" name="details">Submit</button>
+          <input type='hidden' name='division' class='button'>
+      </p>
+  </div>
+  </form>
+
+  <h3>Create a Budget</h3>
+  <h4>Create a Spending Category</h4>
+  <form method='POST' action="{% url 'suite:budget' club.id %}">
+    {% csrf_token %}
+    <div class="control is-horizontal">
+         <div class="control-label">
+              <label class="label">Division Name</label>
+         </div>
+         <p class="control">
+              {{ budget_form.did|add_class:'input is-fullwidth' }}
+         </p>
+    </div>
+
+    <div class="control is-horizontal">
+         <div class="control-label">
+              <label class="label" for="id_planned">Allocated Amount</label>
+         </div>
+         <p class="control has-icon">
+              {% render_field budget_form.planned class="input is-fullwidth" type="number" step="any" %}
+              <span class="icon is-small">
+                   <i class="fa fa-usd"></i>
+              </span>
+    </div>
+
+    <div class="control is-horizontal">
+         <div class="control-label">
+              <label class="label">Start Date</label>
+         </div>
+         <p class="control">
+              {% render_field budget_form.start_date class="input is-fullwidth" type="date" %}
+         </p>
+    </div>
+
+    <div class="control is-horizontal">
+         <div class="control-label">
+              <label class="label">End Date</label>
+         </div>
+         <p class="control">
+              {% render_field budget_form.end_date class="input is-fullwidth" type="date" %}
+         </p>
+    </div>
+
+    <div class="control is-grouped">
+      <p class="control">
+           <button class="button is-primary" type="submit" name="details">Add Division</button>
+         <input type='hidden' name='budget' class='button'>
+      </p>
+</div>
+</form>
+
+   <h3>View Budget</h3>
+
+   <div class="columns">
+        <div class="column is-half is-offset-one-quarter">
+             <canvas id="myChart"></canvas>
+        </div>
+   </div>
+   <script>
+   var divisions = [];
+   var budgets = [];
+   {% for book in books %}
+        {% if not book.total_budget == 0 %}
+             divisions.push( "{{book.division}}" );
+             budgets.push( {{book.total_budget}} );
+        {% endif %}
+   {% endfor %}
+   var backgroundColors = ["#FF5733", "#36A2EB", "#33FF7A", "#FFA833", "#8A33FF", "#FFCE56", "#3F33FF", "#FF335E", "#33FFB5"];
+
+   var ctx = document.getElementById("myChart");
+
+   var myChart = new Chart(ctx, {
+       type: 'pie',
+       data: {
+       labels: divisions,
+       datasets: [
+           {
+               data: budgets,
+               backgroundColor: backgroundColors,
+               hoverBackgroundColor: backgroundColors
+           }]
+       },
+       options: {
+           animation:{
+               animateScale:true
+           }
+       }
+   });
+   </script>
+
+  <table class="table">
+  <thead>
+    <tr>
+      <th>Division</th>
+      <th>Spent</th>
+      <th>Budget</th>
+    </tr>
+  </thead>
+  <tfoot>
+       <tr>
+            <th>Total</th>
+            <th>{{total_expense}}</th>
+            <th>{{total_budget}}</th>
+       </tr>
+  </tfoot>
+  <tbody>
+       {% for book in books %}
+       <tr>
+            <td>{{book.division}}</td>
+            <td>${{book.total_expense}}</td>
+            <td>${{book.total_budget}}</td>
+      </tr>
+       {% endfor %}
+
+  </tbody>
+</table>
+
+<h3>View Detailed Budget</h3>
+{% for book in books %}
+{% if not book.total_budget == 0 and not book.total_expense == 0 %}
+<h4>{{book.division}} - ${{book.total_expense}} / ${{book.total_budget}}</h4>
+  <progress class="progress is-info" value="{{ book.total_expense|div:book.total_budget|mul:100}}" max="100">{{book.total_expense|div:book.total_budget|mul:100}}%</progress>
+  <table class="table">
+       <thead>
+            <th>Event Name</th>
+            <th>Event Cost</th>
+       </thead>
+       <tbody>
+            {% for event in book.events %}
+            <tr>
+                 <td>{{event.event_name}}</td>
+                 <td>{{event.event_cost}}</td>
+            </tr>
+            {% endfor %}
+       </tbody>
+  </table>
+{% endif %}
+{% endfor %}
+
+</div>
+</section>
+
+{% endblock body_block %}

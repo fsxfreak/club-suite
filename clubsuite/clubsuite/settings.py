@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'suite',
     'django.contrib.auth',
     'guardian', 
-    'widget_tweaks'
+    'widget_tweaks',
+    'mathfilters'
 ]
 
 MIDDLEWARE = [

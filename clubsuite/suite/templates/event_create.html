@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% load widget_tweaks %}
+{% load guardian_tags %}
 
 {% block body_block %}
 
+{% get_obj_perms request.user for club as "club_perms" %}
 <section class='section'>
   <div class='container'>
+      {% include 'club_bar.html' with club=club club_id=club.id user=request.user%} 
+
 
      <h1>Create an Event</h1>
-     <form action="{% url 'suite:event_create' club.id %}" method="post">
+     <form action="{% url 'suite:event_create' club.id %}" method="post" enctype='multipart/form-data'>
        {% csrf_token %}
 
        <div class="control is-horizontal">
@@ -20,7 +24,6 @@
             </p>
        </div>
 
-       <!-- note: start_date field does not yet exist-->
        <div class="control is-horizontal">
             <div class="control-label">
                  <label class="label" for="id_start_date">Start Date</label>
@@ -82,6 +85,26 @@
                  <span class="icon is-small">
                       <i class="fa fa-usd"></i>
                  </span>
+       </div>
+
+       <div class="control is-horizontal">
+            <div class="control-label">
+                 <label class="label">Upload Image</label>
+            </div>
+            <p class="control has-icon">
+                 {% render_field form.image %}
+            </p>
+       </div>
+
+
+
+       <div class="control is-horizontal">
+            <div class="control-label">
+                 <label class="label" for="id_did">Division</label>
+            </div>
+            <p class="control has-icon">
+                 {% render_field form.did %}
+            </p>
        </div>
 
        <div class="control is-horizontal">

@@ -1,0 +1,20 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="description" content="A site to make managing your club easier.">
+    <title>{% block title %}Club Suite{% endblock %}</title>
+
+    {% include 'base_css.html' %}
+    {% include 'base_js.html' %}
+  </head>
+  <body class="loginBody">
+    <div class="content">
+      {% block body_block %}{% endblock %}
+    </div>
+    <footer class="loginFooter">
+    </footer>
+  </body>
+</html>

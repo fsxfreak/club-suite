@@ -1,8 +1,15 @@
 from django.db import models
 
+from suite.models import Club
+
 class Division(models.Model):
-    name = models.CharField(max_length=50, default="name for this division",\
+    cid = models.ForeignKey(
+        'Club',
+        on_delete = models.CASCADE,
+        null=True
+    )
+    name = models.CharField(max_length=50, default="",\
            primary_key=True)
-    
+
     def __str__(self):
         return self.name
