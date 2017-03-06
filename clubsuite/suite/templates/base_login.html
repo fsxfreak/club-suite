@@ -10,12 +10,11 @@
     {% include 'base_css.html' %}
     {% include 'base_js.html' %}
   </head>
-
-  <body>
-  {% include 'base_header.html' %}
-  <div class="content">
+  <body class="loginBody">
+    <div class="content">
       {% block body_block %}{% endblock %}
-  </div>
-  {% include 'base_footer.html' %}
+    </div>
+    <footer class="loginFooter">
+    </footer>
   </body>
 </html>

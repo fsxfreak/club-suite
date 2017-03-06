@@ -8,8 +8,8 @@ class Division(models.Model):
         on_delete = models.CASCADE,
         null=True
     )
-    name = models.CharField(max_length=50, default="name for this division",\
+    name = models.CharField(max_length=50, default="",\
            primary_key=True)
-    
+
     def __str__(self):
-        return 'Division %s' % self.name
+        return self.name
