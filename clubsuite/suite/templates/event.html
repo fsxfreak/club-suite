@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% load widget_tweaks %}
+{% load guardian_tags %}
 
-{% load staticfiles %}
 
 {% block body_block %}
-
+{% get_obj_perms user for club as "club_perms" %}
 <section class='section'>
 <div class='container'>
       {% include 'club_bar.html' with club_id=club.id user=request.user%} 
@@ -35,13 +35,15 @@
   {% for member in members %}
 
 
-  <th>{{ member.user.first_name}} {{ member.user.last_name }}</th>
-  <th>{{ member.group }} </th>
-  <form method='POST' action="{% url 'suite:event' club.id event.id %}">
+    <th>{{ member.user.first_name}} {{ member.user.last_name }}</th>
+    <th>{{ member.user.student_title}}, {{ member.group }}</th>
+    {% if "can_access_attendance" in club_perms %}
+    <form method='POST' action="{% url 'suite:event' club.id event.id %}">
       {% csrf_token %}
       <th><input class='button' type='submit' name='submit' value='Sign In'></th>
       <input type='hidden' name='going' value='{{ member.user.id }}'>
     </form>
+    {% endif %}
 
 </tr>
 

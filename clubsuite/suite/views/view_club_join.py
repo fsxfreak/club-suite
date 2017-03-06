@@ -24,8 +24,9 @@ class ClubJoin(LoginRequiredMixin, View):
       club = Club.objects.get(pk=club_id)
 
       if request.user not in club.members.all():
-        join_request = JoinRequest(cid=club, uid=request.user, reason=reason)
-        join_request.save()
+        if JoinRequest.objects.filter(cid=club, uid=request.user).count() <= 0:
+          join_request = JoinRequest(cid=club, uid=request.user, reason=reason)
+          join_request.save()
 
       redir = reverse('suite:club_view', args=[club_id])
       return HttpResponseRedirect(redir)

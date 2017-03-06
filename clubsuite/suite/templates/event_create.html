@@ -89,6 +89,17 @@
 
        <div class="control is-horizontal">
             <div class="control-label">
+                 <label class="label" for="id_event_fee">Fee</label>
+            </div>
+            <p class="control has-icon">
+                 {% render_field form.event_fee class="input is-expanded" type="number" step="any" min="0"%}
+                 <span class="icon is-small">
+                      <i class="fa fa-usd"></i>
+                 </span>
+       </div>
+
+       <div class="control is-horizontal">
+            <div class="control-label">
                  <label class="label">Upload Image</label>
             </div>
             <p class="control has-icon">

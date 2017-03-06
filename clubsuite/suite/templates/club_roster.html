@@ -10,20 +10,18 @@
 {% get_obj_perms request.user for club as "club_perms" %}
 <section class='section'>
 <div class='container'>
-      {% include 'club_bar.html' with club_id=club.id user=request.user%} 
+{% include 'club_bar.html' with club_id=club.id user=request.user%}
 
-  
-    <h1> {{ club.club_name }} Roster </h1>
-
-  <ul>
-    
-    <table class="table">
+<h1> {{ club.club_name }} Roster </h1>
+<table class="table">
   <thead>
     <tr>
       <th>ID</th>
       <th>Name</th>
       <th>Title</th>
-      <th>Modify Role</th>
+      {% if "can_handle_promotion_requests" in club_perms %}
+        <th>Modify Role</th>
+      {% endif %}
     </tr>
   </thead>
   <tfoot>
@@ -31,20 +29,18 @@
       <th>ID</th>
       <th>Name</th>
       <th>Title</th>
-      <th>Modify Role</th>
+      {% if "can_handle_promotion_requests" in club_perms %}
+        <th>Modify Role</th>
+      {% endif %}
     </tr>
   </tfoot>
   <tbody>
-       
-      <div> 
-      </div>
-      
   {% for member in members %}
-
-      <tr>
-      <th>{{ member.user.id }} </th>
-      <th>{{ member.user.first_name}} {{ member.user.last_name }}</th>
-      <th>{{ member.group }}</th>
+    <tr>
+      <td>{{ member.user.id }} </td>
+      <td>{{ member.user.first_name}} {{ member.user.last_name }}</td>
+      <td>{{ member.group }}</td>
+      {% if "can_remove_member" in club_perms or "can_handle_promotion_requests" in club_perms %}
       <div class="block">
       {% if "can_remove_member" in club_perms %}
       <form method='POST' action="{% url 'suite:club_roster' club.id %}">
@@ -67,9 +63,10 @@
         <input type='hidden' name='demote' value='{{ member.user.id }}'>
       </form>
       {% endif %}
-    {% endfor %}
       </div>
+      {% endif %}
     </tr>
+    {% endfor %}
   </tbody>
 </table>
     
