@@ -1,10 +1,9 @@
-
 {% load staticfiles %}
 {% load widget_tweaks %}
 {% load guardian_tags %}
 {% get_obj_perms user for club as "club_perms" %}
 
-    
+
 <nav class="nav has-shadow">
   <div class="container">
     <div class="nav-center">
@@ -16,10 +15,13 @@
         <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:club_join' club_id %}">Join this Club</a>  
         {% endif %}
         {% if "can_view_account_info" in club_perms %}
-        <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:club_emails' club_id %}">Generate Email List </a>  
+        <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:club_emails' club_id %}">Generate Email List </a>
         {% endif %}
         {% if "can_handle_join_requests" in club_perms %}
-        <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:handle_join_request' club_id %}">Handle Join Request</a>  
+        <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:handle_join_request' club_id %}">Handle Join Request</a>
+        {% endif %}
+        {% if "can_access_budget" in club_perms %}
+        <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:budget' club_id %}">Access Budget</a>
         {% endif %}
         {% if "can_access_budget" in club_perms %}
         <a class="nav-item is-tab is-hidden-mobile" href="{% url 'suite:budget' club_id %}">Access Budget</a>  
@@ -51,7 +53,6 @@
   </div>
 </nav>
 
-
 <script type="text/javascript">
         document.getElementById("nav-toggle").addEventListener ("click", toggleNav);
         function toggleNav() {
@@ -63,4 +64,4 @@
                     nav.className = "nav-right nav-menu";
                 }
         }
-    </script>
+</script>

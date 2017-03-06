@@ -121,6 +121,9 @@ class Club(models.Model):
     '''
     return: True if user removed, False if not
     '''
+    if self.is_owner(user) and self.get_owners().count() <= 1:
+       return False
+
     if 'can_remove_member' in get_perms(actor, self) or actor is user:
       # TODO edge case where actor and user is owner of club
       if user.groups.filter(name=self._get_owner_group_name()).count() > 0:
