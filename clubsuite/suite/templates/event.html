@@ -36,7 +36,7 @@
 
 
     <th>{{ member.user.first_name}} {{ member.user.last_name }}</th>
-    <th>{{ member.user.student_title}}, {{ member.group }}</th>
+    <th>{{ member.group }}</th>
     {% if "can_access_attendance" in club_perms %}
     <form method='POST' action="{% url 'suite:event' club.id event.id %}">
       {% csrf_token %}
