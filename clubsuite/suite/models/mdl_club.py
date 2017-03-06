@@ -108,7 +108,6 @@ class Club(models.Model):
     return: True if user is member of the club, False if not
     '''
     if not 'can_handle_join_requests' in get_perms(actor, self):
-      print(actor, 'cannot add the user because insufficient permisisons!')
       return False
 
     if user.groups.filter(name=self._get_member_group_name()).count() == 0:
@@ -135,7 +134,6 @@ class Club(models.Model):
       self.members.remove(user)
       return True # denotes the member was removed
     else:
-      print(actor, 'cannot remove the user because insufficient permisisons!')
       return False
 
     return False # denotes the member was not removed for some reason
@@ -147,7 +145,6 @@ class Club(models.Model):
     '''
     is_member = self.is_member(user)
     if not is_member:
-      print('Cannot promote a non member to officer')
       return False
     if not 'can_handle_promotion_requests' in get_perms(actor, self):
       return False
@@ -164,7 +161,6 @@ class Club(models.Model):
     '''
     is_officer = self.is_officer(user)
     if not is_officer:
-      print('Cannot demote a non officer to member')
       return False
     if not 'can_handle_promotion_requests' in get_perms(actor,self):
       return False

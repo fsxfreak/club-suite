@@ -1,5 +1,6 @@
 from django.db import models
-from datetime import datetime
+
+from django.utils import timezone
 
 class EventManager(models.Manager):
 
@@ -8,10 +9,7 @@ class EventManager(models.Manager):
    def get_upcoming_events(self, in_cid):
       upcoming_events=Event.objects.filter(
                         cid=in_cid,
-                        end_date__gte=datetime.datetime.now().date
-                        )
-      upcoming_events=upcoming_events.filter(
-                        end_time__gte=datetime.datetime.now().time
+                        end_date__gte=timezone.now()
                         ).order_by('start_date', 'start_time')
       return upcoming_events
 
@@ -30,9 +28,9 @@ class Event(models.Model):
 
    did = models.ForeignKey('Division', on_delete=models.CASCADE, null=True)
    event_name = models.CharField(max_length=100)
-   start_date = models.DateField(default=datetime.now)
+   start_date = models.DateField(default=timezone.now)
    start_time = models.TimeField(default='12:00:00')
-   end_date = models.DateField(default=datetime.now)
+   end_date = models.DateField(default=timezone.now)
    end_time = models.TimeField(default='12:00:00')
    event_location = models.CharField(max_length=100)
    event_description = models.TextField()
