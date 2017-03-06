@@ -5,43 +5,80 @@
 {% load staticfiles %}
 
 {% block body_block %}
+
 <section class='section'>
 <div class='container'>
+      {% include 'club_bar.html' with club_id=club.id user=request.user%} 
+  
   <h1> {{ event.event_name }} Sign In </h1>
 
-  <ul>
+  
+      
+    <table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Title</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th>Name</th>
+      <th>Title</th>
+      <th></th>
+    </tr>
+  </tfoot>
+  <tbody>
+       
+   
   {% for member in members %}
-  <li>
 
 
-    {{ member.user.first_name}} {{ member.user.last_name }}
-    : {{ member.user.student_title}}, {{ member.group }}
-    <form method='POST' action="{% url 'suite:event' club.id event.id %}">
+  <th>{{ member.user.first_name}} {{ member.user.last_name }}</th>
+  <th>{{ member.group }} </th>
+  <form method='POST' action="{% url 'suite:event' club.id event.id %}">
       {% csrf_token %}
-      <input class='button' type='submit' name='submit' value='Sign In'>
+      <th><input class='button' type='submit' name='submit' value='Sign In'></th>
       <input type='hidden' name='going' value='{{ member.user.id }}'>
     </form>
 
+</tr>
 
 
-   </li>
        {% endfor %}
-  </ul>
+  </tbody>
+</table>
+       
   <br />
 
 <p>Members who have signed in</p>
-
-  <ul>
+    <table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th>Name</th>
+    </tr>
+  </tfoot>
+  <tbody>
+       
+   
   {% for eventSignIn in eventSignIns %}
-  <li>
 
 
-    {{ eventSignIn.uid}}
+  <th>{{ eventSignIn.uid}}</th>
+
+</tr>
 
 
-
-   </li>
        {% endfor %}
+  </tbody>
+</table>
+  <ul>
   </ul>
 
 
