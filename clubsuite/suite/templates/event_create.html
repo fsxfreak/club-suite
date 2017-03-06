@@ -12,7 +12,7 @@
 
 
      <h1>Create an Event</h1>
-     <form action="{% url 'suite:event_create' club.id %}" method="post">
+     <form action="{% url 'suite:event_create' club.id %}" method="post" enctype='multipart/form-data'>
        {% csrf_token %}
 
        <div class="control is-horizontal">

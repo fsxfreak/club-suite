@@ -19,7 +19,7 @@
     <form method='POST' action="{% url 'suite:event' club.id event.id %}">
       {% csrf_token %}
       <input class='button' type='submit' name='submit' value='Sign In'>
-      <input type='hidden' name='going' value='{{ member.id }}'>
+      <input type='hidden' name='going' value='{{ member.user.id }}'>
     </form>
 
 

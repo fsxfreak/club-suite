@@ -40,4 +40,4 @@ class HandleJoinRequest(UserPassesTestMixin, LoginRequiredMixin, View):
          req.delete()
 
     reqs = Club.objects.get(pk=club_id).joinrequest_set.all()
-    return render(request, self.template_name, { 'reqs' : reqs })
+    return render(request, self.template_name, { 'reqs' : reqs, 'club' : club })
