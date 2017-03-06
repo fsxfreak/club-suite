@@ -16,34 +16,63 @@
     <h1> {{ club.club_name }} Roster </h1>
 
   <ul>
-  {% for member in members %}
-    <li>
-      <div>{{ member.user.first_name}} {{ member.user.last_name }} 
-            : {{ member.group }} 
+    
+    <table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Title</th>
+      <th>Modify Role</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Title</th>
+      <th>Modify Role</th>
+    </tr>
+  </tfoot>
+  <tbody>
+       
+      <div> 
       </div>
+      
+  {% for member in members %}
+
+      <tr>
+      <th>{{ member.user.id }} </th>
+      <th>{{ member.user.first_name}} {{ member.user.last_name }}</th>
+      <th>{{ member.group }}</th>
+      <div class="block">
       {% if "can_remove_member" in club_perms %}
       <form method='POST' action="{% url 'suite:club_roster' club.id %}">
         {% csrf_token %}
-        <input class='button' type='submit' name='submit' value='Delete {{ member.user.first_name }}'>
+        <td><input class='button is-danger' type='submit' name='submit' value='Delete {{ member.user.first_name }}'>
         <input type='hidden' name='delete' value='{{ member.user.id }}'>
       </form>
       {% endif %}
       {% if "can_handle_promotion_requests" in club_perms %}
       <form method='POST' action="{% url 'suite:club_roster' club.id %}">
         {% csrf_token %}
-        <input class='button' type='submit' name='submit' value='Promote {{ member.user.first_name }}'>
+        <input class='button is-success' type='submit' name='submit' value='Promote {{ member.user.first_name }}'>
         <input type='hidden' name='promote' value='{{ member.user.id }}'>
       </form>
       {% endif %}
       {% if "can_handle_promotion_requests" in club_perms %}
       <form method='POST' action="{% url 'suite:club_roster' club.id %}">
         {% csrf_token %}
-        <input class='button' type='submit' name='submit' value='Demote {{ member.user.first_name }}'>
+        <input class='button is-warning' type='submit' name='submit' value='Demote {{ member.user.first_name }}'></td>
         <input type='hidden' name='demote' value='{{ member.user.id }}'>
       </form>
       {% endif %}
-    </li>
     {% endfor %}
+      </div>
+    </tr>
+  </tbody>
+</table>
+    
   </ul>
   </div>
 </section>
