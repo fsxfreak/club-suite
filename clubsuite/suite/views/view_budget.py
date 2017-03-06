@@ -84,10 +84,17 @@ class Budget(UserPassesTestMixin, LoginRequiredMixin, View):
         budget.save()
 
     books = self.generate_books(club.division_set.all())
+    total_budget = 0
+    total_expense = 0
+    for book in books:
+      total_budget = total_budget + book['total_budget']
+      total_expense = total_expense + book['total_expense']
 
     return render(request, self.template_name, { 'books' : books, 
                                                  'club': club,
                                                  'budget_form' : budget_form,
-                                                 'division_form' : division_form})
+                                                 'division_form' : division_form,
+                                                 'total_budget' : total_budget,
+                                                 'total_expense' : total_expense})
 
 
