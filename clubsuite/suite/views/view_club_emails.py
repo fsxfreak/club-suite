@@ -17,14 +17,14 @@ class ClubEmails(UserPassesTestMixin, LoginRequiredMixin, View):
 
     return True 
 
-  def get_members(self, club, group_str):
+  def get_members(self, club, group_str, actor):
     users = None
-    if 'owner' in group_str:
-      users = club.get_owners()
-    elif 'officer' in group_str:
-      users = club.get_officers()
+    if 'owner' in group_str.lower():
+      users = club.get_owners().exclude(id=actor.id)
+    elif 'officer' in group_str.lower():
+      users = club.get_officers().exclude(id=actor.id)
     else: # 'members', ideally
-      users = club.get_members()
+      users = club.get_members().exclude(id=actor.id)
 
     members = []
     for user in users:
@@ -35,13 +35,13 @@ class ClubEmails(UserPassesTestMixin, LoginRequiredMixin, View):
 
   def get(self, request, club_id):
     club = get_object_or_404(Club, pk=club_id)
-    members = self.get_members(club, 'members')
+    members = self.get_members(club, 'members', request.user)
     return render(request, self.template_name, { 'club' : club, 'members': members})
 
   def post(self, request, club_id):
     club = get_object_or_404(Club, pk=club_id)
 
     # 'member_type' see self.get_members function
-    members = self.get_members(club, request.POST['member_type'])
+    members = self.get_members(club, request.POST['member_type'], request.user)
 
     return render(request, self.template_name, {'club' : club, 'members': members})
