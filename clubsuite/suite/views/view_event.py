@@ -7,6 +7,8 @@ from django.views.generic import View
 from suite.models import Event as EventModel
 from suite.models import Club, EventSignIn, User
 
+from guardian.shortcuts import get_perms
+
 class Event(LoginRequiredMixin, View):
   template_name = 'event.html'
 
@@ -26,9 +28,10 @@ class Event(LoginRequiredMixin, View):
      'event': event, 'eventSignIns': eventSignIns})
 
   def post(self, request, club_id, event_id, *args, **kwargs):
-    if 'going' in request.POST:
+    club = get_object_or_404(Club, pk=club_id)
+
+    if 'going' in request.POST and 'can_access_attendance' in get_perms(self.request.user, club):
       member_id = request.POST['going']
-      club = get_object_or_404(Club, pk=club_id)
       event = EventModel.objects.get(pk=event_id)
       member = get_object_or_404(User, pk=member_id)
 
