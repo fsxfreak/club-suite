@@ -24,8 +24,17 @@ class Event(LoginRequiredMixin, View):
       if EventSignIn.objects.filter(eid=event_id, uid=mem, status=True).count() < 1:
         members.append(member)
 
+    # getting the revnue
+    totalCost = 0
+    i = 1
+    for eventSignIn in eventSignIns:
+        totalCost = i * event.event_fee
+        i+=1
+
+
+
     return render(request, self.template_name, {'club': club, 'members' : members,
-     'event': event, 'eventSignIns': eventSignIns})
+     'event': event, 'eventSignIns': eventSignIns, 'totalCost':totalCost})
 
   def post(self, request, club_id, event_id, *args, **kwargs):
     club = get_object_or_404(Club, pk=club_id)
