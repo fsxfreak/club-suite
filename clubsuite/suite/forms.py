@@ -48,7 +48,7 @@ class RegistrationForm(auth.forms.UserCreationForm):
 class ClubCreateForm(forms.ModelForm):
   class Meta:
     model = Club
-    fields = ['club_name', 'club_type', 'club_description', 'image' ]
+    fields = ['club_name', 'club_description', 'image' ]
 
 class EventCreateForm(forms.ModelForm):
   class Meta:
