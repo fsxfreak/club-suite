@@ -85,6 +85,32 @@
              <canvas id="myChart"></canvas>
         </div>
    </div>
+   <table class="table">
+ <thead>
+   <tr>
+     <th>Division</th>
+     <th>Spent</th>
+     <th>Budget</th>
+   </tr>
+ </thead>
+ <tfoot>
+       <tr>
+            <th>Total</th>
+            <th>{{total_expense}}</th>
+            <th>{{total_budget}}</th>
+       </tr>
+ </tfoot>
+ <tbody>
+       {% for book in books %}
+       <tr>
+            <td>{{book.division}}</td>
+            <td>${{book.total_expense}}</td>
+            <td>${{book.total_budget}}</td>
+     </tr>
+       {% endfor %}
+
+ </tbody>
+</table>
    {% else %}
    <div class="notification">
         No budget information to display.
@@ -92,45 +118,67 @@
    <div>
    </div>
    {% endif %}
-   <script>
-   var divisions = [];
-   var budgets = [];
-   {% for book in books %}
-        {% if not book.total_budget == 0 %}
-             divisions.push( "{{book.division}}" );
-             budgets.push( {{book.total_budget}} );
-        {% endif %}
-   {% endfor %}
-   var backgroundColors = ["#FF5733", "#36A2EB", "#33FF7A", "#FFA833", "#8A33FF", "#FFCE56", "#3F33FF", "#FF335E", "#33FFB5"];
 
-   var ctx = document.getElementById("myChart");
-
-   var myChart = new Chart(ctx, {
-       type: 'pie',
-       data: {
-       labels: divisions,
-       datasets: [
-           {
-               data: budgets,
-               backgroundColor: backgroundColors,
-               hoverBackgroundColor: backgroundColors
-           }]
-       },
-       options: {
-           animation:{
-               animateScale:true
-           }
-       }
-   });
-   </script>
+   <h3>View Budget 2</h3>
    {% if not total_budget == 0 %}
+   <div class="columns">
+        <table class="table column is-half">
+        <thead>
+         <tr>
+            <th>Division</th>
+            <th>Spent</th>
+            <th>Budget</th>
+         </tr>
+        </thead>
+        <tfoot>
+             <tr>
+                  <th>Total</th>
+                  <th>{{total_expense}}</th>
+                  <th>{{total_budget}}</th>
+             </tr>
+        </tfoot>
+        <tbody>
+             {% for book in books %}
+             <tr>
+                  <td>{{book.division}}</td>
+                  <td>${{book.total_expense}}</td>
+                  <td>${{book.total_budget}}</td>
+            </tr>
+             {% endfor %}
+
+        </tbody>
+      </table>
+        <div class="column is-5 is-offset-1">
+             <canvas id="myChart2"></canvas>
+        </div>
+   </div>
+   {% else %}
+   <div class="notification">
+        No budget information to display.
+   </div>
+   <div>
+   </div>
+   {% endif %}
+
+   <h3>View Budget 3</h3>
+   {% if not total_budget == 0 %}
+   <div class="columns">
+        <div class="column is-5">
+             <h4 class="has-text-centered">Planned Breakdown of Expenses</h4>
+             <canvas id="budgetChart"></canvas>
+        </div>
+        <div class="column is-5 is-offset-2">
+             <h4 class="has-text-centered">Actual Breakdown of Expenses</h4>
+             <canvas id="expensesChart"></canvas>
+        </div>
+   </div>
   <table class="table">
   <thead>
-    <tr>
+   <tr>
       <th>Division</th>
       <th>Spent</th>
       <th>Budget</th>
-    </tr>
+   </tr>
   </thead>
   <tfoot>
        <tr>
@@ -150,7 +198,104 @@
 
   </tbody>
 </table>
-{% endif %}
+   {% else %}
+   <div class="notification">
+        No budget information to display.
+   </div>
+   <div>
+   </div>
+   {% endif %}
+
+   <script>
+        var divisions = [];
+        var budgets = [];
+        var expenses = [];
+        {% for book in books %}
+                  divisions.push( "{{book.division}}" );
+                  budgets.push( {{book.total_budget}} );
+                  expenses.push({{book.total_expense}} );
+        {% endfor %}
+
+        var backgroundColors = ["#FF5733", "#36A2EB", "#33FF7A", "#FFA833", "#8A33FF", "#FFCE56", "#3F33FF", "#FF335E", "#33FFB5", "#47965C"];
+
+        var ctx = document.getElementById("myChart");
+        var ctx2 = document.getElementById("myChart2");
+        var ctxBudget = document.getElementById("budgetChart");
+        var ctxExpenses = document.getElementById("expensesChart");
+
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+            labels: divisions,
+            datasets: [
+                {
+                    data: budgets,
+                    backgroundColor: backgroundColors,
+                    hoverBackgroundColor: backgroundColors
+                }]
+            },
+            options: {
+                animation:{
+                    animateScale:true
+                }
+            }
+        });
+
+
+        var myChart2 = new Chart(ctx2, {
+            type: 'pie',
+            data: {
+            labels: divisions,
+            datasets: [
+               {
+                   data: budgets,
+                   backgroundColor: backgroundColors,
+                   hoverBackgroundColor: backgroundColors
+               }]
+            },
+            options: {
+               animation:{
+                   animateScale:true
+               }
+            }
+        });
+
+        var budgetChart = new Chart(ctxBudget, {
+            type: 'pie',
+            data: {
+            labels: divisions,
+            datasets: [
+              {
+                   data: budgets,
+                   backgroundColor: backgroundColors,
+                   hoverBackgroundColor: backgroundColors
+              }]
+            },
+            options: {
+              animation:{
+                   animateScale:true
+              }
+            }
+        });
+
+        var expensesChart = new Chart(ctxExpenses, {
+            type: 'pie',
+            data: {
+            labels: divisions,
+            datasets: [
+              {
+                   data: expenses,
+                   backgroundColor: backgroundColors,
+                   hoverBackgroundColor: backgroundColors
+              }]
+            },
+            options: {
+              animation:{
+                   animateScale:true
+              }
+            }
+        });
+   </script>
 
 <h3>View Detailed Budget</h3>
 {% if total_budget == 0 %}
