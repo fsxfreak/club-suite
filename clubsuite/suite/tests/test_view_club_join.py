@@ -8,6 +8,8 @@ from django.urls import reverse
 class View_Club_Join_TestCase(TestCase):
     def setUp(self):
         self.client=Client()
+
+        #Create club
         self.club=Club.objects.create(club_name="club",club_type="PUB", club_description="a club")
 
         #create club owner
@@ -25,7 +27,6 @@ class View_Club_Join_TestCase(TestCase):
         response = self.client.get(reverse('suite:club_join',kwargs={'club_id':self.club.id}))
         self.assertRedirects(response,"/?next="+reverse('suite:club_join',kwargs={'club_id':self.club.id}))
 
-    #TODO Check JoinRequest after class is finished
     def test_post(self):
         self.client.force_login(get_user_model().objects.get(first_name='Owner'))
 
@@ -37,13 +38,11 @@ class View_Club_Join_TestCase(TestCase):
                 "club_id":self.club.pk}
 
         response = self.client.post(reverse('suite:club_join',kwargs={'club_id':self.club.id}),data)
-
         self.assertRedirects(response,reverse('suite:club_view',kwargs={'club_id':self.club.id}))
 
         response2 = self.client.post(reverse('suite:club_join',kwargs={'club_id':self.club.id}),data2)
-
         response3 = self.client.post(reverse('suite:club_join',kwargs={'club_id':self.club.id}),data3)
 
+        #Check that user cannot makke multiple requests to the same club
         requests=JoinRequest.objects.filter(cid=self.club.pk).filter(uid=self.owner.pk)
-
         self.assertEqual(len(requests),1)
