@@ -8,7 +8,7 @@
 {% get_obj_perms user for club as "club_perms" %}
 <section class='section'>
   <div class='container'>
-    {% include 'club_bar.html' with club_id=club.id user=request.user%} 
+    {% include 'club_bar.html' with club_id=club.id user=request.user%}
     <h1> {{ event.event_name }} Sign In </h1>
     {% if members %}
     <table class="table">
@@ -65,9 +65,11 @@
       </tfoot>
       <tbody>
         {% for eventSignIn in eventSignIns %}
+
         <tr>
           <td>{{ eventSignIn.uid.get_full_name}}</td>
         </tr>
+          {{ forloop.counter }} Checked in Member
         {% endfor %}
       </tbody>
     </table>
