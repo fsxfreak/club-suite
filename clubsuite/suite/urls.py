@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm  # easy registration
 from django.contrib.auth.views import login, logout, password_reset, password_reset_done, password_reset_confirm, password_reset_complete#password reset
 from django.conf.urls.static import static
 from django.conf import settings
+from django.contrib import admin
 
 import django.contrib.auth as auth
 
@@ -24,6 +25,7 @@ urlpatterns = [
     url(r'^club/(?P<club_id>[0-9]+)/join/handle_requests$', views.HandleJoinRequest.as_view(), name='handle_join_request'),
     url(r'^club/(?P<club_id>[0-9]+)/budget$', views.Budget.as_view(), name='budget'),
     url(r'^account', views.Account.edit_profile, name='edit_profile'),
+    url(r'^admin/', admin.site.urls),
 
 
     #password reset
