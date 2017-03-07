@@ -1,52 +1,79 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% load widget_tweaks %}
+{% load guardian_tags %}
 
-{% load staticfiles %}
 
 {% block body_block %}
+{% get_obj_perms user for club as "club_perms" %}
 <section class='section'>
-<div class='container'>
-  <h1> {{ event.event_name }} Sign In </h1>
+  <div class='container'>
+    {% include 'club_bar.html' with club_id=club.id user=request.user%} 
+    <h1> {{ event.event_name }} Sign In </h1>
+    {% if members %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Title</th>
+          {% if "can_access_attendance" in club_perms %}
+          <th>Options</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <th>Name</th>
+          <th>Title</th>
+          {% if "can_access_attendance" in club_perms %}
+          <th>Options</th>
+          {% endif %}
+        </tr>
+      </tfoot>
+      <tbody>
+        {% for member in members %}
+        <tr>
+          <td>{{ member.user.first_name}} {{ member.user.last_name }}</td>
+          <td>{{ member.group }}</td>
+          {% if "can_access_attendance" in club_perms %}
+          <form method='POST' action="{% url 'suite:event' club.id event.id %}">
+            {% csrf_token %}
+            <td><input class='button' type='submit' name='submit' value='Sign In'></td>
+            <input type='hidden' name='going' value='{{ member.user.id }}'>
+          </form>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p>All members have been checked in!</p>
+    {% endif %}
 
-  <ul>
-  {% for member in members %}
-  <li>
-
-
-    {{ member.user.first_name}} {{ member.user.last_name }}
-    : {{ member.user.student_title}}, {{ member.group }}
-    <form method='POST' action="{% url 'suite:event' club.id event.id %}">
-      {% csrf_token %}
-      <input class='button' type='submit' name='submit' value='Sign In'>
-      <input type='hidden' name='going' value='{{ member.user.id }}'>
-    </form>
-
-
-
-   </li>
-       {% endfor %}
-  </ul>
-  <br />
-
-<p>Members who have signed in</p>
-
-  <ul>
-  {% for eventSignIn in eventSignIns %}
-  <li>
-
-
-    {{ eventSignIn.uid}}
-
-
-
-   </li>
-       {% endfor %}
-  </ul>
-
-
-
+    {% if eventSignIns %}
+    <p>Checked in Members</p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <th>Name</th>
+        </tr>
+      </tfoot>
+      <tbody>
+        {% for eventSignIn in eventSignIns %}
+        <tr>
+          <td>{{ eventSignIn.uid.get_full_name}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p>No members have been signed in yet.</p>
+    {% endif %}
   </div>
 </section>
-
 {% endblock body_block %}

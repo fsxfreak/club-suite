@@ -2,6 +2,7 @@ from django.contrib import auth
 from django import forms
 
 from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.password_validation import validate_password
 from .models import *
 
 class RegistrationForm(auth.forms.UserCreationForm):
@@ -20,6 +21,8 @@ class RegistrationForm(auth.forms.UserCreationForm):
     if password1 and password2 and password1 != password2:
       msg = "Passwords don't match"
       raise forms.ValidationError("Password mismatch")
+
+    validate_password(password1)
 
     return password2
 
