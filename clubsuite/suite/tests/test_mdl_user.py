@@ -40,7 +40,6 @@ class UserTestCase(TestCase):
         club2.add_member(self.owner,self.user)
 
         #test get clubs
-        #NOTE fails because add_member method doesn't work
         club_list=self.user.get_clubs()
         self.assertEqual(club_list[0],self.club)
         self.assertEqual(club_list[1],club2)

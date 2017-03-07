@@ -23,7 +23,6 @@ class View_Budget_TestCase(TestCase):
 
     def test_get_login(self):
         self.client.force_login(get_user_model().objects.get(first_name='Owner'))
-        #response = self.client.get(reverse('suite:budget',kwargs={self.club.id}))
         response = self.client.get(reverse('suite:budget',kwargs={'club_id':self.club.id}),club_id=self.club.pk)
         self.assertEqual(response.status_code,200)
 

@@ -52,14 +52,3 @@ class View_Handle_Join_Request_TestCase(TestCase):
         self.assertNotContains(response,"Please")
         self.assertContains(response,"cmon")
         self.assertContains(response,"help me out")
-
-    def test_post_multiple_requests_same_user(self):
-        self.joinRequest4=JoinRequest.objects.create(cid=self.club,uid=self.user,reason="Ayo")
-        self.joinRequest5=JoinRequest.objects.create(cid=self.club,uid=self.user,reason="Lmao")
-
-        data = {"accept":self.joinRequest2.pk}
-        self.client.force_login(get_user_model().objects.get(first_name='Owner'))
-        response = self.client.post(reverse('suite:handle_join_request',kwargs={'club_id':self.club.id}),data)
-        self.assertContains(response,"Please")
-        self.assertNotContains(response,"Ayo")
-        self.assertNotContains(response,"Lmao")

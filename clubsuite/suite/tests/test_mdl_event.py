@@ -10,8 +10,6 @@ class EventTestCase(TestCase):
 
         self.club=Club.objects.create(club_name="club",club_type="PUB",
                                     club_description="a club")
-
-
         self.eventManager = EventManager()
         self.event = Event.objects.create(cid=self.club,event_name="Event1",start_time="00:00:00",end_time="23:59:59",event_location="Library",event_description="Lots of testing!")
 
