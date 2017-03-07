@@ -16,4 +16,6 @@ class ClubView(LoginRequiredMixin, View):
         eventSignIn = EventSignIn.objects.filter(cid=club_id, uid=request.user.id)
         signedInEvents = [EventSignIn.eid for EventSignIn in eventSignIn]
 
+        print(club)
+        print(events)
         return render(request, self.template_name, {'club': club, 'events': events, 'signedInEvents': signedInEvents})
