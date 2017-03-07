@@ -30,6 +30,7 @@
             </div>
             <p class="control">
                  {% render_field form.start_date class="input is-fullwidth" type="date" %}
+            </p>
        </div>
 
        <div class="control is-horizontal">
@@ -41,13 +42,16 @@
             </p>
        </div>
 
-       <!-- note: end_date field does not yet exist-->
+       <p class='control'>
+         {{ form.end_date.errors }}
+       </p>
        <div class="control is-horizontal">
             <div class="control-label">
                  <label class="label" for="id_end_date">End Date</label>
             </div>
             <p class="control">
                  {% render_field form.end_date class="input is-fullwidth" type="date" %}
+            </p>
        </div>
 
       <div class="control is-horizontal">
@@ -56,6 +60,7 @@
           </div>
           <p class="control">
                {% render_field form.end_time class="input is-fullwidth" type="time" %}
+          </p>
       </div>
 
        <div class="control is-horizontal">
@@ -85,6 +90,7 @@
                  <span class="icon is-small">
                       <i class="fa fa-usd"></i>
                  </span>
+            </p>
        </div>
 
        <div class="control is-horizontal">
@@ -96,6 +102,7 @@
                  <span class="icon is-small">
                       <i class="fa fa-usd"></i>
                  </span>
+            </p>
        </div>
 
        <div class="control is-horizontal">
