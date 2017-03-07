@@ -24,7 +24,7 @@ class Event(LoginRequiredMixin, View):
       if EventSignIn.objects.filter(eid=event_id, uid=mem, status=True).count() < 1:
         members.append(member)
 
-    return render(request, self.template_name, {'club': club, 'members' : members, 
+    return render(request, self.template_name, {'club': club, 'members' : members,
      'event': event, 'eventSignIns': eventSignIns})
 
   def post(self, request, club_id, event_id, *args, **kwargs):
@@ -38,7 +38,7 @@ class Event(LoginRequiredMixin, View):
       eventsign = EventSignIn(cid=club, uid=member, eid=event, status=True)
       eventsign.save()
 
-      return HttpResponseRedirect(reverse('suite:event', 
+      return HttpResponseRedirect(reverse('suite:event',
         kwargs={ 'club_id': club_id, 'event_id': event_id}))
 
     return render(request, self.template_name, {'club': club, 'members' : members, 'event': event})
