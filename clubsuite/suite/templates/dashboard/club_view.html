@@ -9,8 +9,8 @@
 <section class='section'>
   <div class='container'>
 
-    
-      {% include 'club_bar.html' with club=club club_id=club.id user=request.user%} 
+
+      {% include 'club_bar.html' with club=club club_id=club.id user=request.user%}
 
 
 
@@ -75,6 +75,39 @@
         </div>
       </div>
     {% endfor %}
+
+      <p> <h2> Attended Events  </h2></p>
+      {% for signedInEvent in signedInEvents %}
+
+     <div class="column is-8">
+          <div class="box">
+            <article class="media">
+              <div class="media-left">
+                <figure class="image is-128x128">
+                  <br />
+                    <img src="{{event.image.url}}" alt="Image">
+                </figure>
+              </div>
+              <div class="media-content">
+                <div class="content">
+                    <p> <h3><a href="{% url 'suite:event' club.id event.id %}">{{event.event_name}}</a>
+                        {% if event.accessibility != True %}<span class="tag is-warning">Members Only</span>  {% endif %}
+                        {% if event.required == True %}<span class="tag is-dark">Event Required</span>  {% endif %}</h3></p>
+
+                    <p> {% if event.start_date != event.end_date %}{{event.start_date}} ({{event.start_time}}) - {{event.end_date}} ({{event.end_time}}){% endif %}
+                        {% if event.start_date == event.end_date %}{{event.start_date}} : {{event.start_time}} - {{event.end_time}} {% endif %}
+                    </p>
+                    <p><h5 class="subtitle">{% if event.event_cost == 0 %} (FREE) {% endif %}</h5>
+                      {% if event.event_fee != 0 %} (${{event.event_fee}} Event Fee) {% endif %}</p>
+                    <p>Description: {{event.event_description}}</p>
+                    <br />
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      {% endfor %}
+
 
   </div>
 </section>
