@@ -28,10 +28,8 @@ class Event(LoginRequiredMixin, View):
     totalCost = 0
     i = 1
     for eventSignIn in eventSignIns:
-        totalCost = i * event.event_fee
+        totalCost = i * eventSignIn.eid.event_fee
         i+=1
-
-
 
     return render(request, self.template_name, {'club': club, 'members' : members,
      'event': event, 'eventSignIns': eventSignIns, 'totalCost':totalCost})

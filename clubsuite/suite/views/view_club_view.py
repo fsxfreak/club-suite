@@ -13,9 +13,8 @@ class ClubView(LoginRequiredMixin, View):
     def get(self, request, club_id):
         club = get_object_or_404(Club, pk=club_id)
         events = Event.objects.filter(cid=club_id).order_by('start_date')
-        eventSignIn = EventSignIn.objects.filter(cid=club_id, uid=request.user.id).order_by('start_date')
-        signedInEvents = [EventSignIn.eid for EventSignIn in eventSignIn]
+        sign_ins = EventSignIn.objects.filter(cid=club_id, uid=request.user.id)
+        signedInEvents = [sign_in.eid for sign_in in sign_ins ]
+        signedInEvents = sorted(signedInEvents, key=lambda x: x.start_date, reverse=True)
 
-        print(club)
-        print(events)
         return render(request, self.template_name, {'club': club, 'events': events, 'signedInEvents': signedInEvents})
