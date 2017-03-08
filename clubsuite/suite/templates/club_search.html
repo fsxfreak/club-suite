@@ -71,7 +71,7 @@
              {% for allClub in allClubs.all %}
              {% if not forloop.counter|divisibleby:"2" %}
              <div class="box">
-                  {{ allClub.club_name }}
+                   <a href="{% url 'suite:club_view' allClub.id %}">{{ allClub.club_name }}</a>
                   <img src="{{allClub.image.url}}" />
                   <p>{{allClub.club_description}}</p>
              </div>
@@ -82,7 +82,7 @@
           {% for allClub in allClubs.all %}
           {% if  forloop.counter|divisibleby:"2" %}
           <div class="box">
-               {{ allClub.club_name }}
+               <a href="{% url 'suite:club_view' allClub.id %}">{{ allClub.club_name }}</a>
                <img src="{{allClub.image.url}}" />
                <p>{{allClub.club_description}}</p>
           </div>
