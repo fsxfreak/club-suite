@@ -40,21 +40,21 @@
       {% if "can_remove_member" in club_perms or "can_handle_promotion_requests" in club_perms %}
       <div class="block">
       {% if "can_remove_member" in club_perms %}
-      <form method='POST' action="{% url 'suite:club_roster' club.id %}">
+      <form method='POST' action="{% url 'suite:club_roster' club.id %}" class='delete_member'>
         {% csrf_token %}
         <td><input class='button is-danger' type='submit' name='submit' value='Delete {{ member.user.first_name }}'>
         <input type='hidden' name='delete' value='{{ member.user.id }}'>
       </form>
       {% endif %}
       {% if "can_handle_promotion_requests" in club_perms %}
-      <form method='POST' action="{% url 'suite:club_roster' club.id %}">
+      <form method='POST' action="{% url 'suite:club_roster' club.id %}" class='promote_member'>
         {% csrf_token %}
         <input class='button' type='submit' name='submit' value='Promote {{ member.user.first_name }}'>
         <input type='hidden' name='promote' value='{{ member.user.id }}'>
       </form>
       {% endif %}
       {% if "can_handle_promotion_requests" in club_perms %}
-      <form method='POST' action="{% url 'suite:club_roster' club.id %}">
+      <form method='POST' action="{% url 'suite:club_roster' club.id %}" class='demote_member'>
         {% csrf_token %}
         <input class='button is-default' type='submit' name='submit' value='Demote {{ member.user.first_name }}'></td>
         <input type='hidden' name='demote' value='{{ member.user.id }}'>
@@ -66,7 +66,7 @@
     {% endfor %}
   </tbody>
 </table>
-    
+
   </ul>
   </div>
 </section>
