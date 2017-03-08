@@ -49,14 +49,14 @@
       {% if "can_handle_promotion_requests" in club_perms %}
       <form method='POST' action="{% url 'suite:club_roster' club.id %}">
         {% csrf_token %}
-        <input class='button is-success' type='submit' name='submit' value='Promote {{ member.user.first_name }}'>
+        <input class='button' type='submit' name='submit' value='Promote {{ member.user.first_name }}'>
         <input type='hidden' name='promote' value='{{ member.user.id }}'>
       </form>
       {% endif %}
       {% if "can_handle_promotion_requests" in club_perms %}
       <form method='POST' action="{% url 'suite:club_roster' club.id %}">
         {% csrf_token %}
-        <input class='button is-warning' type='submit' name='submit' value='Demote {{ member.user.first_name }}'></td>
+        <input class='button is-default' type='submit' name='submit' value='Demote {{ member.user.first_name }}'></td>
         <input type='hidden' name='demote' value='{{ member.user.id }}'>
       </form>
       {% endif %}
