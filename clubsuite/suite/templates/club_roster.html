@@ -16,7 +16,6 @@
 <table class="table">
   <thead>
     <tr>
-      <th>ID</th>
       <th>Name</th>
       <th>Title</th>
       {% if "can_handle_promotion_requests" in club_perms %}
@@ -26,7 +25,6 @@
   </thead>
   <tfoot>
     <tr>
-      <th>ID</th>
       <th>Name</th>
       <th>Title</th>
       {% if "can_handle_promotion_requests" in club_perms %}
@@ -37,7 +35,6 @@
   <tbody>
   {% for member in members %}
     <tr>
-      <td>{{ member.user.id }} </td>
       <td>{{ member.user.first_name}} {{ member.user.last_name }}</td>
       <td>{{ member.group }}</td>
       {% if "can_remove_member" in club_perms or "can_handle_promotion_requests" in club_perms %}
