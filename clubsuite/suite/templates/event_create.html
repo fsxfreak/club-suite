@@ -41,10 +41,11 @@
                  {% render_field form.start_time class="input is-fullwidth" type="time" %}
             </p>
        </div>
-
+       <div class="notification is-danger">
        <p class='control'>
          {{ form.end_date.errors }}
        </p>
+       </div>
        <div class="control is-horizontal">
             <div class="control-label">
                  <label class="label" for="id_end_date">End Date</label>
