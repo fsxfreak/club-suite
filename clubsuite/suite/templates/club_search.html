@@ -68,7 +68,7 @@
 
    <div class="columns">
         <div class='column is-half'>
-             {% for allClub in allClubs %}
+             {% for allClub in allClubs.all %}
              {% if not forloop.counter|divisibleby:"2" %}
              <div class="box">
                   {{ allClub.club_name }}
@@ -79,15 +79,15 @@
              {% endfor%}
         </div>
         <div class="column is-half">
-             {% for allClubs in allClubs %}
-             {% if forloop.counter|divisibleby:"2" %}
-             <div class="box">
-              {{ allClub.club_name }}
-                  <img src="{{allClub.image.url}}" />
-                  <p>{{allClub.club_description}}</p>
-             </div>
-             {% endif %}
-             {% endfor%}
+          {% for allClub in allClubs.all %}
+          {% if  forloop.counter|divisibleby:"2" %}
+          <div class="box">
+               {{ allClub.club_name }}
+               <img src="{{allClub.image.url}}" />
+               <p>{{allClub.club_description}}</p>
+          </div>
+          {% endif %}
+          {% endfor%}
         </div>
    </div>
 
