@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.shortcuts import render
 from django.urls import reverse
+from django.contrib import messages
 
 from suite.forms import ClubCreateForm
 
@@ -21,6 +22,7 @@ class ClubCreate(LoginRequiredMixin, View):
       club = form.save()
       club._create_permissions()
       club._set_owner(request.user)
+      messages.add_message(request, messages.SUCCESS, 'You Have Created a Club!')
 
       return HttpResponseRedirect(reverse('suite:dashboard'))
 
