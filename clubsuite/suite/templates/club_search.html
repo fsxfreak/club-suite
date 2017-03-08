@@ -56,6 +56,42 @@
        {% endif %}
    </div>
 
+
+   <!-- displays all the clubs -->
+
+   <div class='heading'>
+     <h1 class='title'>Here are some of the Clubs</h1>
+   </div>
+   <br/>
+
+     {% if not clubs %}
+
+   <div class="columns">
+        <div class='column is-half'>
+             {% for allClub in allClubs %}
+             {% if not forloop.counter|divisibleby:"2" %}
+             <div class="box">
+                  {{ allClub.club_name }}
+                  <img src="{{allClub.image.url}}" />
+                  <p>{{allClub.club_description}}</p>
+             </div>
+             {% endif %}
+             {% endfor%}
+        </div>
+        <div class="column is-half">
+             {% for allClubs in allClubs %}
+             {% if forloop.counter|divisibleby:"2" %}
+             <div class="box">
+              {{ allClub.club_name }}
+                  <img src="{{allClub.image.url}}" />
+                  <p>{{allClub.club_description}}</p>
+             </div>
+             {% endif %}
+             {% endfor%}
+        </div>
+   </div>
+
+     {% endif %}
   </div>
 </section>
 {% endblock body_block %}
