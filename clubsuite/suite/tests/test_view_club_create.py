@@ -13,11 +13,9 @@ class View_Club_Create_TestCase(TestCase):
         self.client.force_login(get_user_model().objects.get_or_create(first_name='testuser')[0])
         response = self.client.get(reverse('suite:club_create'))
         self.assertEqual(response.status_code,200)
-        #self.assertRedirects(response, "/?next="+reverse('suite:club_create'), 302,200)
 
     def test_get_not_logged_in(self):
         response = self.client.get(reverse('suite:club_create'))
-        #self.assertEqual(response.status_code,200)
         self.assertRedirects(response, "/?next="+reverse('suite:club_create'), 302,200)
 
     def test_post_login(self):

@@ -4,8 +4,6 @@ from suite.forms import ClubCreateForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 from django.test import Client
-# Create your tests here.
-#
 
 class RegistrationFormTestCase(TestCase):
     def setUp(self):
@@ -41,7 +39,6 @@ class RegistrationFormTestCase(TestCase):
                                       'first_name':"First",
                                       'last_name':"Last"
                                     })
-
         self.assertFalse(form.is_valid())
 
 class ClubCreateFormTestCase(TestCase):
@@ -51,7 +48,6 @@ class ClubCreateFormTestCase(TestCase):
         form = ClubCreateForm(data={'club_name':"club",
                                     'club_type':"PUB",
                                     'club_description':"cool"})
-
         club=form.save()
         self.assertTrue(form.is_valid())
         self.assertTrue(club.club_name,"club")
@@ -62,12 +58,6 @@ class ClubCreateFormTestCase(TestCase):
         form = ClubCreateForm(data={'club_name':"club",
                                     'club_type':"PUB"
                                     })
-
-        #club=form.save()
         self.assertFalse(form.is_valid())
-        '''
-        self.assertTrue(club.club_name,"club")
-        self.assertTrue(club.club_type,"PUB")
-        self.assertTrue(club.club_description,"cool")
-        '''
+
 

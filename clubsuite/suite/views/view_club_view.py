@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import View
 
-from suite.models import Club, Event
+from suite.models import Club, Event, EventSignIn
 from . import models
 
 class ClubView(LoginRequiredMixin, View):
@@ -12,6 +12,10 @@ class ClubView(LoginRequiredMixin, View):
 
     def get(self, request, club_id):
         club = get_object_or_404(Club, pk=club_id)
-        events = Event.objects.filter(cid=club_id)
+        events = Event.objects.filter(cid=club_id).order_by('start_date')
+        eventSignIn = EventSignIn.objects.filter(cid=club_id, uid=request.user.id).order_by('start_date')
+        signedInEvents = [EventSignIn.eid for EventSignIn in eventSignIn]
 
-        return render(request, self.template_name, {'club': club, 'events': events})
+        print(club)
+        print(events)
+        return render(request, self.template_name, {'club': club, 'events': events, 'signedInEvents': signedInEvents})

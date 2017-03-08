@@ -34,6 +34,8 @@ class EventCreate(UserPassesTestMixin, LoginRequiredMixin, TemplateView):
     club = get_object_or_404(Club, pk=club_id)
     if form.is_valid():
       event = form.save(club, commit=True)
+    else:
+      return render(request, self.template_name, { 'club' : club, 'form' : form})
 
     return HttpResponseRedirect(reverse('suite:club_view', args=[club_id]))
 

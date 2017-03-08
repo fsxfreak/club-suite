@@ -14,10 +14,16 @@ class View_Club_Manage_TestCase(TestCase):
         self.owner.set_password("clubsuite")
         self.owner.save()
 
+        #create club owner2, since owner can only resign if there is more than 1 owner
+        self.owner2=get_user_model().objects.create(first_name="Owner2",last_name="McPerson",email="test2@test.com")
+        self.owner2.set_password("clubsuite")
+        self.owner2.save()
+
         #Create club
         self.club=Club.objects.create(club_name="club",club_type="PUB",club_description="a club")
         self.club._create_permissions()
         self.club._set_owner(self.owner)
+        self.club._set_owner(self.owner2)
 
 
     def test_get_login(self):
@@ -42,7 +48,6 @@ class View_Club_Manage_TestCase(TestCase):
         self.assertFalse(self.club.is_officer(self.owner))
         self.assertFalse(self.club.is_member(self.owner))
 
-        #self.assertRedirects(response,reverse('suite:dashboard'))
         self.assertEqual(response.status_code,200)
 
     def test_post_login_no_resign(self):
@@ -51,11 +56,8 @@ class View_Club_Manage_TestCase(TestCase):
 
         data = {'club_id':self.club.pk}
 
-
         response = self.client.post(reverse('suite:club_manage'),data,follow=True)
         self.assertTrue(self.club.is_owner(self.owner))
         self.assertTrue(self.club.is_officer(self.owner))
         self.assertTrue(self.club.is_member(self.owner))
-
-        #self.assertRedirects(response,reverse('suite:dashboard'))
         self.assertEqual(response.status_code,200)

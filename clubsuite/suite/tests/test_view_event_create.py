@@ -20,8 +20,6 @@ class View_EventCreate_TestCase(TestCase):
         self.club._create_permissions()
         self.club._set_owner(self.owner)
 
-        #self.event = Event.objects.create(cid=self.club,event_name="Event1",start_time="00:00:00",end_time="23:59:59",event_location="Library",event_description="Lots of testing!")
-
     def test_get_login(self):
         self.client.force_login(get_user_model().objects.get(first_name='Owner'))
         response = self.client.get(reverse('suite:event_create',kwargs={'club_id':self.club.pk}))
@@ -29,7 +27,6 @@ class View_EventCreate_TestCase(TestCase):
 
     def test_get_not_logged_in(self):
         response = self.client.get(reverse('suite:event_create',kwargs={'club_id':self.club.pk}))
-        #self.assertRedirects(response, "/?next="+reverse('suite:event_create',kwargs={'club_id':self.club.pk}), 403,200)
         self.assertEquals(response.status_code,403)
 
     def test_post(self):

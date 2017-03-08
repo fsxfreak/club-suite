@@ -32,7 +32,7 @@ class ClubManagerTestCase(TestCase):
         self.user_list=[]
         self.user_list.append(self.owner)
 
-        #add users to club
+        #add 19 users to club
         for i in range(1,20):
             #create users
             user=get_user_model().objects.create(first_name="Person"+str(i),last_name="McPerson",email="test"+str(i)+"@test.com")
@@ -167,5 +167,38 @@ class ClubTestCase(TestCase):
         for i in range(1,20):
             self.assertTrue(self.club.promote_to_officer(self.owner,self.user_list[i]))
 
-    #TODO test_demote_from_officer
+    def test_demote_from_officer(self):
+        #Promote members to officer first
+        for i in range(1,20):
+            self.assertTrue(self.club.promote_to_officer(self.owner,self.user_list[i]))
 
+        #Then demote them
+        for i in range(1,20):
+            self.assertTrue(self.club.demote_from_officer(self.owner,self.user_list[i]))
+
+    def test_demote_from_officer_no_permission(self):
+        #Promote 1 member
+        self.assertTrue(self.club.promote_to_officer(self.owner,self.user_list[1]))
+        self.assertFalse(self.club.demote_from_officer(self.actor,self.user_list[1]))
+
+    def test_promote_officer_to_owner(self):
+        #Promote members to officer first
+        for i in range(1,20):
+            self.assertTrue(self.club.promote_to_officer(self.owner,self.user_list[i]))
+
+        #Then promote again
+        for i in range(1,20):
+            self.assertTrue(self.club.promote_officer_to_owner(self.owner,self.user_list[i]))
+
+    def test_demote_owner_to_officer(self):
+        #Promote members to officer first
+        for i in range(1,20):
+            self.assertTrue(self.club.promote_to_officer(self.owner,self.user_list[i]))
+
+        #Then promote again
+        for i in range(1,20):
+            self.assertTrue(self.club.promote_officer_to_owner(self.owner,self.user_list[i]))
+
+        #Finally, demote them
+        for i in range(1,20):
+            self.assertTrue(self.club.demote_owner_to_officer(self.owner,self.user_list[i]))
