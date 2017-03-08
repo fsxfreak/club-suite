@@ -4,8 +4,11 @@ from suite.models import User
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 
-class Account:
-  def edit_profile(request):
+from django.views.generic import View
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class Account(View, LoginRequiredMixin):
+  def get(self, request):
     if request.POST:
       if 'details' in request.POST:
         form = EditProfileForm(request.POST, instance=request.user)
