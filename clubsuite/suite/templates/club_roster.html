@@ -37,13 +37,13 @@
   <tbody>
     {% if messages %}
 
-      <ul class="messages">
+
           {% for message in messages %}
-          <div class="notification is-warning">
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          <div class="notification is-danger">
+            <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
           </div>
           {% endfor %}
-      </ul>
+
     {% endif %}
   {% for member in members %}
     <tr>
