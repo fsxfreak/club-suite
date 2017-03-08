@@ -69,11 +69,13 @@
               {% render_field budget_form.end_date class="input is-fullwidth" type="date" %}
          </p>
     </div>
+    {% if form.end_date.errors %}
     <div class="notification is-danger">
     <p class='control'>
       {{ budget_form.end_date.errors }}
     </p>
     </div>
+    {% endif %}
 
     <div class="control is-grouped">
       <p class="control">
