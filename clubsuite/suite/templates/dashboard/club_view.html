@@ -9,8 +9,8 @@
 <section class='section'>
   <div class='container'>
 
-    
-      {% include 'club_bar.html' with club=club club_id=club.id user=request.user%} 
+
+      {% include 'club_bar.html' with club=club club_id=club.id user=request.user%}
 
 
 
@@ -58,7 +58,7 @@
             </div>
             <div class="media-content">
               <div class="content">
-                  <p> <h3><a href="{% url 'suite:event' club.id event.id %}">{{event.event_name}}</a>
+                  <p> <h3><a href="{% url 'suite:event' club_id=club.id event_id=event.id %}">{{event.event_name}}</a>
                       {% if event.accessibility != True %}<span class="tag is-warning">Members Only</span>  {% endif %}
                       {% if event.required == True %}<span class="tag is-dark">Event Required</span>  {% endif %}</h3></p>
 
@@ -75,6 +75,39 @@
         </div>
       </div>
     {% endfor %}
+
+      <p> <h2> Attended Events  </h2></p>
+      {% for signedInEvent in signedInEvents %}
+
+     <div class="column is-8">
+          <div class="box">
+            <article class="media">
+              <div class="media-left">
+                <figure class="image is-128x128">
+                  <br />
+                    <img src="{{signedInEvent.image.url}}" alt="Image">
+                </figure>
+              </div>
+              <div class="media-content">
+                <div class="content">
+                    <p> <h3><a href="{% url 'suite:event' club_id=club.id event_id=signedInEvent.id %}">{{signedInEvent.event_name}}</a>
+                        {% if event.accessibility != True %}<span class="tag is-warning">Members Only</span>  {% endif %}
+                        {% if event.required == True %}<span class="tag is-dark">Event Required</span>  {% endif %}</h3></p>
+
+                    <p> {% if signedInEvent.start_date != signedInEvent.end_date %}{{signedInEvent.start_date}} ({{signedInEvent.start_time}}) - {{signedInEvent.end_date}} ({{signedInEvent.end_time}}){% endif %}
+                        {% if signedInEvent.start_date == signedInEvent.end_date %}{{signedInEvent.start_date}} : {{signedInEvent.start_time}} - {{signedInEvent.end_time}} {% endif %}
+                    </p>
+                    <p><h5 class="subtitle">{% if signedInEvents.event_cost == 0 %} (FREE) {% endif %}</h5>
+                      {% if signedInEvents.event_fee != 0 %} (${{signedInEvents.event_fee}} Event Fee) {% endif %}</p>
+                    <p>Description: {{signedInEvent.event_description}}</p>
+                    <br />
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      {% endfor %}
+
 
   </div>
 </section>

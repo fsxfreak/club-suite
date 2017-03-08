@@ -15,7 +15,7 @@
             </h1>
           <form action="{% url 'suite:login' %}" method="post" accept-charset="utf-8">
             {% if form.errors %}
-            <label class='label'>{{ form.errors }}</label>
+            {{ form.non_field_errors }}
             {% endif %}
             {% csrf_token %}
             {% for field in form %}

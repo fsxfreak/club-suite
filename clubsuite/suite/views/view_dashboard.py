@@ -6,5 +6,5 @@ from suite.models import Club
 
 class Dashboard(LoginRequiredMixin, TemplateView):
   def get(self, request):
-    clubs = request.user.get_clubs()
+    clubs = request.user.get_clubs().order_by('-last_seen')
     return render(request, 'dashboard/dashboard.html', { 'clubs': clubs, 'user': request.user})

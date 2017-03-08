@@ -1,6 +1,7 @@
 from django.contrib import auth
 from django import forms
 
+from datetime import date
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.password_validation import validate_password
 from .models import *
@@ -47,7 +48,7 @@ class RegistrationForm(auth.forms.UserCreationForm):
 class ClubCreateForm(forms.ModelForm):
   class Meta:
     model = Club
-    fields = ['club_name', 'club_type', 'club_description', 'image' ]
+    fields = ['club_name', 'club_description', 'image' ]
 
 class EventCreateForm(forms.ModelForm):
   class Meta:
@@ -55,6 +56,20 @@ class EventCreateForm(forms.ModelForm):
     fields = ['event_name', 'start_date', 'start_time', 'end_date', 'end_time',
               'event_location', 'event_description', 'event_cost', 'event_fee',
               'accessibility', 'required', 'did', 'image']
+
+  def clean_end_date(self):
+     start_date = self.cleaned_data['start_date']
+     end_date = self.cleaned_data['end_date']
+
+     if end_date < start_date:
+       raise forms.ValidationError("End date cannot be before start date")
+     # i tried to make this part clean_start_time BUT YOU WILL GET AN ISSUE
+     #  DJANGO will say you cant use start_date in this function, and clean_start_date
+     if start_date < date.today():
+       raise forms.ValidationError("Cannot be in the past")
+     return end_date
+
+
 
   def save(self, club, commit=False):
       event_name = self.cleaned_data['event_name']
@@ -82,6 +97,7 @@ class EventCreateForm(forms.ModelForm):
           event.save()
 
       return event
+
 
 class ClubSearchForm(forms.Form):
   keyword = forms.CharField(max_length=50, required=False)
@@ -112,3 +128,15 @@ class BudgetCreateForm(forms.ModelForm):
   class Meta:
     model = Budget
     fields = [ 'did', 'planned', 'start_date', 'end_date' ]
+
+  def clean_end_date(self):
+     start_date = self.cleaned_data['start_date']
+     end_date = self.cleaned_data['end_date']
+
+     if end_date < start_date:
+       raise forms.ValidationError("End date cannot be before start date")
+     # i tried to make this part clean_start_time BUT YOU WILL GET AN ISSUE
+     #  DJANGO will say you cant use start_date in this function, and clean_start_date
+     if start_date < date.today():
+       raise forms.ValidationError("Cannot be in the past")
+     return end_date
