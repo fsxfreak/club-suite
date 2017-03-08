@@ -2,8 +2,10 @@ from django.db import models
 from django.utils import timezone
 from django.db.models import Q
 
+
 from django.contrib.auth.models import Group
 from guardian.shortcuts import assign_perm, remove_perm, get_perms
+
 
 from suite.models import User
 
@@ -170,11 +172,11 @@ class Club(models.Model):
       user.groups.remove(self._get_officer_group())
 
     if user.groups.filter(name=self._get_officer_group_name()).count() != 0:
-      user.groups.remove(self._get_officer_group()) 
+      user.groups.remove(self._get_officer_group())
       return True
 
     return False
-  
+
   def promote_officer_to_owner(self, actor, user):
     if not self.is_owner(actor):
        return False

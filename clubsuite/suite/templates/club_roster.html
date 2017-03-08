@@ -35,6 +35,16 @@
     </tr>
   </tfoot>
   <tbody>
+    {% if messages %}
+
+      <ul class="messages">
+          {% for message in messages %}
+          <div class="notification is-warning">
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          </div>
+          {% endfor %}
+      </ul>
+    {% endif %}
   {% for member in members %}
     <tr>
       <td>{{ member.user.id }} </td>
@@ -69,7 +79,7 @@
     {% endfor %}
   </tbody>
 </table>
-    
+
   </ul>
   </div>
 </section>
