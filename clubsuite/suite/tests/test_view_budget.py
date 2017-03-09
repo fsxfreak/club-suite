@@ -31,15 +31,23 @@ class View_Budget_TestCase(TestCase):
         self.assertEqual(response.status_code,403)
 
     def test_post(self):
+        #login
         self.client.force_login(get_user_model().objects.get(first_name='Owner'))
-        data_division = {'name':"Expenses",
+        #create division
+        data_division = {'name':"Expenses",'cid':self.club,
                          'division':"1"}
         response = self.client.post(reverse('suite:budget',kwargs={'club_id':self.club.id}),data_division,club_id=self.club.pk,follow=True)
+
         self.assertEqual(response.status_code,200)
+        #assert division was created
+        self.assertEqual(len(Division.objects.filter(name="Expenses",cid=self.club)),1)
+
+        #create budget
         division = Division.objects.get(name="Expenses")
+        self.assertEqual(division.name,"Expenses")
+        #IMPORTANT: start/end date cannot be in the past
+        data_budget = {'did':division,'planned':1000,'start_date':"03/05/2027",'end_date':"03/06/2027",'budget':"1"}
+        response = self.client.post(reverse('suite:budget',kwargs={'club_id':self.club.id}),data_budget, club_id=self.club.pk,follow=True)
 
-        data_budget = {'did':division.pk,'planned':1000,'start_date':"03/05/17",'end_date':"03/06/17",'budget':"1"}
-
-        response = self.client.post(reverse('suite:budget',kwargs={'club_id':self.club.id}),data_budget, follow=True)
-
-        self.assertEqual(len(Budget.objects.filter(did=division.pk)),1)
+        #assert budget was created
+        self.assertEqual(len(Budget.objects.filter(did=division)),1)
