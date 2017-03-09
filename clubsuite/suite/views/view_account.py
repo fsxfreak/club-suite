@@ -9,20 +9,27 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 class Account(View, LoginRequiredMixin):
   def get(self, request):
-    if request.POST:
-      if 'details' in request.POST:
-        form = EditProfileForm(request.POST, instance=request.user)
-        form.save()
-
-      elif 'password' in request.POST:
-        form = PasswordChangeForm(request.POST)
-        if form.is_valid():
-          print('form valid')
-          form.save()
-          update_session_auth_hash(request, form.user)
-
     form = EditProfileForm(instance=request.user)
     form2 = PasswordChangeForm(user=request.user)
     args = {'form': form, 'form2': form2 }
     return render(request, 'account.html', args)
+
+  def post(self, request):
+    form = EditProfileForm(instance=request.user)
+    form2 = PasswordChangeForm(user=request.user)
+
+    if 'details' in request.POST:
+      form = EditProfileForm(request.POST, instance=request.user)
+      form.save()
+
+    elif 'password' in request.POST:
+      form2 = PasswordChangeForm(request.POST)
+      if form.is_valid():
+        print('form valid')
+        form.save()
+        update_session_auth_hash(request, form.user)
+
+    args = {'form': form, 'form2': form2 }
+    return render(request, 'account.html', args)
+
 
