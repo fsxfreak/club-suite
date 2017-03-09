@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from suite.models import Club, Division, Budget
 from suite.forms import EventCreateForm
+from django.contrib import messages
 
 from guardian.shortcuts import get_perms
 from django.core.exceptions import PermissionDenied
@@ -34,6 +35,7 @@ class EventCreate(UserPassesTestMixin, LoginRequiredMixin, TemplateView):
     club = get_object_or_404(Club, pk=club_id)
     if form.is_valid():
       event = form.save(club, commit=True)
+      messages.add_message(request, messages.SUCCESS, 'You Have Created an Event!')
       #saved = True
     else:
       return render(request, self.template_name, { 'club' : club, 'form' : form})

@@ -27,7 +27,7 @@ class ClubRoster(LoginRequiredMixin, View):
     if 'delete' in request.POST:
       user_id = request.POST['delete']
       if not club.remove_member(request.user, User.objects.get(id=user_id)):
-          messages.add_message(request, messages.ERROR, 'Cannot delete only owner')
+          messages.add_message(request, messages.ERROR, 'Cannot delete Yourself!')
     elif 'promote' in request.POST:
       user_id = request.POST['promote']
       act_on_user = User.objects.get(id=user_id)
