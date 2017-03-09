@@ -51,17 +51,38 @@
                  <p class="control">
                       <button class="button is-primary" type="submit" name="details">Save</button>
                  </p>
-                 <p class="control">
-                      <button class="button is-link" type="cancel">Cancel</button>
-                 </p>
             </div>
         </form>
 
 
         <h3>Edit Login Details</h3>
+        {% if messages %}
+          {% for message in messages %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div class="notification is-danger">
+              <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+              {% if form2.errors %}
+                <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ form2.non_field_errors }}</p>
+              {% endif %}
+              {% if form2.old_password.errors %}
+                <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ form2.old_password.errors}}</p>
+              {% endif %}
+              {% if form2.new_password1.errors %}
+                <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ form2.new_password1.errors}}</p>
+              {% endif %}
+              {% if form2.new_password2.errors %}
+                <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ form2.new_password2.errors }}</p>
+              {% endif %}
+            </div>
+          {% else %}
+            <div class="notification is-success">
+              <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+            </div>
+          {% endif %}
+          {% endfor %}
+        {% endif %}
         <form method="post" action="{% url 'suite:edit_profile' %}">
             {% csrf_token %}
-
             <div class="control is-horizontal">
                  <div class="control-label">
                       <label class="label" for="id_old_password">Old Password</label>
@@ -103,13 +124,9 @@
                <p class="control">
                     <button class="button is-primary" type="submit" name="password" value="Change Password">Save</button>
                </p>
-               <p class="control">
-                    <button class="button is-link" type="cancel">Cancel</button>
-               </p>
           </div>
 
         </form>
-
     </div>
 </section>
 {% endblock body_block %}
