@@ -1,3 +1,4 @@
+/*
 $(document).ready(function() {
     console.log("JavaScript Connected")
     initializePage();
@@ -33,3 +34,4 @@ function addImage(result) {
 
 
 }
+*/

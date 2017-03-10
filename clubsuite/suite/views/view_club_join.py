@@ -6,6 +6,7 @@ from django.urls import reverse
 
 from suite.models import Club, JoinRequest
 from suite.forms import ClubJoinForm
+from django.contrib import messages
 
 class ClubJoin(LoginRequiredMixin, View):
   form_class = ClubJoinForm
@@ -22,6 +23,9 @@ class ClubJoin(LoginRequiredMixin, View):
     if form.is_valid():
       reason = form.cleaned_data.get('reason')
       club = Club.objects.get(pk=club_id)
+      messages.add_message(request, messages.INFO, 'Your request has been sent! It is pending review.')
+    
+
 
       if request.user not in club.members.all():
         if JoinRequest.objects.filter(cid=club, uid=request.user).count() <= 0:
@@ -32,4 +36,3 @@ class ClubJoin(LoginRequiredMixin, View):
       return HttpResponseRedirect(redir)
 
     return render(request, self.template_name, { 'form' : form })
-
