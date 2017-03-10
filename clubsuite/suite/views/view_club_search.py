@@ -13,8 +13,8 @@ class ClubSearch(LoginRequiredMixin, View):
 
   def get(self, request, *args, **kwargs):
     form = self.form_class
-    allClubs = Club.objects.order_by('club_name')[:4]
-    print(allClubs)
+    allClubs = Club.objects.order_by('club_name')
+    #print(allClubs)
     return render(request, self.template_name, { 'form' : form, 'allClubs': allClubs })
 
   def post(self, request, *args, **kwargs):
