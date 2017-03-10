@@ -50,6 +50,10 @@ class ClubCreateForm(forms.ModelForm):
     model = Club
     fields = ['club_name', 'club_description', 'image' ]
 
+  def save(self, commit=False):
+    pass
+
+
 class EventCreateForm(forms.ModelForm):
   class Meta:
     model = Event
