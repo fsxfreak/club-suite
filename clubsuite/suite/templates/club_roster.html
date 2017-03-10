@@ -3,8 +3,6 @@
 {% load widget_tweaks %}
 {% load guardian_tags %}
 
-{% load staticfiles %}
-
 {% block body_block %}
 
 {% get_obj_perms request.user for club as "club_perms" %}
@@ -80,5 +78,6 @@
   </ul>
   </div>
 </section>
+<script src="{% static "javascript/confirm.js" %}"></script>
 
 {% endblock body_block %}

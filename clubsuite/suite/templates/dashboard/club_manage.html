@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
+{% load guardian_tags %}
+
 {% block body_block %}
 <section class='section'>
   <div class='container'>
@@ -14,6 +16,7 @@
       </thead>
       <tbody>
       {% for club in clubs %}
+        {% get_obj_perms request.user for club as "club_perms" %}
         <tr>
             <td><a href="{% url 'suite:club_view' club.id %}">{{ club.club_name }}</a></td>
           <td>
@@ -22,6 +25,9 @@
               <input type='hidden' name='club_id' value='{{ club.id }}'>
               <input class='button is-link' type="submit" formaction="{% url 'suite:club_manage' %}" name='resign' value='Resign'>
             </form>
+            {% if "can_handle_promotion_requests" in club_perms %}
+              <a href="{% url 'suite:club_edit' club.id %}" class='button is-link'>Edit</a>
+            {% endif %}
           </td>
         </tr>
       {% endfor %}
