@@ -25,14 +25,10 @@ class Event(LoginRequiredMixin, View):
         members.append(member)
 
     # getting the revnue
-    totalCost = 0
-    i = 1
-    for eventSignIn in eventSignIns:
-        totalCost = i * eventSignIn.eid.event_fee
-        i+=1
+    totalRevenue = eventSignIns.count() * event.event_fee
 
     return render(request, self.template_name, {'club': club, 'members' : members,
-     'event': event, 'eventSignIns': eventSignIns, 'totalCost':totalCost})
+     'event': event, 'eventSignIns': eventSignIns, 'totalRevenue':totalRevenue})
 
   def post(self, request, club_id, event_id, *args, **kwargs):
     club = get_object_or_404(Club, pk=club_id)
