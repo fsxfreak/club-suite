@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load mathfilters %}
+
+{% block body_block %}
+<section class='section'>
+<div class='container'>
+  <h1>Edit {{ club.club_name }} Details</h1>
+
+  <form method='POST' action="{% url 'suite:club_edit' club.id %}">
+    {% csrf_token %}
+    {{ form }}
+    <div class="control is-grouped">
+      <p class="control">
+           <button class="button is-primary" type="submit" name="details">Submit</button>
+          <input type='hidden' name='edit'>
+      </p>
+    </div>
+  </form>
+</div>
+</section>
+
+{% endblock body_block %}
+

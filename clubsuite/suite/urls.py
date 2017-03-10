@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^club/(?P<club_id>[0-9]+)/join$', views.ClubJoin.as_view(), name='club_join'),
     url(r'^club/(?P<club_id>[0-9]+)/emails$', views.ClubEmails.as_view(), name='club_emails'),
     url(r'^club/(?P<club_id>[0-9]+)/join/handle_requests$', views.HandleJoinRequest.as_view(), name='handle_join_request'),
+    url(r'^club/(?P<club_id>[0-9]+)/edit$', views.ClubEdit.as_view(), name='club_edit'),
     url(r'^club/(?P<club_id>[0-9]+)/budget$', views.Budget.as_view(), name='budget'),
     url(r'^account', views.Account.as_view(), name='edit_profile'),
     url(r'^admin/', admin.site.urls),
