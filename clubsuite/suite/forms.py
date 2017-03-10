@@ -138,7 +138,7 @@ class BudgetCreateForm(forms.ModelForm):
      # i tried to make this part clean_start_time BUT YOU WILL GET AN ISSUE
      #  DJANGO will say you cant use start_date in this function, and clean_start_date
      if start_date < date.today():
-       raise forms.ValidationError("Cannot be in the past")
+       raise forms.ValidationError("Start date cannot be in the past")
      return end_date
 
 class ClubEditForm(forms.ModelForm):

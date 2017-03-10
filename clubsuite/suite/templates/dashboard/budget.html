@@ -9,15 +9,36 @@
   {% include 'club_bar.html' with club=club club_id=club.id user=request.user%}
   <h1>Manage Logistics</h1>
 
+  {% if messages %}
+    {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+      <div class="notification is-danger">
+        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+        {% if budget_form.errors %}
+          <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ budget_form.non_field_errors }}</p>
+        {% endif %}
+        {% if budget_form.did.errors %}
+          <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ budget_form.did.errors}}</p>
+        {% endif %}
+        {% if budget_form.planned.errors %}
+          <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ budget_form.planned.errors}}</p>
+        {% endif %}
+        {% if budget_form.start_date.errors %}
+          <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ budget_form.start_date.errors }}</p>
+        {% endif %}
+        {% if budget_form.end_date.errors %}
+          <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ budget_form.end_date.errors }}</p>
+        {% endif %}
+      </div>
+    {% else %}
+      <div class="notification is-success">
+        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+      </div>
+    {% endif %}
+    {% endfor %}
+  {% endif %}
+
   <h3>Create a New Division</h3>
-
-
-  {% for message in messages %}
-  <div class="notification is-info">
-    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
-  </div>
-  {% endfor %}
-
 
   <form method='POST' action="{% url 'suite:budget' club.id %}">
     {% csrf_token %}
@@ -40,6 +61,9 @@
   <h3>Create a Budget</h3>
   <h4>Create a Spending Category</h4>
   <form method='POST' action="{% url 'suite:budget' club.id %}">
+    {% if form.non_field_errors %}
+    {{ form.non_field_errors }}
+    {% endif %}
     {% csrf_token %}
     <div class="control is-horizontal">
          <div class="control-label">
