@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
+from django.contrib import messages
 
 from suite.models import Club, User
 
@@ -25,7 +26,8 @@ class ClubRoster(LoginRequiredMixin, View):
 
     if 'delete' in request.POST:
       user_id = request.POST['delete']
-      club.remove_member(request.user, User.objects.get(id=user_id))
+      if not club.remove_member(request.user, User.objects.get(id=user_id)):
+          messages.add_message(request, messages.ERROR, 'Cannot delete Yourself!')
     elif 'promote' in request.POST:
       user_id = request.POST['promote']
       act_on_user = User.objects.get(id=user_id)
@@ -37,7 +39,8 @@ class ClubRoster(LoginRequiredMixin, View):
       user_id = request.POST['demote']
       act_on_user = User.objects.get(id=user_id)
       if club.is_owner(act_on_user):
-        club.demote_owner_to_officer(request.user, act_on_user)
+        if not club.demote_owner_to_officer(request.user, act_on_user):
+            messages.add_message(request, messages.ERROR, 'You Cannot Demote Yourself!')
       elif club.is_officer(act_on_user):
         club.demote_from_officer(request.user, act_on_user)
 

@@ -1,9 +1,9 @@
 from django.test import TestCase
-from suite.forms import RegistrationForm
-from suite.forms import ClubCreateForm
+from suite.forms import RegistrationForm,ClubCreateForm,EventCreateForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 from django.test import Client
+from suite.models import Club,Division
 
 class RegistrationFormTestCase(TestCase):
     def setUp(self):
@@ -60,4 +60,40 @@ class ClubCreateFormTestCase(TestCase):
                                     })
         self.assertFalse(form.is_valid())
 
+class EventCreateFormTestCase(TestCase):
+    def setUp(self):
+        #Create club
+        self.club=Club.objects.create(club_name="club",club_type="PUB",club_description="a club")
+        #Create division
+        self.division=Division.objects.create(name="Expenses",cid=self.club)
 
+    def test_valid_data(self):
+        #IMPORTANT: start/end date cannot be in the past
+        data = {
+                'start_date':"03/05/2027",
+                'end_date':"03/06/2027",
+                'event_name':"Event",
+                'start_time':"00:00:00",
+                'end_time':"23:59:59",
+                'event_location':"Library",
+                'event_description':"So much fun",
+                'event_cost':100,
+                'event_fee':100,
+                'accessibility':True,
+                'required':False,
+                'did':self.division
+                }
+
+        form = EventCreateForm(data)
+        if not form.is_valid():
+            print(form.errors)
+
+        event=form.save(self.club)
+
+        self.assertTrue(event.event_name,"Event")
+
+    def test_invalid_data(self):
+        form = EventCreateForm(data={'event_name':"club event",
+                                    'event_cost':100
+                                    })
+        self.assertFalse(form.is_valid())

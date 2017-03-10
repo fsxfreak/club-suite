@@ -7,8 +7,14 @@
   <div class='container'>
     {% if clubs %}
     <p>Here is a listing of clubs you are a part of! Click on the name of a club to navigate to that club's home page. As always, you can search for more clubs to join under "Club Search" and start your own club under "Create Club"</p>
+    {% for message in messages %}
+    <div class="notification is-success">
+      <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+    </div>
+    {% endfor %}
     <div class="columns">
       <div class='column is-half'>
+
         {% for club in clubs %}
         {% if not forloop.counter|divisibleby:"2" %}
         <div class="box">

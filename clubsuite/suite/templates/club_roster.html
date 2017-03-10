@@ -3,8 +3,6 @@
 {% load widget_tweaks %}
 {% load guardian_tags %}
 
-{% load staticfiles %}
-
 {% block body_block %}
 
 {% get_obj_perms request.user for club as "club_perms" %}
@@ -33,6 +31,16 @@
     </tr>
   </tfoot>
   <tbody>
+    {% if messages %}
+
+
+          {% for message in messages %}
+          <div class="notification is-danger">
+            <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+          </div>
+          {% endfor %}
+
+    {% endif %}
   {% for member in members %}
     <tr>
       <td>{{ member.user.first_name}} {{ member.user.last_name }}</td>

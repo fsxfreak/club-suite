@@ -140,3 +140,8 @@ class BudgetCreateForm(forms.ModelForm):
      if start_date < date.today():
        raise forms.ValidationError("Cannot be in the past")
      return end_date
+
+class ClubEditForm(forms.ModelForm):
+  class Meta:
+    model = Club
+    fields = ['club_name', 'club_description', 'image' ]
