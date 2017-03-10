@@ -1,9 +1,9 @@
 from django.test import TestCase
-from suite.forms import RegistrationForm,ClubCreateForm,EventCreateForm
+from suite.forms import RegistrationForm,ClubCreateForm,EventCreateForm,EditProfileForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 from django.test import Client
-from suite.models import Club,Division
+from suite.models import Club,Division,User
 
 class RegistrationFormTestCase(TestCase):
     def setUp(self):
@@ -97,3 +97,18 @@ class EventCreateFormTestCase(TestCase):
                                     'event_cost':100
                                     })
         self.assertFalse(form.is_valid())
+
+class EditProfileFormTestCase(TestCase):
+    def setUp(self):
+        self.user=get_user_model().objects.create(email="test@test.com",first_name="User",last_name="Last")
+
+    def test_valid_data(self):
+        data={'email':"test2@test.com",'first_name':"NameChange",'last_name':"Change"}
+        form=EditProfileForm(data,instance=self.user)
+        if not form.is_valid():
+            print(form.errors)
+
+        user2=form.save()
+        self.assertEqual(len(User.objects.all()),2)
+        self.assertEqual(self.user,user2)
+        self.assertEqual(self.user.first_name,"NameChange")
