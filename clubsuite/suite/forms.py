@@ -108,7 +108,7 @@ class EditProfileForm(forms.ModelForm):
         fields = ['email', 'first_name', 'last_name' ]
 
 class ClubJoinForm(forms.Form):
-  reason = forms.CharField(max_length=200, required=True)
+  reason = forms.CharField(widget=forms.Textarea, required=True)
 
 class DivisionCreateForm(forms.ModelForm):
   class Meta:
