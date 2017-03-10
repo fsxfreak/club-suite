@@ -60,7 +60,7 @@
    <!-- displays all the clubs -->
 
    <div class='heading'>
-     <h1 class='title'>Here are some of the Clubs</h1>
+     <h1 class='title'>Browse All the Clubs</h1>
    </div>
    <br/>
 
@@ -70,11 +70,14 @@
         <div class='column is-half'>
              {% for allClub in allClubs.all %}
              {% if not forloop.counter|divisibleby:"2" %}
-             <div class="box">
+             <div class="box" id={{allClub.id}}>
                    <a href="{% url 'suite:club_view' allClub.id %}">{{ allClub.club_name }}</a>
-                  <img src="{{allClub.image.url}}" />
                   <p>{{allClub.club_description}}</p>
+                  <div class="details">
+
+                  </div>
              </div>
+
              {% endif %}
              {% endfor%}
         </div>
@@ -83,9 +86,12 @@
           {% if  forloop.counter|divisibleby:"2" %}
           <div class="box">
                <a href="{% url 'suite:club_view' allClub.id %}">{{ allClub.club_name }}</a>
-               <img src="{{allClub.image.url}}" />
                <p>{{allClub.club_description}}</p>
+               <div class="details">
+
+               </div>
           </div>
+
           {% endif %}
           {% endfor%}
         </div>
@@ -94,4 +100,5 @@
      {% endif %}
   </div>
 </section>
+<script src="{% static "javascript/clubsearch.js" %}"></script>
 {% endblock body_block %}

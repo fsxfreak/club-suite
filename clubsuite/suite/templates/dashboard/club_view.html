@@ -43,18 +43,31 @@
         </div>
   </div>
 
+<br />
+
+{% if messages  %}
+      {% for message in messages %}
+      {% ifequal message.tags 'info' %}
+      <div class="notification is-info">
+        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+      </div>
+      {% endifequal %}
+
+      {% endfor %}
+{% endif %}
 
     <p> <h2> New Events  </h2></p>
     {% if messages %}
-
-
           {% for message in messages %}
+          {% ifequal message.tags 'success' %}
           <div class="notification is-success">
             <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
           </div>
-          {% endfor %}
+          {% endifequal %}
 
+          {% endfor %}
     {% endif %}
+
     {% for event in events %}
 
    <div class="column is-8">
