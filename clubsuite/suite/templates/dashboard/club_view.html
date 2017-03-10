@@ -24,8 +24,10 @@
                         <img src="{{club.image.url}}" alt="Image">
                     </figure>
                 </div>
+                  {% if "can_handle_join_requests" in club_perms %}
                 <br />
                   &nbsp   &nbsp <span class="tag is-danger is-medium"> {{reqs.count}} Join Requests</span>
+                  {% endif %}
                 <div class="card-content">
                     <div class="media">
                         <div class="media-left">
