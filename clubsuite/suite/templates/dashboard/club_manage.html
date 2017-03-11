@@ -16,6 +16,7 @@
       </thead>
       <tbody>
       {% for club in clubs %}
+        {% get_obj_perms request.user for club as "club_perms" %}
         <tr>
             <td><a href="{% url 'suite:club_view' club.id %}">{{ club.club_name }}</a></td>
           <td>
