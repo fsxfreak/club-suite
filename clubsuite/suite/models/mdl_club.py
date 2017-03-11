@@ -265,6 +265,28 @@ class Club(models.Model):
     # Only owners have all owner permissions.
     self._assign_owner_permissions(owner_group)
 
+  def _clear_permissions(self):
+    '''
+    Must and should only be called on club deletion!!!
+    '''
+    owners = self.get_owners()
+    officers = self.get_officers()
+    members = self.get_members()
+
+    owner_group = self._get_owner_group()
+    officer_group = self._get_officer_group()
+    member_group = self._get_member_group()
+    for owner in owners:
+      owner.groups.remove(owner_group)
+    for officer in officers:
+      officer.groups.remove(officer_group)
+    for member in members:
+      member.groups.remove(member_group)
+
+    owner_group.delete()
+    officer_group.delete()
+    member_group.delete()
+
   def save(self, *args, **kwargs):
     if not self.first_seen:
       self.first_seen = timezone.now()

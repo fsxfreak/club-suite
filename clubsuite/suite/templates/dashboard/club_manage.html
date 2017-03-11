@@ -7,6 +7,19 @@
   <div class='container'>
 <script src="{% static "javascript/club_manage.js" %}"></script>
     <h1 class='title'>MANAGE MY CLUBS</h1>
+    {% if messages %}
+      {% for message in messages %}
+      {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+        <div class="notification is-danger">
+          <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+        </div>
+      {% else %}
+        <div class="notification is-success">
+          <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+        </div>
+      {% endif %}
+      {% endfor %}
+    {% endif %}
     {% if clubs %}
     <table class='table'>
       <thead>
@@ -21,13 +34,44 @@
         <tr>
             <td><a href="{% url 'suite:club_view' club.id %}">{{ club.club_name }}</a></td>
           <td>
-            <form method='POST' action="{% url 'suite:club_manage' %}">
-              {% csrf_token %}
-              <input type='hidden' name='club_id' value='{{ club.id }}' id="resign">
-              <input class='button is-link' type="submit" formaction="{% url 'suite:club_manage' %}" name='resign' value='Resign' id="resign">
-            </form>
-            {% if "can_handle_promotion_requests" in club_perms %}
+            {% if "can_handle_join_requests" in club_perms %}
               <a href="{% url 'suite:club_edit' club.id %}" class='button is-link'>Edit</a>
+            {% endif %}
+            <p>
+              <a class="button is-link modal-button" data-target="#resign-toggle-{{club.id}}">Resign</a>
+            </p>
+            <div class="modal" id="resign-toggle-{{club.id}}">
+              <div class="modal-background"></div>
+              <div class="modal-content">
+                  <div class='notification is-danger'>
+                    You are about to resign from your club. Proceed?
+                    <form method='POST' action="{% url 'suite:club_manage' %}">
+                      {% csrf_token %}
+                      <input type='hidden' name='club_id' value='{{ club.id }}' id="resign">
+                      <input class='button' type="submit" formaction="{% url 'suite:club_manage' %}" name='resign' value='Resign' id="resign">
+                    </form>
+                  </div>
+              </div>
+              <button class="modal-close"></button>
+            </div>
+            {% if "can_remove_member" in club_perms %}
+              <p>
+                <a class="button is-link modal-button" data-target="#disband-toggle-{{club.id}}">Disband</a>
+              </p>
+              <div class="modal" id="disband-toggle-{{club.id}}">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                    <div class='notification is-danger'>
+                      You are about to disband your club. Proceed?
+                      <form method='POST' action="{% url 'suite:club_manage' %}">
+                        {% csrf_token %}
+                        <input type='hidden' name='club_id' value='{{ club.id }}'>
+                        <input class='button' type="submit" formaction="{% url 'suite:club_manage' %}" name='disband' value='Disband'>
+                      </form>
+                    </div>
+                </div>
+                <button class="modal-close"></button>
+              </div>
             {% endif %}
           </td>
         </tr>
@@ -39,6 +83,7 @@
          No club settings to display. 
     </div>
     {% endif %}
+
   </div>
 </section>
 {% endblock body_block %}
