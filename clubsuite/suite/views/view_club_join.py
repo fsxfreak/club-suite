@@ -24,8 +24,6 @@ class ClubJoin(LoginRequiredMixin, View):
       reason = form.cleaned_data.get('reason')
       club = Club.objects.get(pk=club_id)
       messages.add_message(request, messages.INFO, 'Your request has been sent! It is pending review.')
-    
-
 
       if request.user not in club.members.all():
         if JoinRequest.objects.filter(cid=club, uid=request.user).count() <= 0:

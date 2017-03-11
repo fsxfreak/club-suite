@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import View
+from django.contrib import messages
 
 from suite.models import Club
 
@@ -15,7 +16,7 @@ class ClubEmails(UserPassesTestMixin, LoginRequiredMixin, View):
     if 'can_view_account_info' not in get_perms(self.request.user, club):
       raise PermissionDenied
 
-    return True 
+    return True
 
   def get_members(self, club, group_str, actor):
     users = None
@@ -36,12 +37,18 @@ class ClubEmails(UserPassesTestMixin, LoginRequiredMixin, View):
   def get(self, request, club_id):
     club = get_object_or_404(Club, pk=club_id)
     members = self.get_members(club, 'members', request.user)
+
+
     return render(request, self.template_name, { 'club' : club, 'members': members})
 
   def post(self, request, club_id):
     club = get_object_or_404(Club, pk=club_id)
 
-    # 'member_type' see self.get_members function
+
+    if 'copied' in request.POST:
+        messages.add_message(request, messages.SUCCESS, 'Emails Copied!')
+        return render(request, self.template_name, {'club' : club})
+
     members = self.get_members(club, request.POST['member_type'], request.user)
 
     return render(request, self.template_name, {'club' : club, 'members': members})

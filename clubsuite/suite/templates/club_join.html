@@ -7,7 +7,7 @@
             {% csrf_token %}
             <label class="label">Please explain why you would like to join.</label>
             <p class="control">
-                {% render_field form.reason class="textarea" %}
+                {% render_field form.reason class+="textarea" %}
             </p>
 
             <input class="button is-primary" type="submit" value="Submit" />

@@ -21,11 +21,13 @@
             <div class="card">
                 <div class="card-image">
                     <figure class="image is-4by1">
-                        <img src="{{club.image.url}}" alt="Image">
+                        <img src="{{club.image.cropped.url}}" alt="Image">
                     </figure>
                 </div>
+                  {% if "can_handle_join_requests" in club_perms %}
                 <br />
                   &nbsp   &nbsp <span class="tag is-danger is-medium"> {{reqs.count}} Join Requests</span>
+                  {% endif %}
                 <div class="card-content">
                     <div class="media">
                         <div class="media-left">
@@ -79,7 +81,7 @@
             <div class="media-left">
               <figure class="image is-128x128">
                 <br />
-                  <img src="{{event.image.url}}" alt="Image">
+                  <img src="{{event.image.cropped.url}}" alt="Image">
               </figure>
             </div>
             <div class="media-content">
