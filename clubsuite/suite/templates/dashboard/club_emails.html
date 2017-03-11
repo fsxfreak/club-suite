@@ -82,15 +82,13 @@
           </p>
           </blockquote>
 
-          <form method="POST" {% url 'suite:club_emails' club.id %}>
+          <form method="POST" action="{% url 'suite:club_emails' club.id %}">
                   {% csrf_token %}
-
             <p style="text-align: right">
               <button class="button is-primary" onClick="copyToClipboard('#p1')"> Copy Emails</button>
             </p>
             <input type='hidden' name='copied' value='True'>
           </form>
-
       </div>
       </div>
 
