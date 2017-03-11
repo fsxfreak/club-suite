@@ -77,9 +77,20 @@
             </div>
             <div class="media-content">
               <div class="content">
-                  <p> <h3><a href="{% url 'suite:event' club_id=club.id event_id=event.id %}">{{event.event_name}}</a>
-                      {% if event.accessibility != True %}<span class="tag is-warning">Members Only</span>  {% endif %}
-                      {% if event.required == True %}<span class="tag is-dark">Event Required</span>  {% endif %}</h3></p>
+                <p>
+                  <h3>
+                    <a href="{% url 'suite:event' club_id=club.id event_id=event.id %}">{{event.event_name}}</a>
+                    {% if event.accessibility != True %}
+                      <span class="tag is-warning">Members Only</span>
+                    {% endif %}
+                    {% if event.required == True %}
+                      <span class="tag is-dark">Event Required</span>
+                    {% endif %}
+                    {% if "can_create_event" in club_perms %}
+                    <span><a class='button is-link' href="{% url 'suite:event_edit' club_id=club.id event_id=event.id %}">Edit</a></span>
+                    {% endif %}
+                  </h3>
+                </p>
 
                   <p> {% if event.start_date != event.end_date %}{{event.start_date}} ({{event.start_time}}) - {{event.end_date}} ({{event.end_time}}){% endif %}
                       {% if event.start_date == event.end_date %}{{event.start_date}} : {{event.start_time}} - {{event.end_time}} {% endif %}

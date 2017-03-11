@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load mathfilters %}
+
+{% block body_block %}
+<section class='section'>
+<div class='container'>
+  <h1>Edit {{ event.event_name }} Details</h1>
+
+  {% if messages %}
+    {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR%}
+      <div class="notification is-danger">
+        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+        {% if form.errors %}
+          <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ form.non_field_errors }}</p>
+        {% endif %}
+
+        {% for field in form %}
+          {% if field.errors %}
+            <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ field.errors}}</p>
+          {% endif %}
+        {% endfor %} 
+      </div>
+    {% else %}
+      <div class="notification is-success">
+        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+      </div>
+    {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  <form method='POST' action="{% url 'suite:event_edit' club_id=club.id event_id=event.id %}" enctype='multipart/form-data'>
+    {% csrf_token %}
+    <div class="control is-horizontal">
+      <div class="control-label">
+        <label class="label" for="id_event_name">Event Name</label>
+      </div>
+      <p class="control">
+      {{ form.event_name|add_class:'input is-fullwidth' }}
+      </p>
+    </div>
+
+    <div class="control is-horizontal">
+      <div class="control-label">
+        <label class="label" for="id_start_date">Start Date</label>
+      </div>
+      <p class="control">
+      {% render_field form.start_date class="input is-fullwidth" type="date" %}
+      </p>
+    </div>
+
+    <div class="control is-horizontal">
+      <div class="control-label">
+        <label class="label" for="id_start_time">Start Time</label>
+      </div>
+      <p class="control">
+      {% render_field form.start_time class="input is-fullwidth" type="time" %}
+      </p>
+    </div>
+    {% if form.end_date.errors %}
+    <div class="notification is-danger">
+      <p class='control'>
+      {{ form.end_date.errors }}
+      </p>
+    </div>
+    {% endif %}
+    <div class="control is-horizontal">
+      <div class="control-label">
+        <label class="label" for="id_end_date">End Date</label>
+      </div>
+      <p class="control">
+      {% render_field form.end_date class="input is-fullwidth" type="date" %}
+      </p>
+    </div>
+
+    <div class="control is-horizontal">
+      <div class="control-label">
+        <label class="label" for="id_end_time">End Time</label>
+      </div>
+      <p class="control">
+      {% render_field form.end_time class="input is-fullwidth" type="time" %}
+      </p>
+    </div>
+
+    <div class="control is-horizontal">
+      <div class="control-label">
+        <label class="label">Location</label>
+      </div>
+      <p class="control">
+      {{ form.event_location|add_class:'input is-fullwidth' }}
+      </p>
+    </div>
+
+    <div class="control is-horizontal">
+      <div class="control-label">
+        <label class="label" for="id_event_description">Description</label>
+      </div>
+      <p class="control">
+      {% render_field form.event_description class="textarea is-fullwidth" %}
+      </p>
+    </div>
+
+    <div class="control is-horizontal">
+      <div class="control-label">
+        <label class="label" for="id_event_cost">Cost to Club</label>
+      </div>
+      <p class="control has-icon">
+      {% render_field form.event_cost class="input is-expanded" type="number" step="any" min="0"%}
+      <span class="icon is-small">
+        <i class="fa fa-usd"></i>
+      </span>
+      </p>
+    </div>
+
+    <div class="control is-horizontal">
+      <div class="control-label">
+        <label class="label" for="id_event_fee">Fee for Attendees</label>
+      </div>
+      <p class="control has-icon">
+      {% render_field form.event_fee class="input is-expanded" type="number" step="any" min="0"%}
+      <span class="icon is-small">
+        <i class="fa fa-usd"></i>
+      </span>
+      </p>
+    </div>
+
+    <div class="control is-horizontal">
+      <div class="control-label">
+        <label class="label">Upload Image</label>
+      </div>
+      <p class="control has-icon">
+      {% render_field form.image %}
+      </p>
+    </div>
+
+
+
+    <div class="control is-horizontal">
+      <div class="control-label">
+        <label class="label" for="id_did">Division</label>
+      </div>
+      <p class="control">
+      <span class="select is-fullwidth">
+        {% render_field form.did %}
+      </span>
+      </p>
+    </div>
+
+    <div class="control is-horizontal">
+      <div class="control-label">
+        <label class="label">Public</label>
+      </div>
+      <p class="control">
+      <label class="checkbox">
+        {% render_field form.accessibility %}
+      </label>
+      </p>
+    </div>
+
+    <div class="control is-horizontal">
+      <div class="control-label">
+        <label class="label">Required</label>
+      </div>
+      <p class="control">
+      <label class="checkbox">
+        {% render_field form.required %}
+      </label>
+      </p>
+    </div>
+
+    <div class="control">
+      <p class="control" style="text-align: right">
+      <button class="button is-primary" type="submit" name="details">Submit</button>
+      </p>
+      <input type='hidden' name='edit'>
+    </div>
+  </form>
+</div>
+</section>
+
+{% endblock body_block %}
+
+
