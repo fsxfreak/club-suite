@@ -24,6 +24,9 @@
               <input type='hidden' name='club_id' value='{{ club.id }}' id="resign">
               <input class='button is-link' type="submit" formaction="{% url 'suite:club_manage' %}" name='resign' value='Resign' id="resign">
             </form>
+            {% if "can_handle_promotion_requests" in club_perms %}
+              <a href="{% url 'suite:club_edit' club.id %}" class='button is-link'>Edit</a>
+            {% endif %}
           </td>
         </tr>
       {% endfor %}
