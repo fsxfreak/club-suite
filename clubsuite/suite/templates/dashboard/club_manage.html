@@ -4,7 +4,9 @@
 {% block body_block %}
 <section class='section'>
   <div class='container'>
-    <h1 class='title'>manage my clubs</h1>
+<script src="{% static "javascript/club_manage.js" %}"></script>
+    <h1 class='title'>MANAGE MY CLUBS</h1>
+    {% if clubs %}
     <table class='table'>
       <thead>
         <tr>
@@ -19,14 +21,19 @@
           <td>
             <form method='POST' action="{% url 'suite:club_manage' %}">
               {% csrf_token %}
-              <input type='hidden' name='club_id' value='{{ club.id }}'>
-              <input class='button is-link' type="submit" formaction="{% url 'suite:club_manage' %}" name='resign' value='Resign'>
+              <input type='hidden' name='club_id' value='{{ club.id }}' id="resign">
+              <input class='button is-link' type="submit" formaction="{% url 'suite:club_manage' %}" name='resign' value='Resign' id="resign">
             </form>
           </td>
         </tr>
       {% endfor %}
       </tbody>
     </table>
+    {% else %}
+    <div class="notification">
+         No club settings to display. 
+    </div>
+    {% endif %}
   </div>
 </section>
 {% endblock body_block %}

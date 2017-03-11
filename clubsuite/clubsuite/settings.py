@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'guardian', 
     'widget_tweaks',
-    'mathfilters'
+    'mathfilters',
+    'stdimage',
 ]
 
 MIDDLEWARE = [

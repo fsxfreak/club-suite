@@ -108,7 +108,7 @@ class EditProfileForm(forms.ModelForm):
         fields = ['email', 'first_name', 'last_name' ]
 
 class ClubJoinForm(forms.Form):
-  reason = forms.CharField(max_length=200, required=True)
+  reason = forms.CharField(widget=forms.Textarea, required=True)
 
 class DivisionCreateForm(forms.ModelForm):
   class Meta:
@@ -138,5 +138,10 @@ class BudgetCreateForm(forms.ModelForm):
      # i tried to make this part clean_start_time BUT YOU WILL GET AN ISSUE
      #  DJANGO will say you cant use start_date in this function, and clean_start_date
      if start_date < date.today():
-       raise forms.ValidationError("Cannot be in the past")
+       raise forms.ValidationError("Start date cannot be in the past")
      return end_date
+
+class ClubEditForm(forms.ModelForm):
+  class Meta:
+    model = Club
+    fields = ['club_name', 'club_description', 'image' ]

@@ -21,9 +21,13 @@
             <div class="card">
                 <div class="card-image">
                     <figure class="image is-4by1">
-                        <img src="{{club.image.url}}" alt="Image">
+                        <img src="{{club.image.cropped.url}}" alt="Image">
                     </figure>
                 </div>
+                  {% if "can_handle_join_requests" in club_perms %}
+                <br />
+                  &nbsp   &nbsp <span class="tag is-danger is-medium"> {{reqs.count}} Join Requests</span>
+                  {% endif %}
                 <div class="card-content">
                     <div class="media">
                         <div class="media-left">
@@ -34,6 +38,7 @@
                         <div class="media-content">
                             <p class="title is-4">{{club.club_name}}</p>
                             <p class="subtitle is-6">University of California, San Diego</p>
+
                         </div>
                     </div>
 
@@ -43,18 +48,31 @@
         </div>
   </div>
 
+<br />
+
+{% if messages  %}
+      {% for message in messages %}
+      {% ifequal message.tags 'info' %}
+      <div class="notification is-info">
+        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+      </div>
+      {% endifequal %}
+
+      {% endfor %}
+{% endif %}
 
     <p> <h2> New Events  </h2></p>
     {% if messages %}
-
-
           {% for message in messages %}
+          {% ifequal message.tags 'success' %}
           <div class="notification is-success">
             <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
           </div>
-          {% endfor %}
+          {% endifequal %}
 
+          {% endfor %}
     {% endif %}
+
     {% for event in events %}
 
    <div class="column is-8">
@@ -63,7 +81,7 @@
             <div class="media-left">
               <figure class="image is-128x128">
                 <br />
-                  <img src="{{event.image.url}}" alt="Image">
+                  <img src="{{event.image.cropped.url}}" alt="Image">
               </figure>
             </div>
             <div class="media-content">
