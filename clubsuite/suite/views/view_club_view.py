@@ -13,7 +13,7 @@ class ClubView(LoginRequiredMixin, View):
 
     def get(self, request, club_id):
         club = get_object_or_404(Club, pk=club_id)
-
+        reqs = Club.objects.get(pk=club_id).joinrequest_set.all()
         events = Event.objects.get_upcoming_events(club)
         signedInEvents = EventSignIn.objects.get_attended_events(request.user, club)
 
