@@ -16,5 +16,5 @@ class ClubView(LoginRequiredMixin, View):
         reqs = Club.objects.get(pk=club_id).joinrequest_set.all()
         events = Event.objects.get_upcoming_events(club)
         signedInEvents = EventSignIn.objects.get_attended_events(request.user, club)
-
+        
         return render(request, self.template_name, {'club': club, 'reqs': reqs, 'events': events, 'signedInEvents': signedInEvents})
