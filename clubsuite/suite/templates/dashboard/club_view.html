@@ -8,16 +8,8 @@
 {% get_obj_perms request.user for club as "club_perms" %}
 <section class='section'>
   <div class='container'>
-
-
       {% include 'club_bar.html' with club=club club_id=club.id user=request.user%}
-
-
-
     <br />
-
-
-
             <div class="card">
                 <div class="card-image">
                     <figure class="image is-4by1">
@@ -47,7 +39,6 @@
             <blockquote>{{ club.summary}}</blockquote>
         </div>
   </div>
-
 <br />
 
 {% if messages  %}
@@ -104,6 +95,7 @@
       </div>
     {% endfor %}
 
+    {% if signedInEvents %}
       <p> <h2> Attended Events  </h2></p>
       {% for signedInEvent in signedInEvents %}
 
@@ -113,7 +105,7 @@
               <div class="media-left">
                 <figure class="image is-128x128">
                   <br />
-                    <img src="{{signedInEvent.image.url}}" alt="Image">
+                    <img src="{{signedInEvent.image.cropped.url}}" alt="Image">
                 </figure>
               </div>
               <div class="media-content">
@@ -125,8 +117,8 @@
                     <p> {% if signedInEvent.start_date != signedInEvent.end_date %}{{signedInEvent.start_date}} ({{signedInEvent.start_time}}) - {{signedInEvent.end_date}} ({{signedInEvent.end_time}}){% endif %}
                         {% if signedInEvent.start_date == signedInEvent.end_date %}{{signedInEvent.start_date}} : {{signedInEvent.start_time}} - {{signedInEvent.end_time}} {% endif %}
                     </p>
-                    <p><h5 class="subtitle">{% if signedInEvents.event_cost == 0 %} (FREE) {% endif %}</h5>
-                      {% if signedInEvents.event_fee != 0 %} (${{signedInEvents.event_fee}} Event Fee) {% endif %}</p>
+                    <p><h5 class="subtitle">{% if signedInEvent.event_cost == 0 %} (FREE) {% endif %}</h5>
+                      {% if signedInEvent.event_fee != 0 %} (${{signedInEvent.event_fee}} Event Fee) {% endif %}</p>
                     <p>Description: {{signedInEvent.event_description}}</p>
                     <br />
                 </div>
@@ -135,8 +127,7 @@
           </div>
         </div>
       {% endfor %}
-
-
+    {% endif %}
   </div>
 </section>
 
