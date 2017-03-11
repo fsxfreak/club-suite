@@ -29,10 +29,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [ 
-    u'coleman.dynamic.ucsd.edu', u'clubsuite.coleman.dynamic.ucsd.edu'
+    u'coleman.dynamic.ucsd.edu', u'clubsuite.coleman.dynamic.ucsd.edu',
+    u'clubsuite.ucsd.edu', u'www.clubsuite.ucsd.edu',
 ]
 
 
