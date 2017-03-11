@@ -89,6 +89,8 @@ class Budget(UserPassesTestMixin, LoginRequiredMixin, View):
       if budget_form.is_valid():
         budget = budget_form.save(commit=True)
         budget.save()
+      else:
+        messages.add_message(request, messages.WARNING, 'Could not create budget.')
 
     books = self.generate_books(club.division_set.all())
     total_budget = 0

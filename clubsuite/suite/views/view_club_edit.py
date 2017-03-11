@@ -40,7 +40,7 @@ class ClubEdit(UserPassesTestMixin, LoginRequiredMixin, View):
 
         return HttpResponseRedirect(reverse('suite:club_manage'))
       else:
-        messages.add_message(request, messages.ERROR, 'Could make changes to your club.')
+        messages.add_message(request, messages.ERROR, 'Could not make changes to your club.')
 
     return render(request, self.template_name, { 'form' : form, 'club' : club })
 

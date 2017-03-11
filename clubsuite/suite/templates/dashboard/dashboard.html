@@ -19,7 +19,7 @@
         {% if not forloop.counter|divisibleby:"2" %}
         <div class="box">
           <a href="{% url 'suite:club_view' club.id %}">{{ club.club_name }}</a> {{club.get_owner_group}}
-          <img src="{{club.image.url}}" />
+          <img src="{{club.image.cropped.url}}" />
           <p>{{club.summary}}</p>
         </div>
         {% endif %}
@@ -30,7 +30,7 @@
         {% if forloop.counter|divisibleby:"2" %}
         <div class="box">
           <a href="{% url 'suite:club_view' club.id %}">{{ club.club_name }} {{club.get_owner_group_name}}</a>
-          <img src="{{club.image.url}}" />
+          <img src="{{club.image.cropped.url}}" />
           <p>{{club.summary}}</p>
         </div>
         {% endif %}

@@ -36,7 +36,6 @@ class EventCreate(UserPassesTestMixin, LoginRequiredMixin, TemplateView):
     if form.is_valid():
       event = form.save(club, commit=True)
       messages.add_message(request, messages.SUCCESS, 'You Have Created an Event!')
-      #saved = True
     else:
       return render(request, self.template_name, { 'club' : club, 'form' : form})
 
