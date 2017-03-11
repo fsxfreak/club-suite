@@ -6,6 +6,7 @@
 {% block body_block %}
 <section class='section'>
 <div class='container'>
+  {% include 'club_bar.html' with club_id=club.id user=request.user%}
   <h1>Edit {{ event.event_name }} Details</h1>
 
   {% if messages %}
