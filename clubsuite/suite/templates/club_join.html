@@ -1,37 +1,20 @@
-{% extends 'base.html' %}
-{% load staticfiles %}
-{% load widget_tweaks %}
-{% load guardian_tags %}
-
-{% block body_block %}_
+{% extends 'base.html' %} {% load staticfiles %} {% load widget_tweaks %} {% load guardian_tags %} {% block body_block %}_
 <section class='section'>
-  <div class='container'>
-      {% include 'club_bar.html' with club=club club_id=club.id user=request.user%} 
-      <h1> Join {{ club.club_name }} </h1>
-      
-      <form method='POST' action="{% url 'suite:club_join' club.id %}">
-      {% csrf_token %}
-      <label class="label">Please explain why you would like to join.</label>
-      <p class="control">
-        {% render_field  form.reason class="textarea" %}
-      </p>
-      
-      <input class="button is-primary" type="submit" value="Submit"/>
+    <div class='container'>
+        <h1> Join {{ club.club_name }} </h1>
 
-      {% if messages %}
-      <ul class="messages">
-          {% for message in messages %}
-          <li {% if message.tags %} class="{{ message.tags }}"{% endif%}>
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-              Important:
-            {% endif %}
-            {{message}}
-          </li>
-          {% endfor %}
-      </ul>
-      {% endif %}
-  
-      </form>
-  </div>
+        <form method='POST' action="{% url 'suite:club_join' club.id %}">
+            {% csrf_token %}
+            <label class="label">Please explain why you would like to join.</label>
+            <p class="control">
+                {% render_field form.reason class+="textarea" %}
+            </p>
+
+            <input class="button is-primary" type="submit" value="Submit" />
+
+
+
+        </form>
+    </div>
 </section>
 {% endblock body_block %}

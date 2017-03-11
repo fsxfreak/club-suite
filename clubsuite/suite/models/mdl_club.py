@@ -2,10 +2,10 @@ from django.db import models
 from django.utils import timezone
 from django.db.models import Q
 
-
 from django.contrib.auth.models import Group
 from guardian.shortcuts import assign_perm, remove_perm, get_perms
 
+from stdimage.models import StdImageField
 
 from suite.models import User
 
@@ -48,7 +48,8 @@ class Club(models.Model):
       ('PRI','Private')
       )
   club_type = models.CharField(max_length=3,choices=C_CHOICES,default='PUB')
-  image = models.ImageField(default="static/media/default.jpg")
+  image = StdImageField(default="static/media/default.jpg",
+      variations={'cropped': {'width': 1600, 'height': 400, 'crop': True}})
   first_seen = models.DateTimeField(editable=False, blank=True, null=True)
   last_seen = models.DateTimeField(blank=True, null=True)
   club_description = models.TextField()
