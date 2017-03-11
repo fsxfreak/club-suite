@@ -35,11 +35,11 @@
     </select>
   </span>
   <form method="POST">
-          {% csrf_token %}
+      {% csrf_token %}
       <button type="submit" name="submit" value="submit" class="button is-primary">
       Filter
     </button>
-      <input type='hidden' name='copiedz' value='True'>
+      <input type='hidden' name='change_type' value='True'>
   </form>
     <div class="columns">
     <div class="column is-4">
