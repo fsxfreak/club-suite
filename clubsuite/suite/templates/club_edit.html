@@ -8,7 +8,7 @@
 <div class='container'>
   <h1>Edit {{ club.club_name }} Details</h1>
 
-  <form method='POST' action="{% url 'suite:club_edit' club.id %}">
+  <form method='POST' action="{% url 'suite:club_edit' club.id %}" enctype='multipart/form-data'>
     {% csrf_token %}
     {{ form }}
     <div class="control is-grouped">
