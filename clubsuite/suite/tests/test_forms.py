@@ -81,7 +81,7 @@ class EventCreateFormTestCase(TestCase):
                 'event_fee':100,
                 'accessibility':True,
                 'required':False,
-                'did':self.division
+                'did':self.division.pk
                 }
 
         form = EventCreateForm(data)

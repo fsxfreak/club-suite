@@ -46,8 +46,8 @@ class View_Budget_TestCase(TestCase):
         division = Division.objects.get(name="Expenses")
         self.assertEqual(division.name,"Expenses")
         #IMPORTANT: start/end date cannot be in the past
-        data_budget = {'did':division,'planned':1000,'start_date':"03/05/2027",'end_date':"03/06/2027",'budget':"1"}
+        data_budget = {'did':division.pk,'planned':1000,'start_date':"03/05/2027",'end_date':"03/06/2027",'budget':"1"}
         response = self.client.post(reverse('suite:budget',kwargs={'club_id':self.club.id}),data_budget, club_id=self.club.pk,follow=True)
 
         #assert budget was created
-        self.assertEqual(len(Budget.objects.filter(did=division)),1)
+        self.assertEqual(len(Budget.objects.filter(did=division.pk)),1)

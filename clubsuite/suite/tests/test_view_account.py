@@ -9,7 +9,8 @@ class View_Account_TestCase(TestCase):
     def setUp(self):
         self.client=Client()
         self.request_factory=RequestFactory()
-        #create club owner
+
+        #create user
         self.user=get_user_model().objects.create(first_name="User",last_name="McPerson",email="test@test.com")
         self.user.set_password("clubsuite")
         self.user.save()

@@ -10,6 +10,7 @@ from .test_mdl_user import *
 
 from .test_view_account import *
 from .test_view_budget import *
+from .test_view_club_edit import *
 from .test_view_club_emails import *
 from .test_view_club_create import *
 from .test_view_club_join import *
