@@ -21,15 +21,20 @@
             <div class="control-label">
                  <label class="label" for="id_event_name">Club's Description</label>
             </div>
-            <p class="control is-horizontal"> {{form.club_description| add_class:'input is-fullwidth' }}</p>
+            <p class="control"> 
+            {% render_field form.club_description class="textarea is-fullwidth" %}</p>
+            
      </div>
-        {% render_field form.image %}
-     <div class="control is-grouped">
+     <div class="control-label">
+                 {% render_field form.image %}
+     </div>
+
+
+     
       <p class="control">
            <button class="button is-primary" type="submit" name="details">Submit</button>
           <input type='hidden' name='edit'>
       </p>
-    </div>
   </form>
 </div>
 </section>
