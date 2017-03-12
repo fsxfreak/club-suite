@@ -8,9 +8,25 @@
 {% get_obj_perms request.user for club as "club_perms" %}
 <section class='section'>
 <div class='container'>
-{% include 'club_bar.html' with club_id=club.id user=request.user%}
-
+{% include 'club_bar.html' with club_id=club.id user=request.user %}
+<script src="{% static "javascript/club_roster.js" %}"></script>
 <h1> {{ club.club_name }} Roster </h1>
+
+{% if messages %}
+  {% for message in messages %}
+  {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="notification is-danger">
+      <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+    </div>
+  {% else %}
+    <div class="notification is-success">
+      <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+    </div>
+  {% endif %}
+  {% endfor %}
+{% endif %}
+
+
 <table class="table">
   <thead>
     <tr>
@@ -31,42 +47,76 @@
     </tr>
   </tfoot>
   <tbody>
-    {% if messages %}
 
-
-          {% for message in messages %}
-          <div class="notification is-danger">
-            <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
-          </div>
-          {% endfor %}
-
-    {% endif %}
   {% for member in members %}
     <tr>
       <td>{{ member.user.first_name}} {{ member.user.last_name }}</td>
       <td>{{ member.group }}</td>
+
       {% if "can_remove_member" in club_perms or "can_handle_promotion_requests" in club_perms %}
       <div class="block">
+
       {% if "can_remove_member" in club_perms %}
-      <form method='POST' action="{% url 'suite:club_roster' club.id %}" class='delete_member'>
-        {% csrf_token %}
-        <td><input class='button is-danger' type='submit' name='submit' value='Delete {{ member.user.first_name }}'>
-        <input type='hidden' name='delete' value='{{ member.user.id }}'>
-      </form>
+      <p>
+          <td><a class="button modal-button is-danger" data-target="#delete-toggle-{{member.user.id}}">Delete {{ member.user.first_name }}</a>
+      </p>
+      <div class="modal" id="delete-toggle-{{member.user.id}}">
+           <div class="modal-background"></div>
+           <div class="modal-content">
+               <div class="notification is-danger">
+                   Remove this member?
+                   <form method='POST' action="{% url 'suite:club_roster' club.id %}" style="text-align: right">
+                     {% csrf_token %}
+                     <input class='button' type='submit' name='submit' value='Delete {{ member.user.first_name }}'>
+                     <input type='hidden' name='delete' value='{{ member.user.id }}'>
+                   </form>
+               </div>
+           </div>
+           <button class="modal-close"></button>
+      </div>
+
       {% endif %}
+
       {% if "can_handle_promotion_requests" in club_perms %}
-      <form method='POST' action="{% url 'suite:club_roster' club.id %}" class='promote_member'>
-        {% csrf_token %}
-        <input class='button' type='submit' name='submit' value='Promote {{ member.user.first_name }}'>
-        <input type='hidden' name='promote' value='{{ member.user.id }}'>
-      </form>
+      <p>
+          <a class="button modal-button" data-target="#promote-toggle-{{member.user.id}}">Promote</a>
+      </p>
+      <div class="modal" id="promote-toggle-{{member.user.id}}">
+           <div class="modal-background"></div>
+           <div class="modal-content">
+               <div class="notification is-success">
+                   Promote this member?
+                   <form method='POST' action="{% url 'suite:club_roster' club.id %}" style="text-align: right">
+                     {% csrf_token %}
+                     <input type='hidden' name='promote' value='{{ member.user.id }}'\>
+                     <input class='button' type='submit' name='promoteMember' value='Promote {{ member.user.first_name }}'>
+                   </form>
+
+               </div>
+           </div>
+           <button class="modal-close"></button>
+      </div>
       {% endif %}
+
       {% if "can_handle_promotion_requests" in club_perms %}
-      <form method='POST' action="{% url 'suite:club_roster' club.id %}" class='demote_member'>
-        {% csrf_token %}
-        <input class='button is-default' type='submit' name='submit' value='Demote {{ member.user.first_name }}'></td>
-        <input type='hidden' name='demote' value='{{ member.user.id }}'>
-      </form>
+      <p>
+          <a class="button modal-button" data-target="#demote-toggle-{{member.user.id}}">Demote</a>
+      </p>
+      <div class="modal" id="demote-toggle-{{member.user.id}}">
+           <div class="modal-background"></div>
+           <div class="modal-content">
+               <div class="notification is-success">
+                   Demote this member?
+                   <form method='POST' action="{% url 'suite:club_roster' club.id %}" style="text-align: right">
+                     {% csrf_token %}
+                     <input class='button' type='submit' name='submit' value='Demote {{ member.user.first_name }}'>
+                     <input type='hidden' name='demote' value='{{ member.user.id }}'>
+                   </form>
+               </div>
+           </div>
+           <button class="modal-close"></button></td>
+      </div>
+
       {% endif %}
       </div>
       {% endif %}
@@ -78,6 +128,5 @@
   </ul>
   </div>
 </section>
-<script src="{% static "javascript/confirm.js" %}"></script>
 
 {% endblock body_block %}

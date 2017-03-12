@@ -145,3 +145,10 @@ class ClubEditForm(forms.ModelForm):
   class Meta:
     model = Club
     fields = ['club_name', 'club_description', 'image' ]
+
+class EventEditForm(forms.ModelForm):
+  class Meta:
+    model = Event 
+    fields = ['event_name', 'start_date', 'start_time', 'end_date', 'end_time',
+              'event_location', 'event_description', 'event_cost', 'event_fee',
+              'accessibility', 'required', 'did', 'image']

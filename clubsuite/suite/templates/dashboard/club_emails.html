@@ -81,7 +81,7 @@
           {% endfor %}
           </p>
           </blockquote>
-          
+
           <form method="POST" action="{% url 'suite:club_emails' club.id %}">
                   {% csrf_token %}
             <p style="text-align: right">
