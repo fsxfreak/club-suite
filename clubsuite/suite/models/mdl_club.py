@@ -68,6 +68,19 @@ class Club(models.Model):
   def summary(self):
     return self.club_description[:100]
 
+  def update_group_names(self, new_club_name):
+    owner_group = self.get_owner_group()
+    officer_group = self.get_officer_group()
+    member_group = self.get_member_group()
+
+    owner_group.name = '%s_owners' % new_club_name
+    officer_group.name = '%s_officers' % new_club_name
+    member_group.name = '%s_members' % new_club_name
+    
+    owner_group.save()
+    officer_group.save()
+    member_group.save()
+
   def _get_owner_group_name(self):
     return '%s_owners' % self.club_name
   def _get_officer_group_name(self):
