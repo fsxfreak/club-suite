@@ -8,6 +8,20 @@
 <div class='container'>
   <h1>Edit {{ club.club_name }}'s Details</h1>
 
+  {% if messages %}
+    {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+      <div class="notification is-danger">
+        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+      </div>
+    {% else %}
+      <div class="notification is-success">
+        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+      </div>
+    {% endif %}
+    {% endfor %}
+  {% endif %}
+
   <form method='POST' action="{% url 'suite:club_edit' club.id %}" enctype='multipart/form-data'>
     {% csrf_token %}
     <div class="control is-horizontal">
