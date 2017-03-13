@@ -35,9 +35,8 @@ class ClubEdit(UserPassesTestMixin, LoginRequiredMixin, View):
     if 'edit' in request.POST:
       form = self.form_class(request.POST, request.FILES, instance=club)
       if form.is_valid():
-
+        club.update_group_names(form.cleaned_data['club_name'])
         club = form.save()
-        print(club.image)
 
         return HttpResponseRedirect(reverse('suite:club_manage'))
       else:
