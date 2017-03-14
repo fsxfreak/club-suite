@@ -40,7 +40,7 @@ class EventEdit(UserPassesTestMixin, LoginRequiredMixin, View):
       form = self.form_class(request.POST, request.FILES, instance=event)
       if form.is_valid():
         event = form.save()
-        print('valid')
+        #print('valid')
 
         messages.add_message(request, messages.SUCCESS, 'Successfully edited event.')
         return HttpResponseRedirect(reverse('suite:club_view', 
