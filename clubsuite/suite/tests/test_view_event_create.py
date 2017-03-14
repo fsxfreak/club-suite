@@ -48,7 +48,7 @@ class View_EventCreate_TestCase(TestCase):
                 'event_fee':100,
                 'accessibility':True,
                 'required':False,
-                'did':division
+                'did':division.pk
                 }
         response = self.client.post(reverse('suite:event_create',kwargs={'club_id':self.club.pk}),data, follow=True)
         #Assert that it redirects to club page
