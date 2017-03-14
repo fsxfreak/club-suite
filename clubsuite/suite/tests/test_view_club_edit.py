@@ -16,19 +16,21 @@ class ViewClubEditTestCase(TestCase):
         self.owner.set_password("clubsuite")
         self.owner.save()
         #Create club
-        self.club=Club.objects.create(club_name="club",club_type="PUB",
-                                    club_description="a club")
+        self.club=Club.objects.create(club_name="club",club_type="PUB",club_description="a club")
         self.club._create_permissions()
         self.club._set_owner(self.owner)
+
 
     def test_get_login(self):
         self.client.force_login(get_user_model().objects.get(first_name='Owner'))
         response = self.client.get(reverse('suite:club_edit',kwargs={'club_id':self.club.pk}))
         self.assertEquals(response.status_code,200)
 
+
     def test_get_not_logged_in(self):
         response = self.client.get(reverse('suite:club_edit',kwargs={'club_id':self.club.pk}))
         self.assertEquals(response.status_code,403)
+
 
     def test_post(self):
         #login
@@ -41,15 +43,14 @@ class ViewClubEditTestCase(TestCase):
         response=ClubEdit.as_view()(request,club_id=self.club.pk)
         response.client=self.client
 
-        '''
-        response = self.client.post(reverse('suite:club_edit',kwargs={'club_id':self.club.pk}),data,club_id=self.club.pk,follow=True)
-        '''
         #Assert that it redirects to club manage page
         self.assertRedirects(response,reverse('suite:club_manage'))
 
-        self.assertEqual(self.club.club_name, "newClub")
-        self.assertEqual(self.club.club_type, "PRI")
-        self.assertEqual(self.club.club_description, "newest club")
+        #self.club's strings are still pointing to old information, need get() to refresh
+        newClub=Club.objects.get(club_name="newClub")
+        self.assertEqual(newClub,self.club)
+        self.assertEqual(newClub.club_name, "newClub")
+        self.assertEqual(newClub.club_description, "newest club")
 
     def test_post_invalid(self):
         club2=Club.objects.create(club_name="club2",club_type="PUB",club_description="club #2")
