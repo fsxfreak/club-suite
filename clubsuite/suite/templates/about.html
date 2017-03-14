@@ -4,11 +4,80 @@
 {% block body_block %}
 <section class='section'>
   <div class='container'>
-    <div class='heading'>
-      <h1 class='title'>About clubsuite!!!!!!!!!</h1>
+    <div class="columns" style="text-align:center">
+         <div class="column is-6 is-offset-3" >
+             <h1>ClubSuite is a product for you to explore the world of clubs, so you can connect to people and causes you care about.</h1>
+          </div>
     </div>
-    <p>yayyyyy description about us</p>
-    <p>more detailed description here, confirming I can see changes</p>
+    <div class="columns">
+         <div class="column is-6 is-offset-3" style="text-align:center">
+              <h3>We believe that getting involved in clubs does not have to be as difficult as building a house of cards.</h3>
+              <h4>
+                   With our application, gone are the days of needing social media, calendars, surveys, and spreadsheets to manage your club life. Our product centralizes and personalizes your experience by allowing you to access all your clubs through one product and to customize each club as you please. Our goal is to help you deal with all the boring, organizational stuff so you can enjoy the fun, exciting stuff happening in your clubs.
+              </h4>
+         </div>
+
+    </div>
+
+
+
+
+<div class="columns">
+     <div class="column">
+          <h3>
+               <span class="icon">
+                    <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+               </span>
+               Create
+          </h3>
+          <h4>Create your own clubs and events.</h4>
+     </div>
+     <div class="column">
+          <h3>
+               <span class="icon">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+               </span>
+               Explore
+          </h3>
+          <h4>Join clubs and events.</h4>
+     </div>
+     <div class="column">
+          <h3>
+               <span class="icon">
+                    <i class="fa fa-address-book-o" aria-hidden="true"></i>
+               </span>
+               Manage
+          </h3>
+          <h4>Keep track of your budget and roster.</h4>
+     </div>
+</div>
+
+<div class="columns">
+     <div class="column">
+          <figure class="image is-200x200">
+
+               <img src="{% static 'media/about_light_bulb.jpg' %}">
+          </figure>
+     </div>
+     <div class="column">
+          <figure class="image is-200x200">
+               <img src="{% static 'media/about_search.jpg' %}">
+          </figure>
+     </div>
+     <div class="column">
+          <figure class="image is-100x100">
+               <img src="{% static 'media/about_organize.png' %}">
+          </figure>
+     </div>
+</div>
+
+<div class="columns">
+     <div class="column">
+          <figure class="image is-3by2">
+            <img src="{% static 'media/about_card_tower.jpg' %}">
+          </figure>
+     </div>
+</div>
   </div>
 </section>
 {% endblock body_block %}
