@@ -6,6 +6,9 @@
   <div class="container">
     <div class="columns" style="text-align:center">
          <div class="column is-6 is-offset-3" >
+             
+              <a class="button is-warning-navbar" href="{% url 'suite:login' %}">Log In</a><a class="button is-info-navbar" href="{% url 'suite:register' %}">Register</a>
+
              <h1>ClubSuite is a product for you to explore the world of clubs, so you can connect to people and causes you care about.</h1>
           </div>
     </div>
@@ -26,6 +29,14 @@
               <img src="{% static 'media/clubs_pattern.png' %}" width="260" height="260">
          </div>
          <div class="column is-1">
+         </div>
+    </div>
+    <div class="columns">
+         <div class="column is-16by9">
+              <img src="{% static 'media/dateam_1.JPG' %}" width="800" height="800">
+         </div>
+         <div class="column is-16by9">
+                <img src="{% static 'media/dateam_2.JPG' %}">
          </div>
     </div>
 
@@ -66,7 +77,7 @@
                </span>
                Manage
           </h3>
-          <h4>Keep track of your budgets and rosters.</h4>
+          <h4>Keep track of your budgets, attendance, and rosters.</h4>
      </div>
 </div>
 <!--
