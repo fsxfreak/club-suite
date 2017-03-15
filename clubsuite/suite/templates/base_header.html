@@ -7,7 +7,7 @@
   </div>
 
   <div class="nav-center">
-  
+
   </div>
 
   <!-- This "nav-toggle" hamburger menu is only visible on mobile -->
@@ -29,21 +29,21 @@
       Club Search
     </a>
     <a class="nav-item" href={% url 'suite:club_create' %}>
-      Create Club 
+      Create Club
     </a>
     <a class="nav-item" href="{% url 'suite:club_manage' %}">
-      Manage My Clubs
+      Manage Clubs
     </a>
     <a class="nav-item" href={% url 'suite:edit_profile' %}>
-      Account 
+      Account
     </a>
-    
+
     <a class="nav-item" href={% url 'suite:dashboard' %}>
         {% if user.is_authenticated %}
         <p>| &nbsp;&nbsp;&nbsp; Welcome, {{ user.get_short_name }} </p> <a class="button is-warning-navbar" href="{% url 'suite:loggedout' %}">Logout</a>
         {% else %}
         <p>| &nbsp;&nbsp;&nbsp; Welcome, Guest </p><a class="button is-warning-navbar" href="{% url 'suite:login' %}">Log In</a><a class="button is-info-navbar" href="{% url 'suite:register' %}">Register</a>
-        {% endif %} 
+        {% endif %}
     </a>
   </div>
 </nav>
@@ -61,4 +61,3 @@
                 }
         }
 </script>
-
