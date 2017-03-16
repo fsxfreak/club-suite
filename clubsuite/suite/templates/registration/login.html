@@ -10,7 +10,7 @@
         <div class="column is-4 is-offset-4">
           <img src="{% static 'media/CSElogo.png' %}" class="loginPanda">
           <div class="box">
-            <h1 class="title">  
+            <h1 class="title">
               Club Suite
             </h1>
           <form action="{% url 'suite:login' %}" method="post" accept-charset="utf-8">
@@ -33,7 +33,7 @@
       <p class="has-text-centered">
         <a href="{% url 'suite:register' %}">Register an Account</a>
         |
-        <a href="#">Forgot password</a>
+        <a href="{% url 'suite:about' %}">About</a>
       </p>
     </div>
     </div>

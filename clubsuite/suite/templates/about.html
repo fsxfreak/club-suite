@@ -1,14 +1,106 @@
-{% extends 'base.html' %}
+{% extends 'base_about.html' %}
 {% load staticfiles %}
 
 {% block body_block %}
-<section class='section'>
-  <div class='container'>
-    <div class='heading'>
-      <h1 class='title'>About clubsuite!!!!!!!!!</h1>
+<section class="section">
+  <div class="container">
+    <div class="columns" style="text-align:center">
+         <div class="column is-6 is-offset-3" >
+             
+              <a class="button is-warning-navbar" href="{% url 'suite:login' %}">Log In</a><a class="button is-info-navbar" href="{% url 'suite:register' %}">Register</a>
+
+             <h1>ClubSuite is a product for you to explore the world of clubs, so you can connect to people and causes you care about.</h1>
+          </div>
     </div>
-    <p>yayyyyy description about us</p>
-    <p>more detailed description here, confirming I can see changes</p>
+    <div class="columns">
+         <div class="column is-6 is-offset-3" style="text-align:center">
+              <h3>We believe that getting involved in clubs does not have to be as difficult as building a house of cards.</h3>
+         </div>
+    </div>
+
+    <div class="columns">
+         <div class="column is-offset-1">
+              <img src="{% static 'media/clubs_pattern.png' %}" width="260" height="260">
+         </div>
+         <div class="column is-4">
+                <img src="{% static 'media/about_card_tower.jpg' %}">
+         </div>
+         <div class="column">
+              <img src="{% static 'media/clubs_pattern.png' %}" width="260" height="260">
+         </div>
+         <div class="column is-1">
+         </div>
+    </div>
+    <div class="columns">
+         <div class="column is-16by9">
+              <img src="{% static 'media/dateam_1.JPG' %}" width="800" height="800">
+         </div>
+         <div class="column is-16by9">
+                <img src="{% static 'media/dateam_2.JPG' %}">
+         </div>
+    </div>
+
+    <div class="columns">
+         <div class="column is-6 is-offset-3" style="text-align:center">
+              <h4>
+                   With our application, gone are the days of needing social media, calendars, surveys, and spreadsheets to manage your club life. Our product centralizes and personalizes your experience by allowing you to access all your clubs in one place and to customize each club as you please. Our goal is to help you deal with all the boring, organizational stuff so you can enjoy the fun, exciting stuff happening in your clubs.
+              </h4>
+         </div>
+    </div>
+
+
+
+
+<div class="columns">
+     <div class="column">
+          <h3>
+               <span class="icon">
+                    <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+               </span>
+               Create
+          </h3>
+          <h4>Create your own clubs and events.</h4>
+     </div>
+     <div class="column">
+          <h3>
+               <span class="icon">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+               </span>
+               Explore
+          </h3>
+          <h4>Join clubs and events.</h4>
+     </div>
+     <div class="column">
+          <h3>
+               <span class="icon">
+                    <i class="fa fa-address-book-o" aria-hidden="true"></i>
+               </span>
+               Manage
+          </h3>
+          <h4>Keep track of your budgets, attendance, and rosters.</h4>
+     </div>
+</div>
+<!--
+<div class="columns">
+     <div class="column">
+          <figure class="image is-200x200">
+
+               <img src="{% static 'media/about_light_bulb.jpg' %}">
+          </figure>
+     </div>
+     <div class="column">
+          <figure class="image is-200x200">
+               <img src="{% static 'media/about_search.jpg' %}">
+          </figure>
+     </div>
+     <div class="column">
+          <figure class="image is-100x100">
+               <img src="{% static 'media/about_organize.png' %}">
+          </figure>
+     </div>
+</div>
+-->
+
   </div>
 </section>
 {% endblock body_block %}
