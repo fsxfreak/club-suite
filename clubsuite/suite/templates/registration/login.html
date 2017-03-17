@@ -10,9 +10,7 @@
         <div class="column is-4 is-offset-4">
           <img src="{% static 'media/CSElogo.png' %}" class="loginPanda">
           <div class="box">
-            <h1 class="title">
-              Club Suite
-            </h1>
+              <img src="{% static 'media/clubsuite.png' %}" >
           <form action="{% url 'suite:login' %}" method="post" accept-charset="utf-8">
             {% if form.errors %}
             {{ form.non_field_errors }}
