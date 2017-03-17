@@ -32,7 +32,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEBUG = True
 
 ALLOWED_HOSTS = [ 
-    u'coleman.dynamic.ucsd.edu', u'clubsuite.coleman.dynamic.ucsd.edu',
     u'clubsuite.ucsd.edu', u'www.clubsuite.ucsd.edu',
 ]
 
