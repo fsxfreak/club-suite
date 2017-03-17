@@ -40,7 +40,7 @@ class Event(models.Model):
    event_fee = models.DecimalField(max_digits=10, decimal_places=2,default=0)
    accessibility = models.BooleanField(default=True) #True=public, False=private
    required = models.BooleanField(default=False)
-   image = StdImageField(default="static/media/special_event.png",
+   image = StdImageField(default="special_event.png",
       variations={'cropped': {'width': 256, 'height': 256, 'crop': True}})
 
    objects = EventManager()
