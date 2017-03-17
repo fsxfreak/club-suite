@@ -34,7 +34,7 @@ body {
     background-repeat: no-repeat;
     background-position: center bottom;
     background-size: 100%;
-    height: 200px;
+    height: 300px;
 }
 
 .section {
@@ -42,9 +42,17 @@ body {
 }
 
 .loginBody {
+    min-height: 100%;
+    display: flex;
     flex-direction: column;
+    background-image: url("../media/CSE110ClubsLogIn.jpg");
     background-repeat: no-repeat;
     background-position: center bottom;
+    background-size: 100%;
+}
+.loginFooter {
+    visibility: hidden;
+    display: none;
 }
 
 .box input {
