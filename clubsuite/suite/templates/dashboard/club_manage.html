@@ -34,7 +34,7 @@
         <tr>
             <td><a href="{% url 'suite:club_view' club.id %}">{{ club.club_name }}</a></td>
           <td>
-            {% if "can_handle_join_requests" in club_perms %}
+            {% if "can_handle_promotion_requests" in club_perms %}
               <a href="{% url 'suite:club_edit' club.id %}" class='button is-link'>Edit</a>
             {% endif %}
             <p>
@@ -80,7 +80,7 @@
     </table>
     {% else %}
     <div class="notification">
-         No club settings to display. 
+         No club settings to display.
     </div>
     {% endif %}
 
