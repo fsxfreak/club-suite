@@ -20,7 +20,10 @@ class Account(View, LoginRequiredMixin):
 
     if 'details' in request.POST:
       form = EditProfileForm(request.POST, instance=request.user)
-      form.save()
+      if form.is_valid():
+        form.save()
+      else:
+        messages.add_message(request, messages.ERROR, 'Could not edit account details.')
 
       form2 = PasswordChangeForm(user=request.user)
       args = {'form': form, 'form2': form2 }

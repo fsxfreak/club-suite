@@ -9,6 +9,7 @@
 <section class='section'>
   <div class='container'>
       {% include 'club_bar.html' with club=club club_id=club.id user=request.user%}
+      <script src="{% static "javascript/club_view.js" %}"></script>
     <br />
             <div class="card">
                 <div class="card-image">
@@ -86,9 +87,35 @@
                     {% if event.required == True %}
                       <span class="tag is-dark">Event Required</span>
                     {% endif %}
+
                     {% if "can_create_event" in club_perms %}
                     <span><a class='button is-link' href="{% url 'suite:event_edit' club_id=club.id event_id=event.id %}">Edit</a></span>
+                    <span>
+                      <a class="button is-link modal-button" data-target="#delete-toggle-{{event.id}}">Delete</a>
+                    </span>
+                      <div class="modal" id="delete-toggle-{{event.id}}">
+                        <div class="modal-background"></div>
+                        <div class="modal-content">
+                            <div class='notification is-danger'>
+                              You are about to delete your event. Proceed?
+                              <form method="POST" action="{% url 'suite:club_view' club_id=club.id %}">
+                                   {% csrf_token %}
+                                   <input type='hidden' name='event_id' value='{{ event.id }}'>
+                                   <div class="columns">
+                                        <div class="column is-offset-10">
+                                        <button class="button" type="submit"formaction="{% url 'suite:club_view' club_id=club.id %}" name='delete' value='Delete' style="text-align:right">
+                                             Delete
+                                        </button>
+                                        </div>
+                                   </div>
+
+                             </form>
+                            </div>
+                        </div>
+                        <button class="modal-close"></button>
+                      </div>
                     {% endif %}
+                    
                   </h3>
                 </p>
 
