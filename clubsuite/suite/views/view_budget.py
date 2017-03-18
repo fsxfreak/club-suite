@@ -91,6 +91,7 @@ class Budget(UserPassesTestMixin, LoginRequiredMixin, View):
         budget.save()
       else:
         messages.add_message(request, messages.WARNING, 'Could not create budget.')
+      budget_form.fields['did'].queryset = Division.objects.filter(cid=club)
 
     books = self.generate_books(club.division_set.all())
     total_budget = 0
