@@ -31,7 +31,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['kevinzavier.pythonanywhere.com']
 
 
 # Application definition
@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'suite',
     'django.contrib.auth',
-    'guardian', 
-    'widget_tweaks',
+    'guardian',
+    'django.widget_tweaks',
     'mathfilters',
     'stdimage',
 ]
